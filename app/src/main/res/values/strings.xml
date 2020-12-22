@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Daily Dose</string>
+
+
+    <!--    TextView    -->
+    <string name="text_welcome">~ Welcome! ~</string>
+    <string name="text_favorites">Favorites</string>
+
+
+
+    <!--    Buttons    -->
+    <string name="button_preferences">Preferences</string>
+    <string name="button_favorites">Favorites</string>
+    <string name="button_browse">Browse</string>
+
+
+</resources>
