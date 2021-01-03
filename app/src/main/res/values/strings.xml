@@ -1,17 +1,62 @@
 <resources>
     <string name="app_name">Daily Dose</string>
 
+    <!--    Menu Paragraphs    -->
+    <string name="about_intro_paragraph">Hello Peons. Welcome to my music sharing app. The purpose
+        of this app is to allow me to send music directly to your phone, in the form of a push notification.
+        I’ve had many people over the years ask me to send them music, and this app will not only
+        give you access to part of my library, but let me send you stuff as I find them.
+    </string>
+
+    <string name="about_text_description">The way this works, is you go into this app’s settings,
+        or preferences, and you tell me what genres of music you want to receive. Then, when I
+        upload a song of that nature, you’ll receive a notification. Just tap on it, and it
+        will take you to a streaming service where you can listen to it.
+    </string>
+
+    <string name="about_text_description_2">You can favorite the songs I send you by pressing the
+        heart (duh). The first app screen is your favorites, and the other screen lets you browse
+        the database. Go nuts!
+    </string>
+
 
     <!--    TextView    -->
     <string name="text_welcome">~ Welcome! ~</string>
     <string name="text_favorites">Favorites</string>
+    <string name="text_view_electronic_music">Electronic Music:</string>
+    <string name="text_view_link">Link:</string>
 
-
+    <!--    Hints    -->
+    <string name="hint_enter_link">Enter Link Here</string>
 
     <!--    Buttons    -->
     <string name="button_preferences">Preferences</string>
     <string name="button_favorites">Favorites</string>
     <string name="button_browse">Browse</string>
+    <string name="button_upload">Upload</string>
+
+    <!--    Menu    -->
+    <string name="menu_about">About</string>
+    <string name="menu_info">Info</string>
+
+    <!--    Notification Stuff    -->
+    <string name="track_notification_channel">Daily Dose</string>
+    <string name="track_notification_channel_title">Artist Name</string>
+    <string name="track_notification_channel_text">Track Name</string>
+
+    <!--    Radio Buttons    -->
+    <string name="radio_button_melodic_dubstep">Melodic Dubstep</string>
+    <string name="radio_button_metalcore">Metalcore</string>
+    <string name="radio_button_acoustic_ballads">Acoustic / Ballads</string>
+    <string name="radio_button_lo_fi">Lo-Fi</string>
+    <string name="radio_button_chillstep">Chillstep</string>
+    <string name="radio_button_piano_ambient">Piano / Ambient</string>
+    <string name="radio_button_experimental_neuro_bass">Experimental / Neuro Bass</string>
+    <string name="radio_button_liquid_dnb">Liquid DnB</string>
+    <string name="radio_button_death_metal">Death Metal</string>
+    <string name="radio_button_ambient_bass">Ambient Bass (try me!)</string>
+    <string name="radio_button_garage">Garage</string>
+    <string name="text_view_acoustic">Acoustic:</string>
 
 
 </resources>

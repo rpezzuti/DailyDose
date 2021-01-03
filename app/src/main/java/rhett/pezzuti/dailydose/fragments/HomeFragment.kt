@@ -19,6 +19,7 @@ import rhett.pezzuti.dailydose.viewmodels.HomeViewModel
 import rhett.pezzuti.dailydose.R
 import rhett.pezzuti.dailydose.databinding.HomeFragmentBinding
 import rhett.pezzuti.dailydose.factory.HomeViewModelFactory
+import timber.log.Timber
 
 class HomeFragment : Fragment() {
 
@@ -59,12 +60,24 @@ class HomeFragment : Fragment() {
         )
         viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
 
+
+        binding.homeViewModelXML = viewModel
         binding.lifecycleOwner = this
 
 
         viewModel.eventFavorites.observe(viewLifecycleOwner, { event ->
             if (event == true){
-                // TODO: Why is the Direction not generating?
+                Timber.i("called")
+                this.findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToFavoritesFragment())
+                viewModel.doneNavigatingFavorites()
+            }
+        })
+
+        viewModel.eventUpload.observe(viewLifecycleOwner, { event ->
+            if (event == true){
+                Timber.i("called")
+                this.findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToUploadFragment())
+                viewModel.doneNavigatingUpload()
             }
         })
 
@@ -109,7 +122,6 @@ class SongAdapter : RecyclerView.Adapter<SongAdapter.ViewHolder>(){
 
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        val songImage: ImageView = itemView.findViewById(R.id.song_item_image)
         val songTitle: TextView = itemView.findViewById(R.id.song_item_track_title)
         val songArtist: TextView = itemView.findViewById(R.id.song_item_track_artist)
         val songFavorite: FloatingActionButton = itemView.findViewById(R.id.song_item_favorite_fab)

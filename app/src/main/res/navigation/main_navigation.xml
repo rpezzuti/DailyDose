@@ -12,12 +12,30 @@
         android:label="HomeFragment"
         tools:layout="@layout/home_fragment">
         <action
-            android:id="@+id/action_homeFragment_to_favoritesFragment2"
+            android:id="@+id/action_homeFragment_to_favoritesFragment"
             app:destination="@id/favoritesFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_uploadFragment"
+            app:destination="@id/uploadFragment" />
     </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
         android:name="rhett.pezzuti.dailydose.fragments.FavoritesFragment"
         android:label="FavoritesFragment"
         tools:layout="@layout/favorites_fragment"/>
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="rhett.pezzuti.dailydose.fragments.AboutFragment"
+        android:label="AboutFragment"
+        tools:layout="@layout/fragment_about"/>
+    <fragment
+        android:id="@+id/infoFragment"
+        android:name="rhett.pezzuti.dailydose.fragments.InfoFragment"
+        android:label="fragment_info"
+        tools:layout="@layout/fragment_info" />
+    <fragment
+        android:id="@+id/uploadFragment"
+        android:name="rhett.pezzuti.dailydose.fragments.UploadFragment"
+        android:label="UploadFragment"
+        tools:layout="@layout/fragment_upload"/>
 </navigation>

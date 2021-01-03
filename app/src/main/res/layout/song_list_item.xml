@@ -10,7 +10,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/song_item_image"
+            android:id="@+id/song_item_album_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/magin_small"
@@ -24,8 +24,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/magin_small"
-            app:layout_constraintStart_toEndOf="@+id/song_item_image"
-            app:layout_constraintTop_toTopOf="@+id/song_item_image"
+            app:layout_constraintStart_toEndOf="@+id/song_item_album_image"
+            app:layout_constraintTop_toTopOf="@+id/song_item_album_image"
             tools:text="SAMPLE TITLE" />
 
         <TextView
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/magin_small"
             android:layout_marginStart="8dp"
-            app:layout_constraintStart_toEndOf="@+id/song_item_image"
+            app:layout_constraintStart_toEndOf="@+id/song_item_album_image"
             app:layout_constraintTop_toBottomOf="@+id/song_item_track_title"
             tools:text="SAMPLE ARTIST" />
 

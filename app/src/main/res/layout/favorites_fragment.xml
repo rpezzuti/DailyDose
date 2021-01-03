@@ -6,7 +6,7 @@
 
     <data>
         <variable
-            name="favoritesViewModel"
+            name="favoritesViewModelXML"
             type="rhett.pezzuti.dailydose.viewmodels.FavoritesViewModel" />
     </data>
 
