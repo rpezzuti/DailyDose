@@ -51,6 +51,10 @@ class UploadFragment : Fragment() {
                 getString(R.string.notification_channel_name)
             )
 
+            createChannel(
+                getString(R.string.fcm_test_notification_channel_id),
+                getString(R.string.fcm_test_notification_channel_name)
+            )
         }
 
 

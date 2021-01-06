@@ -65,6 +65,8 @@
 
     <!--    Firebase Test Shit    -->
     <string name="breakfast_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="fcm_test_notification_channel_id">fcm_test_channel</string>
+    <string name="fcm_test_notification_channel_name">fcm_test_channel_name</string>
 
 
 </resources>
