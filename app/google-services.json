@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "792171633337",
+    "project_id": "daily-dose-f1709",
+    "storage_bucket": "daily-dose-f1709.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:792171633337:android:ff7e2e284865f98bbe1968",
+        "android_client_info": {
+          "package_name": "rhett.pezzuti.dailydose"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "792171633337-644dc3mrtspesdfbggl4gqb9l0p18ku0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAB7UPSWQQAcmIPCeA0vLMRrcYNfiICYZ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "792171633337-644dc3mrtspesdfbggl4gqb9l0p18ku0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

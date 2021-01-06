@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
     id 'androidx.navigation.safeargs'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -147,5 +148,9 @@ dependencies {
     // Fixes an error. Also enabled multidex in defaultConfig above ^^^^^
     implementation 'com.android.support:multidex:1.0.3'
 
-
+    //FCM
+    implementation 'com.google.firebase:firebase-core:18.0.0'
+    implementation 'com.google.firebase:firebase-iid:21.0.1'
+    implementation 'com.google.firebase:firebase-messaging:21.0.1'
+    implementation 'android.arch.work:work-runtime:1.0.1'
 }

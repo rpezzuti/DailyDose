@@ -25,6 +25,7 @@
     <string name="text_favorites">Favorites</string>
     <string name="text_view_electronic_music">Electronic Music:</string>
     <string name="text_view_link">Link:</string>
+    <string name="text_view_acoustic">Acoustic:</string>
 
     <!--    Hints    -->
     <string name="hint_enter_link">Enter Link Here</string>
@@ -43,6 +44,10 @@
     <string name="track_notification_channel">Daily Dose</string>
     <string name="track_notification_channel_title">Artist Name</string>
     <string name="track_notification_channel_text">Track Name</string>
+    <string name="test_notification_body">Test Body</string>
+    <string name="notification_channel_id">track_channel</string>
+    <string name="notification_channel_name">channel_name</string>
+
 
     <!--    Radio Buttons    -->
     <string name="radio_button_melodic_dubstep">Melodic Dubstep</string>
@@ -56,7 +61,10 @@
     <string name="radio_button_death_metal">Death Metal</string>
     <string name="radio_button_ambient_bass">Ambient Bass (try me!)</string>
     <string name="radio_button_garage">Garage</string>
-    <string name="text_view_acoustic">Acoustic:</string>
+
+
+    <!--    Firebase Test Shit    -->
+    <string name="breakfast_notification_channel_id" translatable="false">fcm_default_channel</string>
 
 
 </resources>
