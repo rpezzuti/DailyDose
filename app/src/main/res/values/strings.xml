@@ -68,5 +68,8 @@
     <string name="fcm_test_notification_channel_id">fcm_test_channel</string>
     <string name="fcm_test_notification_channel_name">fcm_test_channel_name</string>
 
+    <string name="message_subscribe_failed">Failed to subscribe to topic</string>
+    <string name="message_subscribed">Subscribed to topic</string>
+
 
 </resources>
