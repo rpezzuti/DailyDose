@@ -54,11 +54,13 @@ class UploadFragment : Fragment() {
         binding.lifecycleOwner = this
 
 
+        // FCM Channel
         createChannel(
             getString(R.string.fcm_test_notification_channel_id),
             getString(R.string.fcm_test_notification_channel_name)
         )
 
+        // Local Channel
         createChannel(
             getString(R.string.notification_channel_id),
             getString(R.string.notification_channel_name)
@@ -66,7 +68,7 @@ class UploadFragment : Fragment() {
 
 
 
-        subscribeTopic()
+        viewModel.subscribeTopic(TOPIC)
         binding.buttonUpload.setOnClickListener {
             val builder = AlertDialog.Builder(context)
                 .setTitle("UPLOAD?!")
@@ -116,15 +118,4 @@ class UploadFragment : Fragment() {
             notificationManager.createNotificationChannel(notificationChannel)
         }
     }
-    private fun subscribeTopic() {
-        FirebaseMessaging.getInstance().subscribeToTopic(TOPIC)
-            .addOnCompleteListener { task ->
-                var msg = getString(R.string.message_subscribed)
-                if (!task.isSuccessful) {
-                    msg = getString(R.string.message_subscribe_failed)
-                }
-                Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
-            }
-    }
-
 }

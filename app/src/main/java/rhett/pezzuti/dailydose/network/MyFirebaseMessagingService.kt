@@ -6,6 +6,8 @@ import androidx.core.content.ContextCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import rhett.pezzuti.dailydose.utils.sendNotification
+import rhett.pezzuti.dailydose.utils.sendNotificationWithIntent
+import timber.log.Timber
 
 class MyFirebaseMessagingService: FirebaseMessagingService() {
 
@@ -16,17 +18,38 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
 
         // This chunk is triggered when the remoteMessage is received when the app is in the foreground.
-        // When the app is in the background, the device receives the notification as normal and wanted.
+        // When the app is in the background, the device receives the notification as displayed is the Firebase Console
 
+        // Notification.Body = text
+        // Data is stored as key value pairs
+
+
+        sendNotificationWithIntent(
+            remoteMessage.data["title"]!!,
+            remoteMessage.data["artist"]!!,
+            remoteMessage.data["url"]!!
+        )
+
+
+
+
+        /**
         remoteMessage?.data?.let {
-            Log.d(TAG, "Remote message data payload: " + remoteMessage.data)
+
+        Timber.i( "Remote message data payload: ${remoteMessage.data}")
+        Timber.i( "Remote message notification: ${remoteMessage.notification}")
+        Timber.i( "Remote message notification body: ${remoteMessage.notification?.body}")
+
+        remoteMessage.data.get("URL")?.let { it1 -> sendNotification(it1) }
         }
-
-
+         */
+        /**
         remoteMessage?.notification?.let {
-            Log.d(TAG, "Message notification body: ${it.body}")
-            sendNotification(it.body!!)
+
+        Log.d(TAG, "Message notification body: ${it.body}")
+        sendNotification(it.body!!)
         }
+         */
     }
 
     override fun onNewToken(token: String) {
@@ -44,8 +67,21 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
 
 
     private fun sendNotification(messageBody: String) {
-        val notificationManager = ContextCompat.getSystemService(applicationContext, NotificationManager::class.java) as NotificationManager
+        val notificationManager = ContextCompat.getSystemService(
+            applicationContext,
+            NotificationManager::class.java
+        ) as NotificationManager
+
         notificationManager.sendNotification(messageBody, applicationContext)
+    }
+
+    private fun sendNotificationWithIntent(trackTitle: String, trackArtist: String, trackUrl: String) {
+        val notificationManager = ContextCompat.getSystemService(
+            applicationContext,
+            NotificationManager::class.java
+        ) as NotificationManager
+
+        notificationManager.sendNotificationWithIntent(trackTitle, trackArtist, trackUrl, applicationContext)
     }
 
 

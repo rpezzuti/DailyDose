@@ -36,6 +36,16 @@
             app:layout_constraintStart_toEndOf="@+id/tv_upload_link"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/radio_button_melodic_dubstep"
+            android:onClick="@{() -> uploadViewModelXML.subscribeTopic(String.format(@string/radio_button_melodic_dubstep))}"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tv_upload_EDM"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.877"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <TextView
             android:id="@+id/tv_upload_EDM"
             android:layout_width="wrap_content"
@@ -47,6 +57,7 @@
             app:layout_constraintBottom_toTopOf="@+id/radio_group_EDM"
             app:layout_constraintStart_toStartOf="@+id/radio_group_EDM" />
 
+
         <RadioGroup
             android:id="@+id/radio_group_EDM"
             android:layout_width="wrap_content"
@@ -57,42 +68,42 @@
             app:layout_constraintHorizontal_bias="0.076"
             app:layout_constraintStart_toStartOf="parent">
 
-            <RadioButton
+            <com.google.android.material.switchmaterial.SwitchMaterial
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/radio_button_melodic_dubstep" />
 
-            <RadioButton
+            <com.google.android.material.switchmaterial.SwitchMaterial
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/radio_button_lo_fi" />
 
-            <RadioButton
+            <com.google.android.material.switchmaterial.SwitchMaterial
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/radio_button_chillstep" />
 
-            <RadioButton
+            <com.google.android.material.switchmaterial.SwitchMaterial
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/radio_button_garage" />
 
-            <RadioButton
+            <com.google.android.material.switchmaterial.SwitchMaterial
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/radio_button_piano_ambient" />
 
-            <RadioButton
+            <com.google.android.material.switchmaterial.SwitchMaterial
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/radio_button_experimental_neuro_bass" />
 
-            <RadioButton
+            <com.google.android.material.switchmaterial.SwitchMaterial
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/radio_button_liquid_dnb" />
 
-            <RadioButton
+            <com.google.android.material.switchmaterial.SwitchMaterial
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/radio_button_ambient_bass" />
@@ -118,17 +129,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/radio_group_EDM">
 
-            <RadioButton
+            <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/radio_button_metalcore" />
 
-            <RadioButton
+            <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/radio_button_acoustic_ballads" />
 
-            <RadioButton
+            <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/radio_button_death_metal" />
