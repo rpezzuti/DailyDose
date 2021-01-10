@@ -41,12 +41,9 @@
     <string name="menu_info">Info</string>
 
     <!--    Notification Stuff    -->
-    <string name="track_notification_channel">Daily Dose</string>
-    <string name="track_notification_channel_title">Artist Name</string>
-    <string name="track_notification_channel_text">Track Name</string>
-    <string name="test_notification_body">Test Body</string>
-    <string name="notification_channel_id">track_channel</string>
-    <string name="notification_channel_name">channel_name</string>
+    <string name="track_notification_channel_title">Default Title</string>
+    <string name="notification_channel_id">notification_channel_id</string>
+    <string name="notification_channel_name">Notification Channel</string>
 
 
     <!--    Radio Buttons    -->
@@ -63,13 +60,12 @@
     <string name="radio_button_garage">Garage</string>
 
 
-    <!--    Firebase Test Shit    -->
-    <string name="breakfast_notification_channel_id" translatable="false">fcm_default_channel</string>
-    <string name="fcm_test_notification_channel_id">fcm_test_channel</string>
-    <string name="fcm_test_notification_channel_name">fcm_test_channel_name</string>
+    <!--    Firebase Strings    -->
+    <string name="fcm_notification_channel_id">fcm_channel_id</string>
+    <string name="fcm_notification_channel_name">FCM Channel</string>
 
-    <string name="message_subscribe_failed">Failed to subscribe to topic</string>
     <string name="message_subscribed">Subscribed to topic</string>
+    <string name="message_subscribe_failed">Failed to subscribe to topic</string>
 
 
 </resources>

@@ -17,10 +17,6 @@ class AlarmReceiver: BroadcastReceiver() {
             NotificationManager::class.java
         ) as NotificationManager
 
-        notificationManager.sendNotification(
-            context.getText(R.string.test_notification_body).toString(),
-            context
-        )
         
     }
 

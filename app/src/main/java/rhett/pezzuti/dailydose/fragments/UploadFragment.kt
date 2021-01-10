@@ -3,24 +3,19 @@ package rhett.pezzuti.dailydose.fragments
 import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.content.Context
 import android.content.DialogInterface
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.google.firebase.messaging.FirebaseMessaging
 import rhett.pezzuti.dailydose.R
 import rhett.pezzuti.dailydose.databinding.FragmentUploadBinding
-import rhett.pezzuti.dailydose.utils.sendNotification
 import rhett.pezzuti.dailydose.viewmodels.UploadViewModel
 import timber.log.Timber
 
@@ -29,7 +24,12 @@ class UploadFragment : Fragment() {
     private lateinit var binding: FragmentUploadBinding
     private lateinit var viewModel: UploadViewModel
 
-    private val TOPIC = "dubstep"
+    private val TOPIC_DUBSTEP = "dubstep"
+    private val TOPIC_MELODIC_DUBSTEP = "melodic dubstep"
+    private val TOPIC_LO_FI = "lo-fi"
+    private val TOPIC_CHILLSTEP = "chillstep"
+    private val TOPIC_GARAGE = "garage"
+    private val TOPIC_PIANO_AMBIENT = "dubstep"
 
     companion object {
         private const val TAG = "UploadFragment"
@@ -39,8 +39,6 @@ class UploadFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-        Timber.i("init token")
 
         binding = DataBindingUtil.inflate(
             inflater,
@@ -56,8 +54,8 @@ class UploadFragment : Fragment() {
 
         // FCM Channel
         createChannel(
-            getString(R.string.fcm_test_notification_channel_id),
-            getString(R.string.fcm_test_notification_channel_name)
+            getString(R.string.fcm_notification_channel_id),
+            getString(R.string.fcm_notification_channel_name)
         )
 
         // Local Channel
@@ -68,7 +66,8 @@ class UploadFragment : Fragment() {
 
 
 
-        viewModel.subscribeTopic(TOPIC)
+        // To make new topics, subscribe to them through here.
+        viewModel.subscribeTopic(TOPIC_MELODIC_DUBSTEP)
         binding.buttonUpload.setOnClickListener {
             val builder = AlertDialog.Builder(context)
                 .setTitle("UPLOAD?!")
@@ -106,13 +105,13 @@ class UploadFragment : Fragment() {
             val notificationChannel = NotificationChannel(
                 channelId,
                 channelName,
-                NotificationManager.IMPORTANCE_LOW
+                NotificationManager.IMPORTANCE_DEFAULT
             )
 
             notificationChannel.enableLights(true)
             notificationChannel.lightColor = Color.RED
             notificationChannel.enableVibration(true)
-            notificationChannel.description = "Time for breakfast"
+            notificationChannel.description = "Music's pretty cool"
 
             val notificationManager = requireActivity().getSystemService(NotificationManager::class.java)
             notificationManager.createNotificationChannel(notificationChannel)

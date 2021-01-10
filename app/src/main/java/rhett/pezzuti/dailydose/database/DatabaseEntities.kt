@@ -9,10 +9,11 @@ data class DatabaseTrack (
     val dateOrTimePosted: Long = 0L
 )
 
-//@Database (entities = [DatabaseTrack::class], version = 1, exportSchema = false)
-//class TrackDatabase : RoomDatabase() {
-//
-//
-//
-//
-//}
+
+@Entity(tableName = "track_list_table")
+data class DatabaseTrackList (
+
+    @PrimaryKey
+    val url: String
+
+    )

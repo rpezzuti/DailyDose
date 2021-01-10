@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.core.content.ContextCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import rhett.pezzuti.dailydose.database.getDatabase
 import rhett.pezzuti.dailydose.utils.sendNotification
 import rhett.pezzuti.dailydose.utils.sendNotificationWithIntent
 import timber.log.Timber
@@ -15,22 +16,25 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
         private const val TAG = "MyFirebaseMsgService"
     }
 
+    val database = getDatabase(applicationContext).trackDatabaseDao
+
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
 
-        // This chunk is triggered when the remoteMessage is received when the app is in the foreground.
+        // This chunk is triggered when the remoteMessage is received when the app is in the foreground. any fragment
         // When the app is in the background, the device receives the notification as displayed is the Firebase Console
 
         // Notification.Body = text
         // Data is stored as key value pairs
 
 
+        // Save genre
         sendNotificationWithIntent(
             remoteMessage.data["title"]!!,
             remoteMessage.data["artist"]!!,
             remoteMessage.data["url"]!!
         )
 
-
+        saveTrackInformation(remoteMessage)
 
 
         /**
@@ -65,6 +69,13 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
         // Send the token to your server
     }
 
+    private fun saveTrackInformation(remoteMessage: RemoteMessage) {
+
+
+
+
+    }
+
 
     private fun sendNotification(messageBody: String) {
         val notificationManager = ContextCompat.getSystemService(
@@ -83,6 +94,5 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
 
         notificationManager.sendNotificationWithIntent(trackTitle, trackArtist, trackUrl, applicationContext)
     }
-
 
 }
