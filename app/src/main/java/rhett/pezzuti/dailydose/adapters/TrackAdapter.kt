@@ -1,5 +1,6 @@
 package rhett.pezzuti.dailydose.adapters
 
+import android.media.MediaParser
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,11 +8,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import rhett.pezzuti.dailydose.R
-import rhett.pezzuti.dailydose.database.TrackData
+import rhett.pezzuti.dailydose.database.domain.Track
 
 class TrackAdapter : RecyclerView.Adapter<ViewHolder>(){
 
-    var data = listOf<TrackData>()
+    var data = listOf<Track>()
         set(value) {
             field = value
             notifyDataSetChanged()

@@ -1,19 +1,28 @@
 package rhett.pezzuti.dailydose.database
 
+import android.provider.MediaStore
 import androidx.room.*
+import rhett.pezzuti.dailydose.database.domain.Track
 
-@Entity(tableName = "song_info_table")
+@Entity(tableName = "track_table")
 data class DatabaseTrack (
 
-    @PrimaryKey (autoGenerate = true)
-    val dateOrTimePosted: Long = 0L
+    @PrimaryKey
+    val url: String,
+    val title: String,
+    val artist: String,
+    val genre: String,
+    val image: String
 )
 
-
-@Entity(tableName = "track_list_table")
-data class DatabaseTrackList (
-
-    @PrimaryKey
-    val url: String
-
-    )
+// Extension function to turn a DatabaseTrack object into a Track Domain object.
+fun List<DatabaseTrack>.asDomainModel(): List<Track> {
+    return map {
+        Track (
+            url = it.url,
+            title = it.title,
+            artist = it.artist,
+            genre = it.genre,
+            image = it.image)
+    }
+}

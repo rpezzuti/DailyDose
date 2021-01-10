@@ -4,15 +4,11 @@ import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
-import androidx.recyclerview.widget.RecyclerView
 import rhett.pezzuti.dailydose.viewmodels.FavoritesViewModel
 import rhett.pezzuti.dailydose.R
-import rhett.pezzuti.dailydose.database.TrackData
 import rhett.pezzuti.dailydose.databinding.FavoritesFragmentBinding
 import rhett.pezzuti.dailydose.factory.FavoritesViewModelFactory
 

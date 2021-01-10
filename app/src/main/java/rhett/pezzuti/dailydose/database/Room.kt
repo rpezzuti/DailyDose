@@ -6,22 +6,25 @@ import androidx.room.*
 @Dao
 interface TrackDatabaseDao {
 
-    @Insert
-    fun addTrack()
+//    @Insert
+//    fun addTrack()
+//
+//    @Insert
+//    fun addTrackToGenre()
+//
+//    @Update
+//    fun updateTrack()
+//
+//    @Update
+//    fun addTrackToFavorites()
+//
+//
+//    fun getAllTracks()
+//
+//    fun getAllFromGenre()
 
-    @Insert
-    fun addTrackToGenre()
-
-    @Update
-    fun updateTrack()
-
-    @Update
-    fun addTrackToFavorites()
-
-
-    fun getAllTracks()
-
-    fun getAllFromGenre()
+    @Query("DELETE FROM track_table")
+    fun clearAll()
 }
 
 @Database(entities = [DatabaseTrack::class], version = 1)
