@@ -51,6 +51,27 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
         <Button
+            android:id="@+id/btn_upload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/magin_small"
+            android:layout_marginBottom="8dp"
+            android:onClick="@{() -> homeViewModelXML.navigateToUpload()}"
+            android:text="@string/button_upload"
+            app:layout_constraintBottom_toTopOf="@+id/btn_favorites"
+            app:layout_constraintStart_toStartOf="@+id/btn_preferences" />
+
+        <Button
+            android:id="@+id/btn_clear_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/magin_small"
+            android:text="@string/button_clear_all"
+            android:onClick="@{() -> homeViewModelXML.onClear()}"
+            app:layout_constraintBottom_toTopOf="@+id/btn_browse"
+            app:layout_constraintEnd_toEndOf="@+id/btn_browse" />
+
+        <Button
             android:id="@+id/btn_preferences"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -83,16 +104,6 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/btn_favorites" />
 
-        <Button
-            android:id="@+id/btn_upload"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/button_upload"
-            android:onClick="@{() -> homeViewModelXML.navigateToUpload()}"
-            android:layout_margin="@dimen/magin_small"
-            app:layout_constraintBottom_toTopOf="@+id/btn_favorites"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

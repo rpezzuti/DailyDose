@@ -68,32 +68,34 @@ class UploadFragment : Fragment() {
 
         // To make new topics, subscribe to them through here.
         viewModel.subscribeTopic(TOPIC_DUBSTEP)
-        binding.buttonUpload.setOnClickListener {
-            val builder = AlertDialog.Builder(context)
-                .setTitle("UPLOAD?!")
-                .setMessage("Are you sure you want to upload?")
 
-            // When you click outside, it will not close.
-            builder.setCancelable(false)
+        /** Upload Button Observer **/
+        viewModel.eventUploadCheck.observe(viewLifecycleOwner, { event ->
+            if (event == true) {
+                val builder = AlertDialog.Builder(context)
+                    .setTitle("Upload?")
+                    .setMessage("Are you sure you want to upload?")
+                    .setCancelable(false)
 
-            builder.setPositiveButton(
-                "Yes, Upload",
-                DialogInterface.OnClickListener { dialog, id ->
-                    Toast.makeText(context, "Uplaoded", Toast.LENGTH_SHORT).show()
-                }
-            )
+                    .setPositiveButton(
+                        "Yes, Upload",
+                    DialogInterface.OnClickListener { dialog, id ->
+                        Toast.makeText(context, "Uploaded", Toast.LENGTH_SHORT).show()
+                    })
 
-            builder.setNegativeButton(
-                "No, wait",
-                DialogInterface.OnClickListener { dialog, id ->
-                    Toast.makeText(context, "Didn't upload", Toast.LENGTH_SHORT).show()
-                }
-            )
+                    .setNegativeButton(
+                        "No, wait",
+                        DialogInterface.OnClickListener { dialog, id ->
+                            Toast.makeText(context, "Didn't upload", Toast.LENGTH_SHORT).show()
+                        }
+                    )
+                    .create()
+                    .show()
 
-            builder.create()
+                viewModel.doneUploadCheck()
+            }
+        })
 
-            builder.show()
-        }
         return binding.root
     }
 

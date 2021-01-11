@@ -2,15 +2,16 @@ package rhett.pezzuti.dailydose.fragments
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import rhett.pezzuti.dailydose.viewmodels.HomeViewModel
 import rhett.pezzuti.dailydose.R
 import rhett.pezzuti.dailydose.adapters.TrackAdapter
@@ -85,50 +86,32 @@ class HomeFragment : Fragment() {
             }
         })
 
+        viewModel.showSnackBarEvent.observe(viewLifecycleOwner, { event ->
+            if (event == true){
+                Snackbar.make(
+                    requireActivity().findViewById(android.R.id.content),
+                    getString(R.string.cleared_message),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+                viewModel.doneShowingSnackBar()
+            }
+        })
 
 
+        setHasOptionsMenu(true)
         return binding.root
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.main_overflow_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // This return statement works when the id of the menu item matches the id of the fragment in the nav graph.
+        return NavigationUI.onNavDestinationSelected(item!!, requireView().findNavController())
+                || super.onOptionsItemSelected(item)
+    }
 }
 
 
-
-
-
-class SongAdapter : RecyclerView.Adapter<SongAdapter.ViewHolder>(){
-
-    var data = listOf(1,2,3)
-        set(value){
-            field = value
-            notifyDataSetChanged()
-        }
-
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
-        val layoutInflater = LayoutInflater.from(parent.context)
-
-        val view = layoutInflater.inflate(
-            R.layout.track_list_item, parent, false
-        )
-
-        return ViewHolder(view)
-
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = data[position]
-
-        holder.songArtist.text = item.toString()
-    }
-
-    override fun getItemCount() = data.size
-
-
-    class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        val songTitle: TextView = itemView.findViewById(R.id.song_item_track_title)
-        val songArtist: TextView = itemView.findViewById(R.id.song_item_track_artist)
-        val songFavorite: FloatingActionButton = itemView.findViewById(R.id.song_item_favorite_fab)
-    }
-
-}

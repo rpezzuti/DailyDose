@@ -35,7 +35,7 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
         /** Show Notification **/
         sendNotificationWithIntent(databaseTrack)
 
-        /** Send back to Firebase Datastore **/
+        /** Send back to Firebase Database **/
         saveTrackInformation(remoteMessage)
 
 
@@ -84,9 +84,9 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
         // Create some kind of working Null Check.
         remoteMessage.data.let {
             val track = DatabaseTrack(
+                remoteMessage.data["url"]!!,
                 remoteMessage.data["title"]!!,
                 remoteMessage.data["artist"]!!,
-                remoteMessage.data["url"]!!,
                 remoteMessage.data["genre"]!!,
                 remoteMessage.data["image"]!!,
             )

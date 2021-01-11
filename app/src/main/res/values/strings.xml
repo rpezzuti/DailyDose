@@ -38,6 +38,7 @@
     <string name="button_favorites">Favorites</string>
     <string name="button_browse">Browse</string>
     <string name="button_upload">Upload</string>
+    <string name="button_clear_all">Clear All</string>
 
 
     <!--    Menu    -->
@@ -69,8 +70,13 @@
     <string name="fcm_notification_channel_id">fcm_channel_id</string>
     <string name="fcm_notification_channel_name">FCM Channel</string>
 
+    <!-- Alerts -->
+    <string name="cleared_message">All tracks deleted!</string>
     <string name="message_subscribed">Subscribed to topic</string>
     <string name="message_subscribe_failed">Failed to subscribe to topic</string>
+
+    <!-- Content Descriptions -->
+    <string name="content_description_favorites_fab">Favorites Fab</string>
 
 
 </resources>

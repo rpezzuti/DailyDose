@@ -24,16 +24,12 @@ class TrackAdapter : ListAdapter<DatabaseTrack, ViewHolder>(TrackDiffCallback())
 
 }
 
-class ViewHolder private constructor (val binding: TrackListItemBinding) : RecyclerView.ViewHolder(binding.root) {
-    val trackTitle: TextView = itemView.findViewById(R.id.song_item_track_title)
-    val trackArtist: TextView = itemView.findViewById(R.id.song_item_track_artist)
-    val trackAlbumImage: ImageView = itemView.findViewById(R.id.song_item_album_image)
+class ViewHolder private constructor(val binding: TrackListItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: DatabaseTrack) {
 
-        trackTitle.text = item.title
-        trackArtist.text = item.artist
-        trackAlbumImage.setImageResource(R.drawable.ic_eigth_note)
+        binding.track = item
+        binding.executePendingBindings()
     }
 
     companion object {

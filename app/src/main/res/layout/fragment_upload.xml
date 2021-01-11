@@ -152,6 +152,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/magin_small"
             android:text="@string/button_upload"
+            android:onClick="@{() -> uploadViewModelXML.uploadCheck()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

@@ -18,14 +18,22 @@ import rhett.pezzuti.dailydose.utils.sendNotification
 
 class UploadViewModel(private val app: Application) : AndroidViewModel(app) {
 
-    private val dummy = app.resources.getString(R.string.notification_channel_id)
+    private val _eventUploadCheck = MutableLiveData<Boolean>()
+    val eventUploadCheck : LiveData<Boolean>
+        get() = _eventUploadCheck
+
 
     init {
-
+        _eventUploadCheck.value = false
     }
 
+    fun uploadCheck() {
+        _eventUploadCheck.value = true
+    }
 
-
+    fun doneUploadCheck() {
+        _eventUploadCheck.value = false
+    }
 
 
 
