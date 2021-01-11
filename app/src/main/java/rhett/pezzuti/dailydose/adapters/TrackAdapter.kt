@@ -1,40 +1,62 @@
 package rhett.pezzuti.dailydose.adapters
 
-import android.media.MediaParser
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import rhett.pezzuti.dailydose.R
-import rhett.pezzuti.dailydose.database.domain.Track
+import rhett.pezzuti.dailydose.database.domain.DatabaseTrack
+import rhett.pezzuti.dailydose.databinding.TrackListItemBinding
 
-class TrackAdapter : RecyclerView.Adapter<ViewHolder>(){
-
-    var data = listOf<Track>()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
-
-    override fun getItemCount() = data.size
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val layoutInflater: LayoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate(R.layout.song_list_item, parent, false)
-
-        return ViewHolder(view)
-    }
+class TrackAdapter : ListAdapter<DatabaseTrack, ViewHolder>(TrackDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        val item = getItem(position)
+        holder.bind(item)
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder.from(parent)
     }
 
 }
 
-class ViewHolder(private val itemView: View) : RecyclerView.ViewHolder(itemView) {
-    val songName: TextView = itemView.findViewById(R.id.song_item_track_title)
-    val songArtist: TextView = itemView.findViewById(R.id.song_item_track_artist)
-    val songAlbumImage: ImageView = itemView.findViewById(R.id.song_item_album_image)
+class ViewHolder private constructor (val binding: TrackListItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    val trackTitle: TextView = itemView.findViewById(R.id.song_item_track_title)
+    val trackArtist: TextView = itemView.findViewById(R.id.song_item_track_artist)
+    val trackAlbumImage: ImageView = itemView.findViewById(R.id.song_item_album_image)
+
+    fun bind(item: DatabaseTrack) {
+
+        trackTitle.text = item.title
+        trackArtist.text = item.artist
+        trackAlbumImage.setImageResource(R.drawable.ic_eigth_note)
+    }
+
+    companion object {
+        fun from(parent: ViewGroup): ViewHolder {
+            /** we're inflating a new view and returning it inside of a holder **/
+            val layoutInflater = LayoutInflater.from(parent.context)
+            val binding = TrackListItemBinding.inflate(layoutInflater, parent, false)
+            return ViewHolder(binding)
+        }
+    }
+}
+
+class TrackDiffCallback : DiffUtil.ItemCallback<DatabaseTrack>() {
+
+    override fun areItemsTheSame(oldItem: DatabaseTrack, newItem: DatabaseTrack): Boolean {
+        return oldItem.url == newItem.url
+    }
+
+    override fun areContentsTheSame(oldItem: DatabaseTrack, newItem: DatabaseTrack): Boolean {
+        return oldItem == newItem
+    }
+}
+
+class DatabaseTrackListener(val clickListener: (trackUrl: String) -> Unit) {
+    fun onClick(track: DatabaseTrack) = clickListener(track.url)
 }

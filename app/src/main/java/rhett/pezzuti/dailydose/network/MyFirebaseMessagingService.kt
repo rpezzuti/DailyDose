@@ -5,11 +5,10 @@ import android.util.Log
 import androidx.core.content.ContextCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import rhett.pezzuti.dailydose.database.domain.Track
-import rhett.pezzuti.dailydose.database.getDatabase
+import rhett.pezzuti.dailydose.database.domain.DatabaseTrack
+import rhett.pezzuti.dailydose.database.getInstance
 import rhett.pezzuti.dailydose.utils.sendNotification
 import rhett.pezzuti.dailydose.utils.sendNotificationWithIntent
-import timber.log.Timber
 
 class MyFirebaseMessagingService: FirebaseMessagingService() {
 
@@ -19,22 +18,24 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
 
+        // Can't use context before the class is being used
+
+
         // This chunk is triggered when the remoteMessage is received when the app is in the foreground. any fragment
         // When the app is in the background, the device receives the notification as displayed is the Firebase Console
 
         // Notification.Body = text
         // Data is stored as key value pairs
 
-        val newTrack = createTrackFromMessage(remoteMessage)
-        sendNotificationWithIntent(newTrack)
+        /** Save to Database **/
+        val database = getInstance(applicationContext).trackDatabaseDao
+        val databaseTrack = createDatabaseTrackFromMessage(remoteMessage)
+        database.insert(databaseTrack)
 
-/*        // Save genre
-        sendNotificationWithIntent(
-            remoteMessage.data["title"]!!,
-            remoteMessage.data["artist"]!!,
-            remoteMessage.data["url"]!!
-        )*/
+        /** Show Notification **/
+        sendNotificationWithIntent(databaseTrack)
 
+        /** Send back to Firebase Datastore **/
         saveTrackInformation(remoteMessage)
 
 
@@ -70,6 +71,7 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
         // Send the token to your server
     }
 
+
     private fun saveTrackInformation(remoteMessage: RemoteMessage) {
 
 
@@ -77,11 +79,11 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
 
     }
 
-    private fun createTrackFromMessage(remoteMessage: RemoteMessage): Track {
+    private fun createDatabaseTrackFromMessage(remoteMessage: RemoteMessage): DatabaseTrack {
 
         // Create some kind of working Null Check.
         remoteMessage.data.let {
-            val track = Track(
+            val track = DatabaseTrack(
                 remoteMessage.data["title"]!!,
                 remoteMessage.data["artist"]!!,
                 remoteMessage.data["url"]!!,
@@ -103,13 +105,13 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
         notificationManager.sendNotification(messageBody, applicationContext)
     }
 
-    private fun sendNotificationWithIntent(track: Track) {
+    private fun sendNotificationWithIntent(databaseTrack: DatabaseTrack) {
         val notificationManager = ContextCompat.getSystemService(
             applicationContext,
             NotificationManager::class.java
         ) as NotificationManager
 
-        notificationManager.sendNotificationWithIntent(track.title, track.artist, track.url, applicationContext)
+        notificationManager.sendNotificationWithIntent(databaseTrack.title, databaseTrack.artist, databaseTrack.url, applicationContext)
     }
 
 }

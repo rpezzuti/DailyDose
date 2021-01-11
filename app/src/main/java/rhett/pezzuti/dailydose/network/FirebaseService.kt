@@ -9,6 +9,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
+import rhett.pezzuti.dailydose.database.domain.DatabaseTrack
 
 private const val BASE_URL = "enter_firebase_url_here"
 
@@ -26,7 +27,7 @@ interface FirebaseService {
 
     @GET("trackdata")
     fun getTracks(@Query("filter") type: String):
-            Deferred<List<MediaParser.TrackData>>
+            Deferred<List<DatabaseTrack>>
 }
 
 object FirebaseApi {

@@ -2,16 +2,24 @@ package rhett.pezzuti.dailydose.database
 
 import android.provider.MediaStore
 import androidx.room.*
-import rhett.pezzuti.dailydose.database.domain.Track
 
+/*
 @Entity(tableName = "track_table")
 data class DatabaseTrack (
 
     @PrimaryKey
     val url: String,
+
+    @ColumnInfo(name = "track_title")
     val title: String,
+
+    @ColumnInfo(name = "track_artist")
     val artist: String,
+
+    @ColumnInfo(name = "track_genre")
     val genre: String,
+
+    @ColumnInfo(name = "track_image")
     val image: String
 )
 
@@ -26,3 +34,4 @@ fun List<DatabaseTrack>.asDomainModel(): List<Track> {
             image = it.image)
     }
 }
+*/

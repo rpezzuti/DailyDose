@@ -67,7 +67,7 @@ class UploadFragment : Fragment() {
 
 
         // To make new topics, subscribe to them through here.
-        viewModel.subscribeTopic(TOPIC_MELODIC_DUBSTEP)
+        viewModel.subscribeTopic(TOPIC_DUBSTEP)
         binding.buttonUpload.setOnClickListener {
             val builder = AlertDialog.Builder(context)
                 .setTitle("UPLOAD?!")
