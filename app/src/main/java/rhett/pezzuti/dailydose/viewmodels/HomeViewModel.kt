@@ -1,11 +1,15 @@
 package rhett.pezzuti.dailydose.viewmodels
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import rhett.pezzuti.dailydose.database.TrackDatabaseDao
 import timber.log.Timber
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(
+    val database: TrackDatabaseDao,
+    app: Application) : AndroidViewModel(app) {
 
     /** Encapsulated LiveData **/
     private val _eventFavorites = MutableLiveData<Boolean>()
@@ -16,11 +20,13 @@ class HomeViewModel : ViewModel() {
     val eventUpload : LiveData<Boolean>
         get() = _eventUpload
 
+
+    val tracks = database.getRecentTracks()
+
     init {
         Timber.i("homeViewModel Init block")
         _eventFavorites.value = false
         _eventUpload.value = false
-
     }
 
     fun navigateToFavorites(){

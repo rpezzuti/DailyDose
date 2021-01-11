@@ -3,7 +3,6 @@ package rhett.pezzuti.dailydose.fragments
 import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.content.Context
 import android.content.DialogInterface
 import android.graphics.Color
 import android.os.Build
@@ -13,18 +12,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import rhett.pezzuti.dailydose.R
 import rhett.pezzuti.dailydose.databinding.FragmentUploadBinding
-import rhett.pezzuti.dailydose.utils.sendNotification
 import rhett.pezzuti.dailydose.viewmodels.UploadViewModel
+import timber.log.Timber
 
 class UploadFragment : Fragment() {
 
     private lateinit var binding: FragmentUploadBinding
     private lateinit var viewModel: UploadViewModel
+
+    private val TOPIC_DUBSTEP = "dubstep"
+    private val TOPIC_MELODIC_DUBSTEP = "melodic dubstep"
+    private val TOPIC_LO_FI = "lo-fi"
+    private val TOPIC_CHILLSTEP = "chillstep"
+    private val TOPIC_GARAGE = "garage"
+    private val TOPIC_PIANO_AMBIENT = "dubstep"
+
+    companion object {
+        private const val TAG = "UploadFragment"
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,21 +48,52 @@ class UploadFragment : Fragment() {
         )
 
         viewModel = ViewModelProvider(this).get(UploadViewModel::class.java)
-
-
         binding.uploadViewModelXML = viewModel
         binding.lifecycleOwner = this
 
-        binding.buttonUpload.setOnClickListener {
 
-            createChannel(
-                getString(R.string.notification_channel_id),
-                getString(R.string.notification_channel_name)
+        // FCM Channel
+        createChannel(
+            getString(R.string.fcm_notification_channel_id),
+            getString(R.string.fcm_notification_channel_name)
+        )
+
+        // Local Channel
+        createChannel(
+            getString(R.string.notification_channel_id),
+            getString(R.string.notification_channel_name)
+        )
+
+
+
+        // To make new topics, subscribe to them through here.
+        viewModel.subscribeTopic(TOPIC_DUBSTEP)
+        binding.buttonUpload.setOnClickListener {
+            val builder = AlertDialog.Builder(context)
+                .setTitle("UPLOAD?!")
+                .setMessage("Are you sure you want to upload?")
+
+            // When you click outside, it will not close.
+            builder.setCancelable(false)
+
+            builder.setPositiveButton(
+                "Yes, Upload",
+                DialogInterface.OnClickListener { dialog, id ->
+                    Toast.makeText(context, "Uplaoded", Toast.LENGTH_SHORT).show()
+                }
             )
 
+            builder.setNegativeButton(
+                "No, wait",
+                DialogInterface.OnClickListener { dialog, id ->
+                    Toast.makeText(context, "Didn't upload", Toast.LENGTH_SHORT).show()
+                }
+            )
+
+            builder.create()
+
+            builder.show()
         }
-
-
         return binding.root
     }
 
@@ -65,17 +105,16 @@ class UploadFragment : Fragment() {
             val notificationChannel = NotificationChannel(
                 channelId,
                 channelName,
-                NotificationManager.IMPORTANCE_LOW
+                NotificationManager.IMPORTANCE_DEFAULT
             )
 
             notificationChannel.enableLights(true)
             notificationChannel.lightColor = Color.RED
             notificationChannel.enableVibration(true)
-            notificationChannel.description = "Time for breakfast"
+            notificationChannel.description = "Music's pretty cool"
 
             val notificationManager = requireActivity().getSystemService(NotificationManager::class.java)
             notificationManager.createNotificationChannel(notificationChannel)
         }
     }
-
 }

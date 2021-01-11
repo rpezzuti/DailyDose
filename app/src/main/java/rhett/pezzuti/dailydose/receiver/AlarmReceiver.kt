@@ -8,6 +8,8 @@ import androidx.core.content.ContextCompat
 import rhett.pezzuti.dailydose.R
 import rhett.pezzuti.dailydose.utils.sendNotification
 
+
+/** Use case is for scheduling something in the future. Not really necessary for what we're doing here. */
 class AlarmReceiver: BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
@@ -17,10 +19,6 @@ class AlarmReceiver: BroadcastReceiver() {
             NotificationManager::class.java
         ) as NotificationManager
 
-        notificationManager.sendNotification(
-            context.getText(R.string.test_notification_body).toString(),
-            context
-        )
         
     }
 
