@@ -100,6 +100,14 @@ class HomeFragment : Fragment() {
             }
         })
 
+        viewModel.eventPreferences.observe(viewLifecycleOwner, { event ->
+            if (event == true){
+                this.findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToPreferencesFragment())
+                viewModel.doneNavigatingPreferences()
+            }
+
+        })
+
         viewModel.showSnackBarEvent.observe(viewLifecycleOwner, { event ->
             if (event == true){
                 Snackbar.make(

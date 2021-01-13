@@ -27,6 +27,7 @@
     <string name="text_view_link">Link:</string>
     <string name="text_view_acoustic">Acoustic:</string>
     <string name="text_recent_uploads">Recent Uploads:</string>
+    <string name="text_view_preferences_welcome">What do you like?</string>
 
 
     <!--    Hints    -->
@@ -52,18 +53,19 @@
     <string name="notification_channel_name">Notification Channel</string>
 
 
-    <!--    Radio Buttons    -->
-    <string name="radio_button_melodic_dubstep">Melodic Dubstep</string>
-    <string name="radio_button_metalcore">Metalcore</string>
-    <string name="radio_button_acoustic_ballads">Acoustic / Ballads</string>
-    <string name="radio_button_lo_fi">Lo-Fi</string>
-    <string name="radio_button_chillstep">Chillstep</string>
-    <string name="radio_button_piano_ambient">Piano / Ambient</string>
-    <string name="radio_button_experimental_neuro_bass">Experimental / Neuro Bass</string>
-    <string name="radio_button_liquid_dnb">Liquid DnB</string>
-    <string name="radio_button_death_metal">Death Metal</string>
-    <string name="radio_button_ambient_bass">Ambient Bass (try me!)</string>
-    <string name="radio_button_garage">Garage</string>
+    <!--    Checkboxes    -->
+    <string name="checkbox_dubstep">Dubstep</string>
+    <string name="checkbox_melodic_dubstep">Melodic Dubstep</string>
+    <string name="checkbox_lo_fi">Lo-Fi</string>
+    <string name="checkbox_chillstep">Chillstep</string>
+    <string name="checkbox_future_garage">Future Garage</string>
+    <string name="checkbox_piano_ambient">Piano / Ambient</string>
+    <string name="checkbox_experimental_bass">Experimental / Neuro Bass</string>
+    <string name="checkbox_liquid_dnb">Liquid DnB</string>
+    <string name="checkbox_ambient_bass">Ambient Bass (try me!)</string>
+    <string name="checkbox_metalcore">Metalcore</string>
+    <string name="checkbox_acoustic_ballads">Acoustic / Ballads</string>
+    <string name="checkbox_death_metal">Death Metal</string>
 
 
     <!--    Firebase Strings    -->

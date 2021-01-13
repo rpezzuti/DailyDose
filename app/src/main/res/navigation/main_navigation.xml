@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_homeFragment_to_uploadFragment"
             app:destination="@id/uploadFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_preferencesFragment"
+            app:destination="@id/preferencesFragment" />
     </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
@@ -38,4 +41,9 @@
         android:name="rhett.pezzuti.dailydose.fragments.UploadFragment"
         android:label="UploadFragment"
         tools:layout="@layout/fragment_upload"/>
+    <fragment
+        android:id="@+id/preferencesFragment"
+        android:name="rhett.pezzuti.dailydose.fragments.PreferencesFragment"
+        android:label="fragment_preferences"
+        tools:layout="@layout/fragment_preferences" />
 </navigation>

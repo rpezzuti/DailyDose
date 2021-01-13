@@ -1,39 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
-            name="uploadViewModelXML"
-            type="rhett.pezzuti.dailydose.viewmodels.UploadViewModel" />
+            name="preferencesViewModelXML"
+            type="rhett.pezzuti.dailydose.viewmodels.PreferencesViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragments.UploadFragment">
+        tools:context=".fragments.PreferencesFragment">
 
         <TextView
-            android:id="@+id/tv_upload_link"
+            android:id="@+id/text_view_preferences_welcome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/magin_small"
-            android:text="@string/text_view_link"
+            android:text="@string/text_view_preferences_welcome"
             android:textColor="@color/black"
-            android:textSize="24sp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/et_upload_link"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <EditText
-            android:id="@+id/et_upload_link"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/magin_small"
-            android:hint="@string/hint_enter_link"
+            android:textSize="44sp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_upload_EDM"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tv_upload_link"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -51,7 +42,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/checkbox_melodic_dubstep"
-            android:onClick="@{() -> uploadViewModelXML.subscribeTopic(String.format(@string/checkbox_melodic_dubstep))}"
             app:layout_constraintBaseline_toBaselineOf="@+id/tv_upload_EDM"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.877"
@@ -67,44 +57,67 @@
             app:layout_constraintHorizontal_bias="0.076"
             app:layout_constraintStart_toStartOf="parent">
 
-            <com.google.android.material.switchmaterial.SwitchMaterial
+            <CheckBox
+                android:id="@+id/checkbox_dubstep"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> preferencesViewModelXML.checkDubstep()}"
+                android:text="@string/checkbox_dubstep" />
+
+            <CheckBox
+                android:id="@+id/checkbox_melodic_dubstep"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> preferencesViewModelXML.checkMelodicDubstep()}"
                 android:text="@string/checkbox_melodic_dubstep" />
 
-            <com.google.android.material.switchmaterial.SwitchMaterial
+            <CheckBox
+                android:id="@+id/checkbox_lo_fi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> preferencesViewModelXML.checkLoFi()}"
                 android:text="@string/checkbox_lo_fi" />
 
-            <com.google.android.material.switchmaterial.SwitchMaterial
+            <CheckBox
+                android:id="@+id/checkbox_chillstep"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> preferencesViewModelXML.checkChillstep()}"
                 android:text="@string/checkbox_chillstep" />
 
-            <com.google.android.material.switchmaterial.SwitchMaterial
+            <CheckBox
+                android:id="@+id/checkbox_future_garage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> preferencesViewModelXML.checkFutureGarage()}"
                 android:text="@string/checkbox_future_garage" />
 
-            <com.google.android.material.switchmaterial.SwitchMaterial
+            <CheckBox
+                android:id="@+id/checkbox_piano_ambient"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> preferencesViewModelXML.checkPianoAmbient()}"
                 android:text="@string/checkbox_piano_ambient" />
 
-            <com.google.android.material.switchmaterial.SwitchMaterial
+            <CheckBox
+                android:id="@+id/checkbox_experimental_bass"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> preferencesViewModelXML.checkExperimentalBass()}"
                 android:text="@string/checkbox_experimental_bass" />
 
-            <com.google.android.material.switchmaterial.SwitchMaterial
+            <CheckBox
+                android:id="@+id/checkbox_liquid_dnb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> preferencesViewModelXML.checkLiquidDnB()}"
                 android:text="@string/checkbox_liquid_dnb" />
 
-            <com.google.android.material.switchmaterial.SwitchMaterial
+            <CheckBox
+                android:id="@+id/checkbox_ambient_bass"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> preferencesViewModelXML.checkAmbientBass()}"
                 android:text="@string/checkbox_ambient_bass" />
         </RadioGroup>
 
@@ -129,18 +142,24 @@
             app:layout_constraintStart_toEndOf="@+id/checkbox_group_EDM">
 
             <CheckBox
+                android:id="@+id/checkbox_metalcore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> preferencesViewModelXML.checkMetalcore()}"
                 android:text="@string/checkbox_metalcore" />
 
             <CheckBox
+                android:id="@+id/checkbox_acoustic_ballads"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> preferencesViewModelXML.checkAcousticBallads()}"
                 android:text="@string/checkbox_acoustic_ballads" />
 
             <CheckBox
+                android:id="@+id/checkbox_death_metal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{() -> preferencesViewModelXML.checkDeathMetal()}"
                 android:text="@string/checkbox_death_metal" />
 
         </RadioGroup>
@@ -151,7 +170,6 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/magin_small"
             android:text="@string/button_upload"
-            android:onClick="@{() -> uploadViewModelXML.uploadCheck()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
