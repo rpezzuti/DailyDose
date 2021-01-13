@@ -25,11 +25,12 @@ class UploadFragment : Fragment() {
     private lateinit var viewModel: UploadViewModel
 
     private val TOPIC_DUBSTEP = "dubstep"
-    private val TOPIC_MELODIC_DUBSTEP = "melodic dubstep"
+    private val TOPIC_MELODIC_DUBSTEP = "melodic-dubstep"
     private val TOPIC_LO_FI = "lo-fi"
     private val TOPIC_CHILLSTEP = "chillstep"
     private val TOPIC_GARAGE = "garage"
-    private val TOPIC_PIANO_AMBIENT = "dubstep"
+    private val TOPIC_PIANO_AMBIENT = "piano-ambient"
+    private val TOPIC_TEST = "Test"
 
     companion object {
         private const val TAG = "UploadFragment"
@@ -67,7 +68,7 @@ class UploadFragment : Fragment() {
 
 
         // To make new topics, subscribe to them through here.
-        viewModel.subscribeTopic(TOPIC_DUBSTEP)
+        viewModel.subscribeTopic(TOPIC_TEST)
 
         /** Upload Button Observer **/
         viewModel.eventUploadCheck.observe(viewLifecycleOwner, { event ->

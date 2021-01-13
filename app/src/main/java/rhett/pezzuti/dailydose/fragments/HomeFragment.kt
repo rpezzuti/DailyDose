@@ -1,5 +1,8 @@
 package rhett.pezzuti.dailydose.fragments
 
+import android.app.PendingIntent
+import android.content.Intent
+import android.net.Uri
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.view.*
@@ -14,6 +17,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import rhett.pezzuti.dailydose.viewmodels.HomeViewModel
 import rhett.pezzuti.dailydose.R
+import rhett.pezzuti.dailydose.adapters.DatabaseTrackListener
 import rhett.pezzuti.dailydose.adapters.TrackAdapter
 import rhett.pezzuti.dailydose.database.getInstance
 import rhett.pezzuti.dailydose.databinding.HomeFragmentBinding
@@ -61,7 +65,17 @@ class HomeFragment : Fragment() {
 
 
         /** Recycler View Pipes **/
-        val adapter = TrackAdapter()
+        val adapter = TrackAdapter( DatabaseTrackListener { url ->
+            val contentIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            val contentPendingIntent = PendingIntent.getActivity(
+                app.applicationContext,
+                0,
+                contentIntent,
+                PendingIntent.FLAG_ONE_SHOT
+            ).send()
+        }
+
+        )
         binding.homeRecyclerView.adapter = adapter
         viewModel.tracks.observe(viewLifecycleOwner, { tracks ->
             tracks?.let {

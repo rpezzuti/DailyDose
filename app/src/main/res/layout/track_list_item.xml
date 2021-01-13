@@ -20,7 +20,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> clickListener.onClick(track)}">
 
             <ImageView
                 android:id="@+id/song_item_album_image"
@@ -69,14 +70,15 @@
                 android:id="@+id/favorite_track_fab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="24dp"
-                android:backgroundTint="@color/white"
+                android:layout_marginEnd="16dp"
+                android:background="@color/white"
+                android:contentDescription="@string/content_description_favorites_fab"
                 android:src="@drawable/ic_heart"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:contentDescription="@string/content_description_favorites_fab" />
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.cardview.widget.CardView>
 </layout>
