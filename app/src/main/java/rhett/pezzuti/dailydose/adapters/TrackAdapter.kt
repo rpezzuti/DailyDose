@@ -11,11 +11,11 @@ import rhett.pezzuti.dailydose.R
 import rhett.pezzuti.dailydose.database.domain.DatabaseTrack
 import rhett.pezzuti.dailydose.databinding.TrackListItemBinding
 
-class TrackAdapter : ListAdapter<DatabaseTrack, ViewHolder>(TrackDiffCallback()) {
+class TrackAdapter(val clickListener: DatabaseTrackListener) : ListAdapter<DatabaseTrack, ViewHolder>(TrackDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item)
+        holder.bind(item, clickListener)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -26,9 +26,10 @@ class TrackAdapter : ListAdapter<DatabaseTrack, ViewHolder>(TrackDiffCallback())
 
 class ViewHolder private constructor(val binding: TrackListItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(item: DatabaseTrack) {
+    fun bind(item: DatabaseTrack, clickListener: DatabaseTrackListener) {
 
         binding.track = item
+        binding.clickListener = clickListener
         binding.executePendingBindings()
     }
 

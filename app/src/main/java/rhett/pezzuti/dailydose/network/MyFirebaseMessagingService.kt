@@ -3,12 +3,16 @@ package rhett.pezzuti.dailydose.network
 import android.app.NotificationManager
 import android.util.Log
 import androidx.core.content.ContextCompat
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import rhett.pezzuti.dailydose.database.domain.DatabaseTrack
 import rhett.pezzuti.dailydose.database.getInstance
 import rhett.pezzuti.dailydose.utils.sendNotification
 import rhett.pezzuti.dailydose.utils.sendNotificationWithIntent
+import timber.log.Timber
 
 class MyFirebaseMessagingService: FirebaseMessagingService() {
 
@@ -18,8 +22,11 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
 
-        // Can't use context before the class is being used
+        // Can't use context outside of a function in this class
 
+        /**
+         *                              TODO
+         * STILL NEED TO HANDLE ALL THIS WHEN THE APP IS NOT IN THE FOREGROUND **/
 
         // This chunk is triggered when the remoteMessage is received when the app is in the foreground. any fragment
         // When the app is in the background, the device receives the notification as displayed is the Firebase Console
@@ -27,16 +34,24 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
         // Notification.Body = text
         // Data is stored as key value pairs
 
-        /** Save to Database **/
-        val database = getInstance(applicationContext).trackDatabaseDao
+
+        // If said child does not exist, it is created.
+
+        // Genre -> Track Title.
+        // When users fetch a genre, they get all the tracks.
+
+
         val databaseTrack = createDatabaseTrackFromMessage(remoteMessage)
-        database.insert(databaseTrack)
+
+
+        /** Save to Database **/
+        saveTrackToDatabase(databaseTrack)
+
+        /** Send back to Firebase Database **/
+        saveTrackToFirebase(databaseTrack)
 
         /** Show Notification **/
         sendNotificationWithIntent(databaseTrack)
-
-        /** Send back to Firebase Database **/
-        saveTrackInformation(remoteMessage)
 
 
         /**
@@ -59,7 +74,7 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
     }
 
     override fun onNewToken(token: String) {
-        Log.i(TAG,"Here is your token: $token")
+        Timber.i("Here is your token: $token")
 
         sendRegistrationToServer(token)
     }
@@ -68,33 +83,36 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
      * Persist token to third-party (your app) servers.
      */
     private fun sendRegistrationToServer(token: String?) {
-        // Send the token to your server
-    }
+        val firebaseDatabase = Firebase.database.reference
 
-
-    private fun saveTrackInformation(remoteMessage: RemoteMessage) {
-
-
-
-
+        firebaseDatabase.child("My Tokens").setValue(token)
     }
 
     private fun createDatabaseTrackFromMessage(remoteMessage: RemoteMessage): DatabaseTrack {
 
         // Create some kind of working Null Check.
         remoteMessage.data.let {
-            val track = DatabaseTrack(
+            return DatabaseTrack(
                 remoteMessage.data["url"]!!,
                 remoteMessage.data["title"]!!,
                 remoteMessage.data["artist"]!!,
                 remoteMessage.data["genre"]!!,
                 remoteMessage.data["image"]!!,
             )
-
-            return track
         }
     }
 
+    private fun saveTrackToDatabase(databaseTrack: DatabaseTrack) {
+        val database = getInstance(applicationContext).trackDatabaseDao
+        database.insert(databaseTrack)
+    }
+
+    private fun saveTrackToFirebase(databaseTrack: DatabaseTrack) {
+
+        val firebaseDatabase = Firebase.database.reference
+        firebaseDatabase.child(databaseTrack.genre).child(databaseTrack.title).setValue(databaseTrack)
+
+    }
 
     private fun sendNotification(messageBody: String) {
         val notificationManager = ContextCompat.getSystemService(

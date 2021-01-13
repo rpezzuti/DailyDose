@@ -148,11 +148,26 @@ dependencies {
     // Fixes an error. Also enabled multidex in defaultConfig above ^^^^^
     implementation 'com.android.support:multidex:1.0.3'
 
-    //FCM
+    // FCM
     implementation 'com.google.firebase:firebase-core:18.0.0'
     implementation 'com.google.firebase:firebase-iid:21.0.1'
     implementation 'com.google.firebase:firebase-messaging:21.0.1'
     implementation 'android.arch.work:work-runtime:1.0.1'
+
+    /*
+    // Firebase Database
+    // Import the BoM for the Firebase platform
+    implementation platform('com.google.firebase:firebase-bom:26.2.0')
+
+    // Declare the dependency for the Realtime Database library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation 'com.google.firebase:firebase-database-ktx'
+    */
+
+    implementation 'com.google.firebase:firebase-database-ktx:19.6.0'
+
+
+
 }
 
 apply plugin: 'com.google.gms.google-services'
