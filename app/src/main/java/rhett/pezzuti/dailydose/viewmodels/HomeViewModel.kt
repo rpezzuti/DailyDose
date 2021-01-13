@@ -24,6 +24,10 @@ class HomeViewModel(
     val eventUpload : LiveData<Boolean>
         get() = _eventUpload
 
+    private val _eventPreferences = MutableLiveData<Boolean>()
+    val eventPreferences : LiveData<Boolean>
+        get() = _eventPreferences
+
     private val _showSnackBarEvent = MutableLiveData<Boolean>()
     val showSnackBarEvent : LiveData<Boolean>
         get() = _showSnackBarEvent
@@ -35,6 +39,7 @@ class HomeViewModel(
         Timber.i("homeViewModel Init block")
         _eventFavorites.value = false
         _eventUpload.value = false
+        _eventPreferences.value = false
         _showSnackBarEvent.value = false
     }
 
@@ -55,6 +60,15 @@ class HomeViewModel(
     fun doneNavigatingUpload(){
         _eventUpload.value = false
     }
+
+    fun navigateToPreferences(){
+        _eventPreferences.value = true
+    }
+
+    fun doneNavigatingPreferences(){
+        _eventPreferences.value = false
+    }
+
 
     /** Snackbar Event **/
     fun doneShowingSnackBar(){
