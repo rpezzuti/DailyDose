@@ -79,6 +79,8 @@
 
     <!-- Content Descriptions -->
     <string name="content_description_favorites_fab">Favorites Fab</string>
+    <string name="checkbox_live_performances">Live Performances</string>
+    <string name="checkbox_instrumental_rock">Instrumental Rock</string>
 
 
 </resources>

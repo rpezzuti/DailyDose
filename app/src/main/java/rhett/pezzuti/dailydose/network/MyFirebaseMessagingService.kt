@@ -42,8 +42,7 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
 
 
         val databaseTrack = createDatabaseTrackFromMessage(remoteMessage)
-
-
+        
         /** Save to Database **/
         saveTrackToDatabase(databaseTrack)
 

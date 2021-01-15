@@ -55,6 +55,8 @@ class HomeFragment : Fragment() {
             false
         )
 
+        Timber.i("Current Timestamp: ${System.currentTimeMillis()}")
+
         /** Normal Pipes **/
         val app = requireNotNull(this.activity).application
         val dataSource = getInstance(app.applicationContext).trackDatabaseDao

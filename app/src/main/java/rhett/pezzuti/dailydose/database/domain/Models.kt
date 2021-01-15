@@ -20,5 +20,8 @@ data class DatabaseTrack (
     val genre: String,
 
     @ColumnInfo(name = "track_image")
-    val image: String
+    val image: String,
+
+    @ColumnInfo(name = "track_timestamp")
+    val timestamp: Long = System.currentTimeMillis()
 )
