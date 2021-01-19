@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="rhett.pezzuti.dailydose">
 
+    <!-- Allows sending POST with retrofit -->
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- Allows Receiving from FCM -->
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
     <application
@@ -12,7 +17,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DailyDose"
-        android:name=".DailyDoseApplication">
+        android:name=".DailyDoseApplication"
+        android:usesCleartextTraffic="true"
+        tools:targetApi="m">
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,11 +32,14 @@
 
 
         <!-- Copy paste from the FCM lesson on Udacity -->
+        <!-- The service itself and default metadata (variables) for the system notification -->
         <service
             android:name=".network.MyFirebaseMessagingService"
+            android:permission="com.google.android.c2dm.permission.SEND"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </service>
         <!-- [START fcm_default_icon] -->

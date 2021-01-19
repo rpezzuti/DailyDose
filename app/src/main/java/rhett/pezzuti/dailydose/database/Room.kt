@@ -16,7 +16,7 @@ interface TrackDatabaseDao {
     @Query ("SELECT * FROM track_table LIMIT 5")
     fun getRecentTracks() : LiveData<List<DatabaseTrack>>
 
-    @Query ("SELECT * FROM track_table")
+    @Query ("SELECT * FROM track_table ORDER BY track_timestamp DESC")
     fun getAllTracks() : LiveData<List<DatabaseTrack>>
 
     @Query ("SELECT * FROM track_table WHERE track_genre = :genre")
@@ -26,7 +26,7 @@ interface TrackDatabaseDao {
     fun clearAll()
 }
 
-@Database(entities = [DatabaseTrack::class], version = 3, exportSchema = false)
+@Database(entities = [DatabaseTrack::class], version = 4, exportSchema = false)
 abstract class TrackDatabase : RoomDatabase() {
     abstract val trackDatabaseDao : TrackDatabaseDao
 }

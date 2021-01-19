@@ -8,6 +8,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.RemoteMessage
 import rhett.pezzuti.dailydose.R
 
 class PreferencesViewModel(private val app: Application) : AndroidViewModel(app) {
@@ -25,7 +26,9 @@ class PreferencesViewModel(private val app: Application) : AndroidViewModel(app)
 
     private val TOPIC_METALCORE = "metalcore"
     private val TOPIC_ACOUSTIC_BALLADS = "acoustic-ballads"
+    private val TOPIC_INSTRUMENTAL_ROCK = "instrumental-rock"
     private val TOPIC_DEATH_METAL = "death-metal"
+    private val TOPIC_LIVE_PERFORMANCES = "live-performances"
 
     private val TOPIC_TEST = "Test"
 
@@ -74,9 +77,17 @@ class PreferencesViewModel(private val app: Application) : AndroidViewModel(app)
     val checkBoxAcousticBallads : LiveData<Boolean>
         get() = _checkBoxAcousticBallads
 
+    private val _checkBoxInstrumentalRock = MutableLiveData<Boolean>()
+    val checkBoxInstrumentalRock : LiveData<Boolean>
+        get() = _checkBoxInstrumentalRock
+
     private val _checkBoxDeathMetal = MutableLiveData<Boolean>()
     val checkBoxDeathMetal : LiveData<Boolean>
         get() = _checkBoxDeathMetal
+
+    private val _checkBoxLivePerformances = MutableLiveData<Boolean>()
+    val checkBoxLivePerformances : LiveData<Boolean>
+        get() = _checkBoxLivePerformances
 
 
     fun checkDubstep() {
@@ -200,6 +211,17 @@ class PreferencesViewModel(private val app: Application) : AndroidViewModel(app)
         }
     }
 
+    fun checkInstrumentalRock() {
+        val checked = _checkBoxInstrumentalRock.value
+        if (checked != true) {
+            _checkBoxInstrumentalRock.value = true
+            subscribeTopic(TOPIC_INSTRUMENTAL_ROCK)
+        } else if (checked == true) {
+            _checkBoxInstrumentalRock.value = false
+            unSubscribeTopic(TOPIC_INSTRUMENTAL_ROCK)
+        }
+    }
+
     fun checkDeathMetal() {
         val checked = _checkBoxDeathMetal.value
         if (checked != true) {
@@ -208,6 +230,17 @@ class PreferencesViewModel(private val app: Application) : AndroidViewModel(app)
         } else if (checked == true) {
             _checkBoxDeathMetal.value = false
             unSubscribeTopic(TOPIC_DEATH_METAL)
+        }
+    }
+
+    fun checkLivePerformances() {
+        val checked = _checkBoxLivePerformances.value
+        if (checked != true) {
+            _checkBoxLivePerformances.value = true
+            subscribeTopic(TOPIC_LIVE_PERFORMANCES)
+        } else if (checked == true) {
+            _checkBoxLivePerformances.value = false
+            unSubscribeTopic(TOPIC_LIVE_PERFORMANCES)
         }
     }
 
@@ -227,6 +260,7 @@ class PreferencesViewModel(private val app: Application) : AndroidViewModel(app)
     }
 
 
+
     fun subscribeTopic(genre: String) {
         FirebaseMessaging.getInstance().subscribeToTopic(genre)
             .addOnCompleteListener { task ->
@@ -236,14 +270,19 @@ class PreferencesViewModel(private val app: Application) : AndroidViewModel(app)
                 }
                 Toast.makeText(app.applicationContext, msg, Toast.LENGTH_SHORT).show()
             }
+
+
+
+
     }
 
+    private
     fun unSubscribeTopic(genre: String) {
         FirebaseMessaging.getInstance().unsubscribeFromTopic(genre)
             .addOnCompleteListener { task ->
                 var msg = "Removed $genre from subscriptions"
                 if (!task.isSuccessful) {
-                    msg = app.resources.getString(R.string.message_subscribe_failed)
+                    msg = app.resources.getString(R.string.message_unsubscribe_failed)
                 }
                 Toast.makeText(app.applicationContext, msg, Toast.LENGTH_SHORT).show()
             }

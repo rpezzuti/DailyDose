@@ -1,21 +1,33 @@
 package rhett.pezzuti.dailydose.fragments
 
 import android.app.AlertDialog
+import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.DialogInterface
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.messaging.FirebaseMessaging
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import rhett.pezzuti.dailydose.R
+import rhett.pezzuti.dailydose.database.domain.DatabaseTrack
+import rhett.pezzuti.dailydose.database.domain.NotificationData
+import rhett.pezzuti.dailydose.database.domain.TrackNotification
 import rhett.pezzuti.dailydose.databinding.FragmentUploadBinding
+import rhett.pezzuti.dailydose.network.RetrofitInstance
+import rhett.pezzuti.dailydose.utils.sendNotificationWithIntent
 import rhett.pezzuti.dailydose.viewmodels.UploadViewModel
 import timber.log.Timber
 
@@ -48,18 +60,20 @@ class UploadFragment : Fragment() {
             false
         )
 
+        val app = requireNotNull(this.activity).application
+
         viewModel = ViewModelProvider(this).get(UploadViewModel::class.java)
         binding.uploadViewModelXML = viewModel
         binding.lifecycleOwner = this
 
 
-        // FCM Channel
+        /** FCM Notification Channel **/
         createChannel(
             getString(R.string.fcm_notification_channel_id),
             getString(R.string.fcm_notification_channel_name)
         )
 
-        // Local Channel
+        /** Local Notification Channel **/
         createChannel(
             getString(R.string.notification_channel_id),
             getString(R.string.notification_channel_name)
@@ -73,6 +87,23 @@ class UploadFragment : Fragment() {
         /** Upload Button Observer **/
         viewModel.eventUploadCheck.observe(viewLifecycleOwner, { event ->
             if (event == true) {
+
+                /**
+                TrackNotification(
+                    NotificationData(
+                        "https://www.youtube.com",
+                        "dummy-title",
+                        "dummy-artist",
+                        "dummy-genre",
+                        "dummy-image"
+                    ), TOPIC_TEST
+                ).also {
+                    viewModel.sendNotification(it)
+                }
+                **/
+
+                // sendNotificaitonWithIntent(databaseTrack, app)
+
                 val builder = AlertDialog.Builder(context)
                     .setTitle("Upload?")
                     .setMessage("Are you sure you want to upload?")
@@ -97,8 +128,41 @@ class UploadFragment : Fragment() {
             }
         })
 
+
+
+
+        fun uploadTrack() {
+            val databaseTrack = DatabaseTrack(
+                binding.etUploadLink.text.toString(),
+                binding.etUploadTitle.text.toString(),
+                binding.etUploadArtist.text.toString(),
+                "genre",
+                "image"
+            )
+
+            sendNotificaitonWithIntent(databaseTrack, app)
+
+        }
+
         return binding.root
     }
+
+    fun sendNotification(notification: TrackNotification){
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = RetrofitInstance.api.postNotification(notification)
+                if (response.isSuccessful) {
+                    Log.d(TAG, "Response: ${response.body().toString()}")
+                } else {
+                    Log.e(TAG, response.errorBody().toString())
+                    Log.e(TAG, "Failure Receiving response from RetrofitInstance")
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, e.toString())
+            }
+    }
+    }
+
 
     // Creates notification Channel
     private fun createChannel(channelId: String, channelName: String) {
@@ -119,5 +183,14 @@ class UploadFragment : Fragment() {
             val notificationManager = requireActivity().getSystemService(NotificationManager::class.java)
             notificationManager.createNotificationChannel(notificationChannel)
         }
+    }
+
+    private fun sendNotificaitonWithIntent(databaseTrack: DatabaseTrack, app: Application) {
+        val notificationManager = ContextCompat.getSystemService(
+            app.applicationContext,
+            NotificationManager::class.java
+        ) as NotificationManager
+
+        notificationManager.sendNotificationWithIntent(databaseTrack.title, databaseTrack.artist, databaseTrack.url, app.applicationContext)
     }
 }
