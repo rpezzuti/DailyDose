@@ -34,42 +34,33 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
         // Notification.Body = text
         // Data is stored as key value pairs
 
+        Timber.i("Has the message been received: $remoteMessage")
 
         // If said child does not exist, it is created.
 
         // Genre -> Track Title.
         // When users fetch a genre, they get all the tracks.
 
+        // App State        Notification        Data                Both
+        // Foreground       onMessageReceived   onMessageReceived   onMessageReceived
+        // Background       System Tray         onMessageReceived   Notification: System tray. Data: in extras of the intent.
 
-        val databaseTrack = createDatabaseTrackFromMessage(remoteMessage)
-        
-        /** Save to Database **/
-        saveTrackToDatabase(databaseTrack)
+        // Data Payload.
+        if (remoteMessage.data.isNotEmpty()) {
+            remoteMessage.data.let {
+                val databaseTrack = createDatabaseTrackFromMessage(remoteMessage)
 
-        /** Send back to Firebase Database **/
-        saveTrackToFirebase(databaseTrack)
+                /** Save to Database **/
+                saveTrackToDatabase(databaseTrack)
 
-        /** Show Notification **/
-        sendNotificationWithIntent(databaseTrack)
+                /** Send back to Firebase Database **/
+                saveTrackToFirebase(databaseTrack)
 
-
-        /**
-        remoteMessage?.data?.let {
-
-        Timber.i( "Remote message data payload: ${remoteMessage.data}")
-        Timber.i( "Remote message notification: ${remoteMessage.notification}")
-        Timber.i( "Remote message notification body: ${remoteMessage.notification?.body}")
-
-        remoteMessage.data.get("URL")?.let { it1 -> sendNotification(it1) }
+                /** Show Notification **/
+                sendNotificationWithIntent(databaseTrack)
+            }
         }
-         */
-        /**
-        remoteMessage?.notification?.let {
 
-        Log.d(TAG, "Message notification body: ${it.body}")
-        sendNotification(it.body!!)
-        }
-         */
     }
 
     override fun onNewToken(token: String) {

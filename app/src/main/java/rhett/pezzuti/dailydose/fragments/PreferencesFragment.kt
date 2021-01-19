@@ -16,6 +16,8 @@ class PreferencesFragment : Fragment() {
     private lateinit var binding: FragmentPreferencesBinding
     private lateinit var viewModel: PreferencesViewModel
 
+    private val TOPIC_TEST = "Test"
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,6 +37,7 @@ class PreferencesFragment : Fragment() {
         binding.lifecycleOwner = this
 
 
+        viewModel.subscribeTopic(TOPIC_TEST)
 
         return binding.root
     }

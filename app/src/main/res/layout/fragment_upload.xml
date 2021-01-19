@@ -32,9 +32,57 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/magin_small"
             android:hint="@string/hint_enter_link"
+            android:importantForAutofill="no"
+            android:inputType="textWebEmailAddress"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_upload_link"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_upload_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/magin_small"
+            android:text="@string/textview_title"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/et_upload_title"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/et_upload_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/magin_small"
+            android:hint="@string/hint_track_title"
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/et_upload_link"
+            app:layout_constraintTop_toBottomOf="@+id/et_upload_link" />
+
+        <TextView
+            android:id="@+id/tv_upload_artist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/magin_small"
+            android:text="@string/textview_artist"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/et_upload_artist"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/et_upload_artist"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/magin_small"
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_upload_artist"
+            app:layout_constraintTop_toBottomOf="@+id/et_upload_title"
+            tools:ignore="LabelFor" />
 
         <TextView
             android:id="@+id/tv_preferences_EDM"
@@ -51,7 +99,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/checkbox_melodic_dubstep"
-            android:onClick="@{() -> uploadViewModelXML.subscribeTopic(String.format(@string/checkbox_melodic_dubstep))}"
             app:layout_constraintBaseline_toBaselineOf="@+id/tv_preferences_EDM"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.877"
@@ -112,10 +159,10 @@
             android:id="@+id/text_view_acoustic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/text_view_acoustic"
             android:layout_marginBottom="@dimen/magin_small"
-            android:textSize="20sp"
+            android:text="@string/text_view_acoustic"
             android:textColor="@color/black"
+            android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/checkbox_group_Acoustic"
             app:layout_constraintStart_toStartOf="@+id/checkbox_group_Acoustic" />
 
@@ -150,8 +197,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/magin_small"
-            android:text="@string/button_upload"
             android:onClick="@{() -> uploadViewModelXML.uploadCheck()}"
+            android:text="@string/button_upload"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

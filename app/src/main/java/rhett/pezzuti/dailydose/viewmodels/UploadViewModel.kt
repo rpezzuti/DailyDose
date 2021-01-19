@@ -12,20 +12,29 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.messaging.FirebaseMessaging
+import com.google.gson.Gson
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import rhett.pezzuti.dailydose.R
+import rhett.pezzuti.dailydose.database.domain.TrackNotification
+import rhett.pezzuti.dailydose.network.FirebaseApi
+import rhett.pezzuti.dailydose.network.RetrofitInstance
 import rhett.pezzuti.dailydose.receiver.AlarmReceiver
 import rhett.pezzuti.dailydose.utils.sendNotification
+import timber.log.Timber
 
 class UploadViewModel(private val app: Application) : AndroidViewModel(app) {
 
     private val _eventUploadCheck = MutableLiveData<Boolean>()
-    val eventUploadCheck : LiveData<Boolean>
+    val eventUploadCheck: LiveData<Boolean>
         get() = _eventUploadCheck
 
 
     init {
         _eventUploadCheck.value = false
     }
+
 
     fun uploadCheck() {
         _eventUploadCheck.value = true
@@ -34,9 +43,6 @@ class UploadViewModel(private val app: Application) : AndroidViewModel(app) {
     fun doneUploadCheck() {
         _eventUploadCheck.value = false
     }
-
-
-
 
 
     fun subscribeTopic(genre: String) {
@@ -62,9 +68,49 @@ class UploadViewModel(private val app: Application) : AndroidViewModel(app) {
     }
 
 
-
+    fun sendNotification(notification: TrackNotification) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                //val response = RetrofitInstance.api.postNotification(notification)
+                val response = FirebaseApi.retrofitService.postNotification(notification)
+                if (response.isSuccessful) {
+//                    Timber.d( "Response: ${Gson().toJson(response)}")
+                    Timber.d("Response Body: ${response.body().toString()}")
+                    Timber.d("Response Is Successful: ${response.isSuccessful}")
+                    Timber.d("Response Code: ${response.code()}")
+                    Timber.d("Response Raw: ${response.raw()}")
+                    Timber.d("Response Headers: ${response.headers()}")
+                    Timber.d("Response Message: ${response.message()}")
+                } else {
+                    Timber.e("Error code: ${response.code()} ${response.errorBody().toString()}")
+                    Timber.e("Failure Receiving response from RetrofitInstance")
+                }
+            } catch (e: Exception) {
+                Timber.e(e.toString())
+            }
+        }
+    }
 
 }
+    /*fun sendNotification2(notification: TrackNotification) {
+        try {
+            val response = RetrofitInstance.api.postNotification(notification)
+            if (response.isSuccessful) {
+                //Timber.d( "Response: ${Gson().toJson(response)}")
+                Timber.d("Response Body: ${response.body().toString()}")
+                Timber.d("Response Is Successful: ${response.isSuccessful}")
+                Timber.d("Response Code: ${response.code()}")
+                Timber.d("Response Raw: ${response.raw()}")
+                Timber.d("Response Headers: ${response.headers()}")
+                Timber.d("Response Message: ${response.message().toString()}")
+            } else {
+                Timber.e("Error code: ${response.code()} ${response.errorBody().toString()}")
+                Timber.e("Failure Receiving response from RetrofitInstance")
+            }
+        } catch (e: Exception) {
+            Timber.e(e.toString())
+        }
+    }*/
 
 
 

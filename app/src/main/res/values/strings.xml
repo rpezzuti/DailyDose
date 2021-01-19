@@ -81,6 +81,11 @@
     <string name="content_description_favorites_fab">Favorites Fab</string>
     <string name="checkbox_live_performances">Live Performances</string>
     <string name="checkbox_instrumental_rock">Instrumental Rock</string>
+    <string name="textview_title">Title:</string>
+    <string name="hint_artist_name">Enter Artist Name</string>
+    <string name="hint_track_title">Enter Track Title</string>
+    <string name="textview_artist">Artist:</string>
+    <string name="message_unsubscribe_failed">Failed to unsubscribe</string>
 
 
 </resources>

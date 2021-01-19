@@ -8,6 +8,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.RemoteMessage
 import rhett.pezzuti.dailydose.R
 
 class PreferencesViewModel(private val app: Application) : AndroidViewModel(app) {
@@ -259,6 +260,7 @@ class PreferencesViewModel(private val app: Application) : AndroidViewModel(app)
     }
 
 
+
     fun subscribeTopic(genre: String) {
         FirebaseMessaging.getInstance().subscribeToTopic(genre)
             .addOnCompleteListener { task ->
@@ -268,14 +270,19 @@ class PreferencesViewModel(private val app: Application) : AndroidViewModel(app)
                 }
                 Toast.makeText(app.applicationContext, msg, Toast.LENGTH_SHORT).show()
             }
+
+
+
+
     }
 
+    private
     fun unSubscribeTopic(genre: String) {
         FirebaseMessaging.getInstance().unsubscribeFromTopic(genre)
             .addOnCompleteListener { task ->
                 var msg = "Removed $genre from subscriptions"
                 if (!task.isSuccessful) {
-                    msg = app.resources.getString(R.string.message_subscribe_failed)
+                    msg = app.resources.getString(R.string.message_unsubscribe_failed)
                 }
                 Toast.makeText(app.applicationContext, msg, Toast.LENGTH_SHORT).show()
             }
