@@ -8,6 +8,18 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <!-- Primary brand color. -->
+    <color name="primaryColor">#7e57c2</color>
+    <color name="primaryLightColor">#b085f5</color>
+    <color name="primaryDarkColor">#4d2c91</color>
+
+    <color name="secondaryColor">#64b5f6</color>
+    <color name="secondaryLightColor">#9be7ff</color>
+    <color name="secondaryDarkColor">#2286c3</color>
+
+    <color name="primaryTextColor">#ffffff</color>
+    <color name="secondaryTextColor">#000000</color>
+
     <!--My Colors-->
     <color name="background">#5E8CE6</color>
 </resources>

@@ -9,7 +9,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.RemoteMessage
+import rhett.pezzuti.dailydose.MainActivity
 import rhett.pezzuti.dailydose.R
+import rhett.pezzuti.dailydose.database.initializePreferences
+import rhett.pezzuti.dailydose.network.FirebaseService
 
 class PreferencesViewModel(private val app: Application) : AndroidViewModel(app) {
 
@@ -31,6 +34,8 @@ class PreferencesViewModel(private val app: Application) : AndroidViewModel(app)
     private val TOPIC_LIVE_PERFORMANCES = "live-performances"
 
     private val TOPIC_TEST = "Test"
+
+    private val preferences = initializePreferences(app.applicationContext).userPreferencesDao
 
     /** Encapsulated Checkbox Triggers **/
     private val _checkBoxDubstep = MutableLiveData<Boolean>()
@@ -89,8 +94,14 @@ class PreferencesViewModel(private val app: Application) : AndroidViewModel(app)
     val checkBoxLivePerformances : LiveData<Boolean>
         get() = _checkBoxLivePerformances
 
+    init {
+
+    }
 
     fun checkDubstep() {
+
+        MainActivity.sharedPref?.edit()?.putInt("dubstep", 0)?.apply()
+
         val checked = _checkBoxDubstep.value
         if (checked != true) {
             _checkBoxDubstep.value = true

@@ -1,10 +1,8 @@
 package rhett.pezzuti.dailydose.database
 
 import android.content.Context
-import android.provider.ContactsContract
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import androidx.work.Data
 import rhett.pezzuti.dailydose.database.domain.DatabaseTrack
 
 @Dao
@@ -56,5 +54,7 @@ fun getInstance(context: Context) : TrackDatabase {
     }
     return INSTANCE
 }
+
+
 
 

@@ -7,20 +7,17 @@ import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import rhett.pezzuti.dailydose.viewmodels.HomeViewModel
 import rhett.pezzuti.dailydose.R
 import rhett.pezzuti.dailydose.adapters.DatabaseTrackListener
 import rhett.pezzuti.dailydose.adapters.TrackAdapter
 import rhett.pezzuti.dailydose.database.getInstance
-import rhett.pezzuti.dailydose.databinding.HomeFragmentBinding
+import rhett.pezzuti.dailydose.databinding.FragmentHomeBinding
 import rhett.pezzuti.dailydose.factory.HomeViewModelFactory
 import timber.log.Timber
 
@@ -28,7 +25,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var viewModel: HomeViewModel
     private lateinit var viewModelFactory: HomeViewModelFactory
-    private lateinit var binding: HomeFragmentBinding
+    private lateinit var binding: FragmentHomeBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -50,7 +47,7 @@ class HomeFragment : Fragment() {
 
         binding = DataBindingUtil.inflate(
             inflater,
-            R.layout.home_fragment,
+            R.layout.fragment_home,
             container,
             false
         )
@@ -106,6 +103,14 @@ class HomeFragment : Fragment() {
             if (event == true){
                 this.findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToPreferencesFragment())
                 viewModel.doneNavigatingPreferences()
+            }
+
+        })
+
+        viewModel.eventBrowse.observe(viewLifecycleOwner, { event ->
+            if (event == true){
+                this.findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToBrowseFragment())
+                viewModel.doneNavigatingBrowse()
             }
 
         })
