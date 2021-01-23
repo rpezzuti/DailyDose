@@ -28,6 +28,10 @@ class HomeViewModel(
     val eventPreferences : LiveData<Boolean>
         get() = _eventPreferences
 
+    private val _eventBrowse = MutableLiveData<Boolean>()
+    val eventBrowse : LiveData<Boolean>
+        get() = _eventBrowse
+
     private val _showSnackBarEvent = MutableLiveData<Boolean>()
     val showSnackBarEvent : LiveData<Boolean>
         get() = _showSnackBarEvent
@@ -40,6 +44,7 @@ class HomeViewModel(
         _eventFavorites.value = false
         _eventUpload.value = false
         _eventPreferences.value = false
+        _eventBrowse.value = false
         _showSnackBarEvent.value = false
     }
 
@@ -69,6 +74,13 @@ class HomeViewModel(
         _eventPreferences.value = false
     }
 
+    fun navigateToBrowse(){
+        _eventBrowse.value = true
+    }
+
+    fun doneNavigatingBrowse(){
+        _eventBrowse.value = false
+    }
 
     /** Snackbar Event **/
     fun doneShowingSnackBar(){

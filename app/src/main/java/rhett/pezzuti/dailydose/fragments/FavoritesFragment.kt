@@ -9,14 +9,14 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import rhett.pezzuti.dailydose.viewmodels.FavoritesViewModel
 import rhett.pezzuti.dailydose.R
-import rhett.pezzuti.dailydose.databinding.FavoritesFragmentBinding
+import rhett.pezzuti.dailydose.databinding.FragmentFavoritesBinding
 import rhett.pezzuti.dailydose.factory.FavoritesViewModelFactory
 
 class FavoritesFragment : Fragment() {
 
     private lateinit var viewModel: FavoritesViewModel
     private lateinit var viewModelFactory: FavoritesViewModelFactory
-    private lateinit var binding: FavoritesFragmentBinding
+    private lateinit var binding: FragmentFavoritesBinding
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -32,7 +32,7 @@ class FavoritesFragment : Fragment() {
 
         binding = DataBindingUtil.inflate(
             inflater,
-            R.layout.favorites_fragment,
+            R.layout.fragment_favorites,
             container,
             false
         )

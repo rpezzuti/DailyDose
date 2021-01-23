@@ -10,7 +10,7 @@
         android:id="@+id/homeFragment"
         android:name="rhett.pezzuti.dailydose.fragments.HomeFragment"
         android:label="HomeFragment"
-        tools:layout="@layout/home_fragment">
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_favoritesFragment"
             app:destination="@id/favoritesFragment" />
@@ -20,12 +20,15 @@
         <action
             android:id="@+id/action_homeFragment_to_preferencesFragment"
             app:destination="@id/preferencesFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_browseFragment"
+            app:destination="@id/browseFragment" />
     </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
         android:name="rhett.pezzuti.dailydose.fragments.FavoritesFragment"
         android:label="FavoritesFragment"
-        tools:layout="@layout/favorites_fragment"/>
+        tools:layout="@layout/fragment_favorites"/>
     <fragment
         android:id="@+id/aboutFragment"
         android:name="rhett.pezzuti.dailydose.fragments.AboutFragment"
@@ -46,4 +49,9 @@
         android:name="rhett.pezzuti.dailydose.fragments.PreferencesFragment"
         android:label="fragment_preferences"
         tools:layout="@layout/fragment_preferences" />
+    <fragment
+        android:id="@+id/browseFragment"
+        android:name="rhett.pezzuti.dailydose.fragments.BrowseFragment"
+        android:label="BrowseFragment"
+        tools:layout="@layout/fragment_browse"/>
 </navigation>
