@@ -13,16 +13,18 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.DailyDose.Launcher"
+        android:theme="@style/Theme.DailyDose"
         android:usesCleartextTraffic="true">
-        <activity android:name=".SplashActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".activities.SetupActivity" />
+        <activity android:name=".activities.SplashActivity"
+            android:theme="@style/Theme.DailyDose.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- Copy paste from the FCM lesson on Udacity -->
+        </activity>
+        <activity android:name=".activities.MainActivity" /> <!-- Copy paste from the FCM lesson on Udacity -->
         <!-- The service itself and default metadata (variables) for the system notification -->
         <service
             android:name=".network.MyFirebaseMessagingService"

@@ -28,10 +28,14 @@
     <string name="text_view_acoustic">Acoustic:</string>
     <string name="text_recent_uploads">Recent Uploads:</string>
     <string name="text_view_preferences_welcome">What do you like?</string>
+    <string name="text_hello">Hello!</string>
 
 
     <!--    Hints    -->
     <string name="hint_enter_link">Enter Link Here</string>
+    <string name="hint_artist_name">Enter Artist Name</string>
+    <string name="hint_track_title">Enter Track Title</string>
+    <string name="hint_enter_your_name">Enter your name</string>
 
 
     <!--    Buttons    -->
@@ -40,6 +44,8 @@
     <string name="button_browse">Browse</string>
     <string name="button_upload">Upload</string>
     <string name="button_clear_all">Clear All</string>
+    <string name="button_next">Next</string>
+    <string name="button_done">Done</string>
 
 
     <!--    Menu    -->
@@ -66,6 +72,8 @@
     <string name="checkbox_metalcore">Metalcore</string>
     <string name="checkbox_acoustic_ballads">Acoustic / Ballads</string>
     <string name="checkbox_death_metal">Death Metal</string>
+    <string name="checkbox_live_performances">Live Performances</string>
+    <string name="checkbox_instrumental_rock">Instrumental Rock</string>
 
 
     <!--    Firebase Strings    -->
@@ -76,16 +84,11 @@
     <string name="cleared_message">All tracks deleted!</string>
     <string name="message_subscribed">Subscribed to topic</string>
     <string name="message_subscribe_failed">Failed to subscribe to topic</string>
+    <string name="message_unsubscribe_failed">Failed to unsubscribe</string>
 
     <!-- Content Descriptions -->
     <string name="content_description_favorites_fab">Favorites Fab</string>
-    <string name="checkbox_live_performances">Live Performances</string>
-    <string name="checkbox_instrumental_rock">Instrumental Rock</string>
     <string name="textview_title">Title:</string>
-    <string name="hint_artist_name">Enter Artist Name</string>
-    <string name="hint_track_title">Enter Track Title</string>
     <string name="textview_artist">Artist:</string>
-    <string name="message_unsubscribe_failed">Failed to unsubscribe</string>
-
 
 </resources>

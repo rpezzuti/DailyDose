@@ -1,7 +1,6 @@
 package rhett.pezzuti.dailydose.fragments
 
 import android.content.Context
-import android.content.SharedPreferences
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import rhett.pezzuti.dailydose.MainActivity
 import rhett.pezzuti.dailydose.R
 import rhett.pezzuti.dailydose.databinding.FragmentPreferencesBinding
 import rhett.pezzuti.dailydose.factory.PreferencesViewModelFactory
