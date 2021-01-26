@@ -1,18 +1,15 @@
 package rhett.pezzuti.dailydose.viewmodels
 
 import android.app.Application
-import android.view.View
 import android.widget.CheckBox
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.messaging.FirebaseMessaging
-import com.google.firebase.messaging.RemoteMessage
-import rhett.pezzuti.dailydose.MainActivity
+import rhett.pezzuti.dailydose.activities.MainActivity
 import rhett.pezzuti.dailydose.R
 import rhett.pezzuti.dailydose.database.initializePreferences
-import rhett.pezzuti.dailydose.network.FirebaseService
 
 class PreferencesViewModel(private val app: Application) : AndroidViewModel(app) {
 

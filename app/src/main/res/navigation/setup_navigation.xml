@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/setup_navigation"
+    app:startDestination="@id/setupNameFragment">
+
+    <fragment
+        android:id="@+id/setupNameFragment"
+        android:name="rhett.pezzuti.dailydose.fragments.SetupNameFragment"
+        android:label="SetupNameFragment"
+        tools:layout="@layout/fragment_setup_name">
+        <action
+            android:id="@+id/action_setupNameFragment_to_preferencesFragment2"
+            app:destination="@id/preferencesFragment2"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/preferencesFragment2"
+        android:name="rhett.pezzuti.dailydose.fragments.PreferencesFragment"
+        android:label="PreferencesFragment"
+        tools:layout="@layout/fragment_preferences"/>
+</navigation>

@@ -1,12 +1,9 @@
-package rhett.pezzuti.dailydose
+package rhett.pezzuti.dailydose.activities
 
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.CheckBox
-import android.widget.Toast
-import com.google.firebase.messaging.FirebaseMessaging
+import rhett.pezzuti.dailydose.R
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,5 +18,6 @@ class MainActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
     }
 }

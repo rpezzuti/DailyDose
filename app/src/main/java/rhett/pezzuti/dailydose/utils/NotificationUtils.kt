@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.core.app.NotificationCompat
-import rhett.pezzuti.dailydose.MainActivity
 import rhett.pezzuti.dailydose.R
 
 private val NOTIFICATION_ID = 0
