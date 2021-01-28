@@ -90,5 +90,6 @@
     <string name="content_description_favorites_fab">Favorites Fab</string>
     <string name="textview_title">Title:</string>
     <string name="textview_artist">Artist:</string>
+    <string name="button_finish">Finish</string>
 
 </resources>

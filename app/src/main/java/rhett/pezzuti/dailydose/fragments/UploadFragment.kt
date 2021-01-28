@@ -17,13 +17,11 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import rhett.pezzuti.dailydose.R
-import rhett.pezzuti.dailydose.database.domain.DatabaseTrack
-import rhett.pezzuti.dailydose.database.domain.NotificationData
+import rhett.pezzuti.dailydose.database.domain.Track
 import rhett.pezzuti.dailydose.database.domain.TrackNotification
 import rhett.pezzuti.dailydose.databinding.FragmentUploadBinding
 import rhett.pezzuti.dailydose.network.RetrofitInstance
@@ -132,7 +130,7 @@ class UploadFragment : Fragment() {
 
 
         fun uploadTrack() {
-            val databaseTrack = DatabaseTrack(
+            val track = Track(
                 binding.etUploadLink.text.toString(),
                 binding.etUploadTitle.text.toString(),
                 binding.etUploadArtist.text.toString(),
@@ -140,7 +138,7 @@ class UploadFragment : Fragment() {
                 "image"
             )
 
-            sendNotificaitonWithIntent(databaseTrack, app)
+            sendNotificaitonWithIntent(track, app)
 
         }
 
@@ -185,12 +183,12 @@ class UploadFragment : Fragment() {
         }
     }
 
-    private fun sendNotificaitonWithIntent(databaseTrack: DatabaseTrack, app: Application) {
+    private fun sendNotificaitonWithIntent(track: Track, app: Application) {
         val notificationManager = ContextCompat.getSystemService(
             app.applicationContext,
             NotificationManager::class.java
         ) as NotificationManager
 
-        notificationManager.sendNotificationWithIntent(databaseTrack.title, databaseTrack.artist, databaseTrack.url, app.applicationContext)
+        notificationManager.sendNotificationWithIntent(track.title, track.artist, track.url, app.applicationContext)
     }
 }

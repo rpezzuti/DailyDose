@@ -1,10 +1,16 @@
 package rhett.pezzuti.dailydose.network
 
-data class FirebaseTrack(
+import com.squareup.moshi.JsonClass
+
+@JsonClass(generateAdapter = true)
+data class NetworkTrackContainer (val tracks: List<NetworkTrack>)
+
+@JsonClass(generateAdapter = true)
+data class NetworkTrack(
+    val url: String,
+    val title: String,
     val artist: String,
     val genre: String,
     val image: String,
-    val timestamp: Long,
-    val title: String,
-    val url: String
+    val timestamp: Long
 )

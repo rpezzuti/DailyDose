@@ -1,18 +1,18 @@
 package rhett.pezzuti.dailydose.viewmodels
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import rhett.pezzuti.dailydose.database.TrackDatabaseDao
+import rhett.pezzuti.dailydose.database.User
+import rhett.pezzuti.dailydose.database.UserPreferencesDao
 import timber.log.Timber
 
 class HomeViewModel(
-    val database: TrackDatabaseDao,
+    val trackDatabase: TrackDatabaseDao,
+    val userDatabase: UserPreferencesDao,
     app: Application) : AndroidViewModel(app) {
 
     /** Encapsulated LiveData **/
@@ -37,7 +37,11 @@ class HomeViewModel(
         get() = _showSnackBarEvent
 
 
-    val tracks = database.getRecentTracks()
+    val tracks = trackDatabase.getRecentTracks()
+
+
+    val currentUser = MediatorLiveData<User>()
+    //fun getUser() = currentUser
 
     init {
         Timber.i("homeViewModel Init block")
@@ -46,6 +50,7 @@ class HomeViewModel(
         _eventPreferences.value = false
         _eventBrowse.value = false
         _showSnackBarEvent.value = false
+        currentUser.addSource(userDatabase.getCurrentUser(), currentUser::setValue)
     }
 
     fun navigateToFavorites(){
@@ -97,7 +102,7 @@ class HomeViewModel(
 
     private suspend fun clear() {
         withContext(Dispatchers.IO) {
-            database.clearAll()
+            trackDatabase.clearAll()
         }
     }
 

@@ -10,7 +10,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
-import rhett.pezzuti.dailydose.database.domain.DatabaseTrack
 import rhett.pezzuti.dailydose.database.domain.TrackNotification
 
 private const val BASE_URL = "https://fcm.googleapis.com"
@@ -32,7 +31,7 @@ interface FirebaseService {
 
     @GET("trackdata")
     fun getTracks(@Query("filter") type: String):
-            Deferred<List<DatabaseTrack>>
+            Deferred<NetworkTrackContainer>
 
     @Headers("Authorization: key=$SERVER_KEY", "Content-Type:$CONTENT_TYPE")
     @POST("fcm/send")

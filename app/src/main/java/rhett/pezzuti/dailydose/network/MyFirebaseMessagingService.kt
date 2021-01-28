@@ -1,14 +1,13 @@
 package rhett.pezzuti.dailydose.network
 
 import android.app.NotificationManager
-import android.util.Log
 import androidx.core.content.ContextCompat
-import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import rhett.pezzuti.dailydose.database.domain.DatabaseTrack
+import rhett.pezzuti.dailydose.database.DatabaseTrack
+import rhett.pezzuti.dailydose.database.domain.Track
 import rhett.pezzuti.dailydose.database.getInstance
 import rhett.pezzuti.dailydose.utils.sendNotification
 import rhett.pezzuti.dailydose.utils.sendNotificationWithIntent
@@ -48,16 +47,16 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
         // Data Payload.
         if (remoteMessage.data.isNotEmpty()) {
             remoteMessage.data.let {
-                val databaseTrack = createDatabaseTrackFromMessage(remoteMessage)
-
-                /** Save to Database **/
-                saveTrackToDatabase(databaseTrack)
-
-                /** Send back to Firebase Database **/
-                saveTrackToFirebase(databaseTrack)
+                val track = createTrackFromMessage(remoteMessage)
 
                 /** Show Notification **/
-                sendNotificationWithIntent(databaseTrack)
+                sendNotificationWithIntent(track)
+
+                /** Send back to Firebase Database **/
+                saveTrackToFirebase(track)
+
+                /** Save to Database **/
+                saveTrackToDatabase(track)
             }
         }
 
@@ -78,11 +77,11 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
         firebaseDatabase.child("My Tokens").setValue(token)
     }
 
-    private fun createDatabaseTrackFromMessage(remoteMessage: RemoteMessage): DatabaseTrack {
+    private fun createTrackFromMessage(remoteMessage: RemoteMessage): Track {
 
         // Create some kind of working Null Check.
         remoteMessage.data.let {
-            return DatabaseTrack(
+            return Track(
                 remoteMessage.data["url"]!!,
                 remoteMessage.data["title"]!!,
                 remoteMessage.data["artist"]!!,
@@ -92,15 +91,25 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
         }
     }
 
-    private fun saveTrackToDatabase(databaseTrack: DatabaseTrack) {
+    private fun saveTrackToDatabase(track: Track) {
         val database = getInstance(applicationContext).trackDatabaseDao
+
+        val databaseTrack = DatabaseTrack(
+            track.url,
+            track.title,
+            track.artist,
+            track.genre,
+            track.image,
+            track.timestamp
+        )
+
         database.insert(databaseTrack)
     }
 
-    private fun saveTrackToFirebase(databaseTrack: DatabaseTrack) {
+    private fun saveTrackToFirebase(track: Track) {
 
         val firebaseDatabase = Firebase.database.reference
-        firebaseDatabase.child(databaseTrack.genre).child(databaseTrack.title).setValue(databaseTrack)
+        firebaseDatabase.child(track.genre).child(track.title).setValue(track)
 
     }
 
@@ -113,13 +122,13 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
         notificationManager.sendNotification(messageBody, applicationContext)
     }
 
-    private fun sendNotificationWithIntent(databaseTrack: DatabaseTrack) {
+    private fun sendNotificationWithIntent(track: Track) {
         val notificationManager = ContextCompat.getSystemService(
             applicationContext,
             NotificationManager::class.java
         ) as NotificationManager
 
-        notificationManager.sendNotificationWithIntent(databaseTrack.title, databaseTrack.artist, databaseTrack.url, applicationContext)
+        notificationManager.sendNotificationWithIntent(track.title, track.artist, track.url, applicationContext)
     }
 
 }

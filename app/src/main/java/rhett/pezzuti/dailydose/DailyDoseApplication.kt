@@ -1,7 +1,7 @@
 package rhett.pezzuti.dailydose
 
 import android.app.Application
-import rhett.pezzuti.dailydose.database.initializeDatabase
+import rhett.pezzuti.dailydose.database.getInstance
 import timber.log.Timber
 
 class DailyDoseApplication: Application() {
@@ -15,7 +15,7 @@ class DailyDoseApplication: Application() {
         Timber.plant(Timber.DebugTree())
 
         // Put all database stuff in this layer
-       initializeDatabase(applicationContext)
+       getInstance(applicationContext)
     }
 
 

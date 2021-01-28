@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="setupPreferencesViewModelXML"
+            type="rhett.pezzuti.dailydose.viewmodels.SetupPreferencesViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".fragments.SetupPreferencesFragment">
+
+        <TextView
+            android:id="@+id/text_preferences_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/magin_small"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/magin_small"
+            app:layout_constraintBottom_toTopOf="@id/btn_finish"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_preferences_name">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/text_electronic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_view_electronic_music"
+                    android:layout_margin="@dimen/magin_small"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <RadioGroup
+                    android:id="@+id/checkbox_group_EDM"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_electronic">
+
+                    <CheckBox
+                        android:id="@+id/checkbox_dubstep"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/checkbox_dubstep" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox_melodic_dubstep"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/checkbox_melodic_dubstep" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox_lo_fi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/checkbox_lo_fi" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox_chillstep"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/checkbox_chillstep" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox_future_garage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/checkbox_future_garage" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox_piano_ambient"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/checkbox_piano_ambient" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox_experimental_bass"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/checkbox_experimental_bass" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox_liquid_dnb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/checkbox_liquid_dnb" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox_ambient_bass"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/checkbox_ambient_bass" />
+                </RadioGroup>
+
+
+                <TextView
+                    android:id="@+id/text_acoustic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/magin_small"
+                    android:text="@string/text_view_acoustic"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toTopOf="@+id/checkbox_group_Acoustic"
+                    app:layout_constraintStart_toStartOf="@+id/checkbox_group_Acoustic" />
+
+                <RadioGroup
+                    android:id="@+id/checkbox_group_Acoustic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.516"
+                    app:layout_constraintStart_toEndOf="@+id/checkbox_group_EDM">
+
+                    <CheckBox
+                        android:id="@+id/checkbox_metalcore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/checkbox_metalcore" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox_acoustic_ballads"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/checkbox_acoustic_ballads" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox_instrumental_rock"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/checkbox_instrumental_rock" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox_death_metal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/checkbox_death_metal" />
+
+                    <CheckBox
+                        android:id="@+id/checkbox_live_performances"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/checkbox_live_performances" />
+
+                </RadioGroup>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.core.widget.NestedScrollView>
+
+
+        <Button
+            android:id="@+id/btn_finish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_finish"
+            android:onClick="@{() -> setupPreferencesViewModelXML.finishedPreferences()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

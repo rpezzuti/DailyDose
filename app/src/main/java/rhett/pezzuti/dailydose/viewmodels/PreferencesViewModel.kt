@@ -9,7 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import com.google.firebase.messaging.FirebaseMessaging
 import rhett.pezzuti.dailydose.activities.MainActivity
 import rhett.pezzuti.dailydose.R
-import rhett.pezzuti.dailydose.database.initializePreferences
+import rhett.pezzuti.dailydose.database.getInstance
 
 class PreferencesViewModel(private val app: Application) : AndroidViewModel(app) {
 
@@ -32,7 +32,7 @@ class PreferencesViewModel(private val app: Application) : AndroidViewModel(app)
 
     private val TOPIC_TEST = "Test"
 
-    private val preferences = initializePreferences(app.applicationContext).userPreferencesDao
+    private val preferences = getInstance(app.applicationContext).userPreferencesDao
 
     /** Encapsulated Checkbox Triggers **/
     private val _checkBoxDubstep = MutableLiveData<Boolean>()
