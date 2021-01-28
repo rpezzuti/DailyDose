@@ -40,8 +40,8 @@ class HomeViewModel(
     val tracks = trackDatabase.getRecentTracks()
 
 
-    val currentUser = MediatorLiveData<User>()
-    //fun getUser() = currentUser
+    private val currentUser = MediatorLiveData<User>()
+    fun getCurrentUser() = currentUser
 
     init {
         Timber.i("homeViewModel Init block")
