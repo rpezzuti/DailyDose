@@ -2,13 +2,10 @@ package rhett.pezzuti.dailydose.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import rhett.pezzuti.dailydose.R
-import rhett.pezzuti.dailydose.database.domain.DatabaseTrack
+import rhett.pezzuti.dailydose.database.DatabaseTrack
 import rhett.pezzuti.dailydose.databinding.TrackListItemBinding
 
 class TrackAdapter(val clickListener: DatabaseTrackListener) : ListAdapter<DatabaseTrack, ViewHolder>(TrackDiffCallback()) {

@@ -7,7 +7,7 @@
 
         <variable
             name="track"
-            type="rhett.pezzuti.dailydose.database.domain.DatabaseTrack" />
+            type="rhett.pezzuti.dailydose.database.DatabaseTrack" />
 
         <variable
             name="clickListener"

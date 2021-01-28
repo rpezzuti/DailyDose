@@ -11,14 +11,16 @@
         android:label="SetupNameFragment"
         tools:layout="@layout/fragment_setup_name">
         <action
-            android:id="@+id/action_setupNameFragment_to_preferencesFragment2"
-            app:destination="@id/preferencesFragment2"
-            app:enterAnim="@anim/fade_in"
-            app:exitAnim="@anim/fade_out" />
+            android:id="@+id/action_setupNameFragment_to_setupPreferencesFragment"
+            app:destination="@id/setupPreferencesFragment" />
     </fragment>
     <fragment
-        android:id="@+id/preferencesFragment2"
-        android:name="rhett.pezzuti.dailydose.fragments.PreferencesFragment"
-        android:label="PreferencesFragment"
-        tools:layout="@layout/fragment_preferences"/>
+        android:id="@+id/setupPreferencesFragment"
+        android:name="rhett.pezzuti.dailydose.fragments.SetupPreferencesFragment"
+        android:label="fragment_setup_preferences"
+        tools:layout="@layout/fragment_setup_preferences" >
+        <argument
+            android:name="name"
+            app:argType="string" />
+    </fragment>
 </navigation>

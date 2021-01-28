@@ -5,9 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import rhett.pezzuti.dailydose.R
+import rhett.pezzuti.dailydose.database.getInstance
 import rhett.pezzuti.dailydose.databinding.ActivitySplashBinding
 
 class SplashActivity : AppCompatActivity() {
@@ -18,9 +18,16 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
+        val app = requireNotNull(this).application
+
         CoroutineScope(Dispatchers.IO).launch {
-            delay(2000L)
-            startSetup()
+            val userDatabase = getInstance(app.applicationContext).userPreferencesDao
+
+            if (userDatabase.isUserInitialized() == null) {
+                startSetup()
+            } else {
+                startMain()
+            }
         }
 
     }
@@ -33,7 +40,6 @@ class SplashActivity : AppCompatActivity() {
     private fun startSetup(){
         val intent = Intent(this, SetupActivity::class.java)
         startActivity(intent)
-        //overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }
 

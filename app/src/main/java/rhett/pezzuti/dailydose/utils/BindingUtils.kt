@@ -2,7 +2,8 @@ package rhett.pezzuti.dailydose.utils
 
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import rhett.pezzuti.dailydose.database.domain.DatabaseTrack
+import rhett.pezzuti.dailydose.database.DatabaseTrack
+import rhett.pezzuti.dailydose.database.User
 
 @BindingAdapter("trackTitle")
 fun TextView.setTrackTitle(item: DatabaseTrack?) {
@@ -22,5 +23,12 @@ fun TextView.setTrackArtist(item: DatabaseTrack?) {
 fun TextView.setTrackGenre(item: DatabaseTrack?) {
     item?.let {
         text = "Genre: ${item.genre}"
+    }
+}
+
+@BindingAdapter("welcomeUser")
+fun TextView.setWelcomeHome(item: User?) {
+    item?.let {
+        text = "~ Welcome, ${item.username}! ~"
     }
 }

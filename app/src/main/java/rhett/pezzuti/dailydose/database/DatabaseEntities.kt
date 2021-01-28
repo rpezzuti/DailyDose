@@ -1,9 +1,10 @@
 package rhett.pezzuti.dailydose.database
 
-import android.provider.MediaStore
-import androidx.room.*
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-/*
+
 @Entity(tableName = "track_table")
 data class DatabaseTrack (
 
@@ -20,18 +21,58 @@ data class DatabaseTrack (
     val genre: String,
 
     @ColumnInfo(name = "track_image")
-    val image: String
+    val image: String,
+
+    @ColumnInfo(name = "track_timestamp")
+    val timestamp: Long
 )
 
-// Extension function to turn a DatabaseTrack object into a Track Domain object.
-fun List<DatabaseTrack>.asDomainModel(): List<Track> {
-    return map {
-        Track (
-            url = it.url,
-            title = it.title,
-            artist = it.artist,
-            genre = it.genre,
-            image = it.image)
-    }
-}
-*/
+@Entity (tableName = "user_preferences")
+data class User (
+
+    @PrimaryKey
+    val username: String,
+
+    @ColumnInfo
+    val dubstep : Boolean = false,
+
+    @ColumnInfo
+    val melodicDubstep: Boolean = false,
+
+    @ColumnInfo
+    val loFi: Boolean = false,
+
+    @ColumnInfo
+    val chillstep: Boolean = false,
+
+    @ColumnInfo
+    val futureGarage: Boolean = false,
+
+    @ColumnInfo
+    val pianoAmbient: Boolean = false,
+
+    @ColumnInfo
+    val experimentalBass: Boolean = false,
+
+    @ColumnInfo
+    val liquidDnB: Boolean = false,
+
+    @ColumnInfo
+    val ambientBass: Boolean = false,
+
+    @ColumnInfo
+    val metalcore: Boolean = false,
+
+    @ColumnInfo
+    val acousticBallads: Boolean = false,
+
+    @ColumnInfo
+    val instrumentalRock: Boolean = false,
+
+    @ColumnInfo
+    val deathMetal: Boolean = false,
+
+    @ColumnInfo
+    val livePerformances: Boolean = false
+
+)

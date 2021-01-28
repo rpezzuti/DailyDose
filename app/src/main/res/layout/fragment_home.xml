@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/magin_small"
-            android:text="@string/text_welcome"
+            app:welcomeUser="@{homeViewModelXML.currentUser}"
             android:textColor="@color/black"
             android:textSize="44sp"
             android:textStyle="bold|italic"
