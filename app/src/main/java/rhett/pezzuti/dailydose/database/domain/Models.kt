@@ -1,8 +1,6 @@
 package rhett.pezzuti.dailydose.database.domain
 
-import androidx.room.ColumnInfo
-import androidx.room.PrimaryKey
-import rhett.pezzuti.dailydose.database.DatabaseTrack
+import com.squareup.moshi.Json
 
 data class Track (
     val url: String,
@@ -10,7 +8,28 @@ data class Track (
     val artist: String,
     val genre: String,
     val image: String,
-    val timestamp: Long = System.currentTimeMillis()
+    val timestamp: Long
+)
+
+data class LocalTrack (
+
+    @Json(name = "url")
+    val url: String,
+
+    @Json(name = "title")
+    val title: String,
+
+    @Json(name = "artist")
+    val artist: String,
+
+    @Json(name = "genre")
+    val genre: String,
+
+    @Json(name = "image")
+    val image: String,
+
+    @Json(name = "timestamp")
+    val timestamp: Long
 )
 
 data class NotificationData (

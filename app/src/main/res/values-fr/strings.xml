@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    Menu Paragraphs    -->
+    <string name="about_intro_paragraph">Bonjour Peons. Bienvenue dans mon application de partage de musique. Le but
+        de cette application est de me permettre d’envoyer de la musique directement sur votre téléphone, sous la forme d’une notification push.
+        Au fil des ans, de nombreuses personnes m’ont demandé de leur envoyer de la musique, et cette application ne sera pas seulement
+        vous donner accès à une partie de ma bibliothèque, mais laissez-moi vous envoyer des trucs au fur et à mesure que je les trouve.
+    </string>
+
+    <string name="about_text_description">La façon dont cela fonctionne, c’est que vous allez dans les paramètres de cette application,
+        ou préférences, et vous me dites quels genres de musique vous souhaitez recevoir. Puis, quand je
+        téléversez une chanson de cette nature, vous recevrez une notification. Appuyez simplement dessus, et
+        vous amènera à un service de streaming où vous pourrez l’écouter.
+    </string>
+
+    <string name="about_text_description_2">Vous pouvez mettre en favori les chansons que je vous envoie en appuyant sur
+        coeur (duh). Le premier écran d’application est vos favoris, et l’autre écran vous permet de parcourir
+        la base de données. Devenir fou!
+    </string>
+    <string name="text_welcome">~ Bienvenu! ~</string>
+</resources>

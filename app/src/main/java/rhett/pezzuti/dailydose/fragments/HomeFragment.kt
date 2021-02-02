@@ -6,8 +6,10 @@ import android.net.Uri
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
@@ -30,6 +32,8 @@ class HomeFragment : Fragment() {
     private lateinit var viewModel: HomeViewModel
     private lateinit var viewModelFactory: HomeViewModelFactory
     private lateinit var binding: FragmentHomeBinding
+
+    private lateinit var navController: NavController
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -55,6 +59,8 @@ class HomeFragment : Fragment() {
             container,
             false
         )
+
+        navController = this.findNavController()
 
         Timber.i("Current Timestamp: ${System.currentTimeMillis()}")
 
@@ -91,7 +97,7 @@ class HomeFragment : Fragment() {
         viewModel.eventFavorites.observe(viewLifecycleOwner, { event ->
             if (event == true){
                 Timber.i("called")
-                this.findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToFavoritesFragment())
+                navController.navigate(HomeFragmentDirections.actionHomeFragmentToFavoritesFragment())
                 viewModel.doneNavigatingFavorites()
             }
         })
@@ -99,14 +105,14 @@ class HomeFragment : Fragment() {
         viewModel.eventUpload.observe(viewLifecycleOwner, { event ->
             if (event == true){
                 Timber.i("called")
-                this.findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToUploadFragment())
+                navController.navigate(HomeFragmentDirections.actionHomeFragmentToUploadFragment())
                 viewModel.doneNavigatingUpload()
             }
         })
 
         viewModel.eventPreferences.observe(viewLifecycleOwner, { event ->
             if (event == true){
-                this.findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToPreferencesFragment())
+                navController.navigate(HomeFragmentDirections.actionHomeFragmentToPreferencesFragment())
                 viewModel.doneNavigatingPreferences()
             }
 
@@ -114,7 +120,7 @@ class HomeFragment : Fragment() {
 
         viewModel.eventBrowse.observe(viewLifecycleOwner, { event ->
             if (event == true){
-                this.findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToBrowseFragment())
+                navController.navigate(HomeFragmentDirections.actionHomeFragmentToBrowseFragment())
                 viewModel.doneNavigatingBrowse()
             }
 
@@ -132,9 +138,15 @@ class HomeFragment : Fragment() {
         })
 
 
+
+        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.fragment_home_title)
         setHasOptionsMenu(true)
         return binding.root
+
+
     }
+
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.main_overflow_menu, menu)

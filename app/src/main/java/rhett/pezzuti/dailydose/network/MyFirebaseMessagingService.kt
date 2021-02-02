@@ -87,6 +87,7 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
                 remoteMessage.data["artist"]!!,
                 remoteMessage.data["genre"]!!,
                 remoteMessage.data["image"]!!,
+                System.currentTimeMillis()
             )
         }
     }
@@ -109,7 +110,8 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
     private fun saveTrackToFirebase(track: Track) {
 
         val firebaseDatabase = Firebase.database.reference
-        firebaseDatabase.child(track.genre).child(track.title).setValue(track)
+
+        firebaseDatabase.child("tracks").child(track.genre).child(track.title).setValue(track)
 
     }
 

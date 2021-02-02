@@ -2,11 +2,19 @@ package rhett.pezzuti.dailydose.viewmodels
 
 import android.annotation.SuppressLint
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import rhett.pezzuti.dailydose.database.domain.LocalTrack
+import rhett.pezzuti.dailydose.network.BrowseFirebaseApi
 import timber.log.Timber
 
 class BrowseViewModel : ViewModel() {
@@ -14,13 +22,44 @@ class BrowseViewModel : ViewModel() {
 
     private val MELODIC_DUBSTEP = "/Melodic%20Dubstep/Drop%20Our%20Hearts%20Pt%20II"
 
+    private val _response = MutableLiveData<String>()
+    val response : LiveData<String>
+        get() = _response
+
     init {
-        Timber.i("Hello World")
+        getTracksFromFirebase()
+    }
+
+    fun getStuff() {
+
+        val aString: String = ""
+        val reader = JSONObject(aString)
+
+        val sys : JSONObject = reader.getJSONObject("sys")
+        val country = sys.getString("country")
+
+        
+
     }
 
 
+
+
+    private fun getTracksFromFirebase() {
+        BrowseFirebaseApi.retrofitService.getAllTracks().enqueue( object: Callback<List<LocalTrack>>{
+            override fun onFailure(call: Call<List<LocalTrack>>, t: Throwable) {
+                _response.value = "Failure: " + t.message
+            }
+
+            override fun onResponse(call: Call<List<LocalTrack>>, response: Response<List<LocalTrack>>) {
+                _response.value = "Success: ${response.body()?.size} Mars properties retrieved"
+            }
+        })
+    }
+
     fun requestFromFirebase() {
         Timber.i("requestFromFirebase called")
+
 
         val firebaseDatabase = FirebaseDatabase.getInstance()
         val reference = firebaseDatabase.getReference("testing/doubletest")
