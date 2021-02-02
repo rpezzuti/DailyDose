@@ -3,6 +3,7 @@ package rhett.pezzuti.dailydose.database
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import rhett.pezzuti.dailydose.database.domain.Track
 
 
 @Entity(tableName = "track_table")
@@ -26,6 +27,19 @@ data class DatabaseTrack (
     @ColumnInfo(name = "track_timestamp")
     val timestamp: Long
 )
+
+fun List<DatabaseTrack>.asDomainModel(): List<Track> {
+    return map {
+        Track (
+            url = it.url,
+            title = it.title,
+            artist = it.artist,
+            genre = it.genre,
+            image = it.image,
+            timestamp = it.timestamp
+                )
+    }
+}
 
 @Entity (tableName = "user_preferences")
 data class User (

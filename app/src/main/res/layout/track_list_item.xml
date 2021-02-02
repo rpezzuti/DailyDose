@@ -12,6 +12,10 @@
         <variable
             name="clickListener"
             type="rhett.pezzuti.dailydose.adapters.DatabaseTrackListener" />
+
+        <variable
+            name="favoritesViewModelXML"
+            type="rhett.pezzuti.dailydose.viewmodels.FavoritesViewModel" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -74,6 +78,7 @@
                 android:background="@color/white"
                 android:contentDescription="@string/content_description_favorites_fab"
                 android:src="@drawable/ic_heart"
+                android:onClick="@{() -> favoritesViewModelXML.addToFavorites(track)}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

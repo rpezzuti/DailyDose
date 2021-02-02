@@ -135,7 +135,8 @@ class UploadFragment : Fragment() {
                 binding.etUploadTitle.text.toString(),
                 binding.etUploadArtist.text.toString(),
                 "genre",
-                "image"
+                "image",
+                System.currentTimeMillis()
             )
 
             sendNotificaitonWithIntent(track, app)

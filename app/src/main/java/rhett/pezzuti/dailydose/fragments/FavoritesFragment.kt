@@ -3,12 +3,14 @@ package rhett.pezzuti.dailydose.fragments
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import rhett.pezzuti.dailydose.viewmodels.FavoritesViewModel
 import rhett.pezzuti.dailydose.R
+import rhett.pezzuti.dailydose.database.getInstance
 import rhett.pezzuti.dailydose.databinding.FragmentFavoritesBinding
 import rhett.pezzuti.dailydose.factory.FavoritesViewModelFactory
 
@@ -37,12 +39,18 @@ class FavoritesFragment : Fragment() {
             false
         )
 
-        viewModelFactory = FavoritesViewModelFactory()
+        val app = requireNotNull(this.activity).application
+        val trackDataSource = getInstance(app.applicationContext).trackDatabaseDao
+        val userDataSource = getInstance(app.applicationContext).userPreferencesDao
+
+        viewModelFactory = FavoritesViewModelFactory(trackDataSource, userDataSource, app)
         viewModel = ViewModelProvider(this, viewModelFactory).get(FavoritesViewModel::class.java)
         binding.favoritesViewModelXML = viewModel
         binding.lifecycleOwner = this
 
 
+
+        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.fragment_favorites_title)
         setHasOptionsMenu(true)
         return binding.root
     }

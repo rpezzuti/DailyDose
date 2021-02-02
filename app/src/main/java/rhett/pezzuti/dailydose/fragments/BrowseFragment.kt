@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import rhett.pezzuti.dailydose.R
@@ -35,7 +36,7 @@ class BrowseFragment : Fragment() {
         binding.lifecycleOwner = this
 
 
-
+        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.fragment_browse_title)
         return binding.root
     }
 
