@@ -14,8 +14,17 @@ interface TrackDatabaseDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg tracks: DatabaseTrack)
 
+    @Query("SELECT * FROM track_table WHERE url = :url")
+    fun getTrack(url: String): DatabaseTrack
+
+    @Update
+    fun favorite(track: DatabaseTrack)
+
     @Query ("SELECT * FROM track_table ORDER BY track_timestamp DESC")
     fun getAllTracks() : LiveData<List<DatabaseTrack>>
+
+    @Query ("SELECT * FROM track_table WHERE is_favorite = :favorite")
+    fun getFavorites(favorite: Boolean): LiveData<List<DatabaseTrack>>
 
     @Query("SELECT * FROM track_table ORDER BY track_timestamp DESC LIMIT 5")
     fun getRecentTracks(): LiveData<List<DatabaseTrack>>

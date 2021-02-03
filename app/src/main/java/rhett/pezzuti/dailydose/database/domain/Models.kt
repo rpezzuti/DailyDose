@@ -8,7 +8,8 @@ data class Track (
     val artist: String,
     val genre: String,
     val image: String,
-    val timestamp: Long
+    val timestamp: Long,
+    var favorite: Boolean
 )
 
 data class LocalTrack (

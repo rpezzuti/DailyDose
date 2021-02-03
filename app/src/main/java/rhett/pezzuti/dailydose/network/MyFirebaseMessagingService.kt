@@ -79,7 +79,9 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
 
     private fun createTrackFromMessage(remoteMessage: RemoteMessage): Track {
 
-        // Create some kind of working Null Check.
+        val timestamp = remoteMessage.data["timestamp"]!!.toLong()
+
+        // Create some kind of working Null Check that doesn't crash the app
         remoteMessage.data.let {
             return Track(
                 remoteMessage.data["url"]!!,
@@ -87,7 +89,8 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
                 remoteMessage.data["artist"]!!,
                 remoteMessage.data["genre"]!!,
                 remoteMessage.data["image"]!!,
-                System.currentTimeMillis()
+                remoteMessage.data["timestamp"]!!.toLong(),
+                false
             )
         }
     }
@@ -101,7 +104,8 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
             track.artist,
             track.genre,
             track.image,
-            track.timestamp
+            track.timestamp,
+            track.favorite
         )
 
         database.insert(databaseTrack)

@@ -29,71 +29,73 @@ import timber.log.Timber
 
 class HomeFragment : Fragment() {
 
-    private lateinit var viewModel: HomeViewModel
-    private lateinit var viewModelFactory: HomeViewModelFactory
-    private lateinit var binding: FragmentHomeBinding
+    /**
+     * One way to delay creation of the viewModel until an appropriate lifecycle method is to use
+     * lazy. This requires that viewModel not be referenced before onViewCreated(), which we
+     * do in this Fragment.
+     */
+    private val viewModel: HomeViewModel by lazy {
+        val activity = requireNotNull(this.activity) {
+            "You can only access the viewModel after onViewCreated()"
+        }
 
-    private lateinit var navController: NavController
+        val trackDataSource = getInstance(activity.applicationContext).trackDatabaseDao
+        val userDataSource = getInstance(activity.applicationContext).userPreferencesDao
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        ViewModelProvider(this, HomeViewModelFactory(trackDataSource, userDataSource, activity.application)).get(HomeViewModel::class.java)
     }
 
+    private var viewModelAdapter: TrackAdapter? = null
 
+    // Putting the data into the adapter at the appropriate time.
     /**
-     *                              TODO BLOCK
-     *
-     * - Use Firebase as backend.
-     *
-     *
+     * Called immediately after onCreateView() has returned, and fragment's
+     * view hierarchy has been created.  It can be used to do final
+     * initialization once these pieces are in place, such as retrieving
+     * views or restoring state.
      */
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.tracks.observe(viewLifecycleOwner, { tracks ->
+            tracks?.apply {
+                viewModelAdapter?.submitList(tracks)
+            }
+        })
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
 
-        binding = DataBindingUtil.inflate(
+        val binding: FragmentHomeBinding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_home,
             container,
             false
         )
+        val navController = this.findNavController()
 
-        navController = this.findNavController()
-
-        Timber.i("Current Timestamp: ${System.currentTimeMillis()}")
-
-        /** Normal Pipes **/
-        val app = requireNotNull(this.activity).application
-        val trackDataSource = getInstance(app.applicationContext).trackDatabaseDao
-        val userDataSource = getInstance(app.applicationContext).userPreferencesDao
-        viewModelFactory = HomeViewModelFactory(trackDataSource, userDataSource, app)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
         binding.homeViewModelXML = viewModel
         binding.lifecycleOwner = this
 
 
-        /** Recycler View Pipes **/
-        val adapter = TrackAdapter( DatabaseTrackListener { url ->
+        /** Recycler View OnClick function **/
+        viewModelAdapter = TrackAdapter( DatabaseTrackListener { url ->
             val contentIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             val contentPendingIntent = PendingIntent.getActivity(
-                app.applicationContext,
+                requireContext(),
                 0,
                 contentIntent,
                 PendingIntent.FLAG_ONE_SHOT
             ).send()
-        }
 
-        )
-        binding.homeRecyclerView.adapter = adapter
-        viewModel.tracks.observe(viewLifecycleOwner, { tracks ->
-            tracks?.let {
-                adapter.submitList(tracks)
-            }
         })
+        binding.homeRecyclerView.adapter = viewModelAdapter
 
 
+        /** Navigation **/
         viewModel.eventFavorites.observe(viewLifecycleOwner, { event ->
             if (event == true){
                 Timber.i("called")
@@ -101,7 +103,6 @@ class HomeFragment : Fragment() {
                 viewModel.doneNavigatingFavorites()
             }
         })
-
         viewModel.eventUpload.observe(viewLifecycleOwner, { event ->
             if (event == true){
                 Timber.i("called")
@@ -109,7 +110,6 @@ class HomeFragment : Fragment() {
                 viewModel.doneNavigatingUpload()
             }
         })
-
         viewModel.eventPreferences.observe(viewLifecycleOwner, { event ->
             if (event == true){
                 navController.navigate(HomeFragmentDirections.actionHomeFragmentToPreferencesFragment())
@@ -117,7 +117,6 @@ class HomeFragment : Fragment() {
             }
 
         })
-
         viewModel.eventBrowse.observe(viewLifecycleOwner, { event ->
             if (event == true){
                 navController.navigate(HomeFragmentDirections.actionHomeFragmentToBrowseFragment())
@@ -142,8 +141,6 @@ class HomeFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.fragment_home_title)
         setHasOptionsMenu(true)
         return binding.root
-
-
     }
 
 

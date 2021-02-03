@@ -136,7 +136,8 @@ class UploadFragment : Fragment() {
                 binding.etUploadArtist.text.toString(),
                 "genre",
                 "image",
-                System.currentTimeMillis()
+                System.currentTimeMillis(),
+                favorite = false
             )
 
             sendNotificaitonWithIntent(track, app)

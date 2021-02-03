@@ -1,8 +1,10 @@
 package rhett.pezzuti.dailydose.network
 
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Deferred
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -17,28 +19,21 @@ private val moshi = Moshi.Builder()
     .build()
 
 private val firebaseRetrofit = Retrofit.Builder()
-    .addConverterFactory(MoshiConverterFactory.create(moshi))
     .baseUrl(FIREBASE_BASE_URL)
+    .addConverterFactory(MoshiConverterFactory.create(moshi))
+    .addCallAdapterFactory(CoroutineCallAdapterFactory())
     .build()
 
 interface BrowseFirebaseApiService {
     @GET(".json")
-    fun getDatbase():
-            Call<String>
-
-    @GET("tracks.json")
-    fun getAllTracksJSON():
-            Call<String>
-
-    @GET("tracks.json")
     fun getAllTracks():
             Call<List<LocalTrack>>
 
-    @GET("tracks/Melodic%20Dubstep.json")
-    fun getAllMelodicDubstep():
-            Call<List<LocalTrack>>
+    @GET(".json")
+    fun getJson():
+            Call<JSONObject>
 
-    @GET ("tracks.json")
+    @GET (".json")
     fun refreshDatbase(): Deferred<NetworkTrackContainer>
 }
 

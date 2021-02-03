@@ -16,7 +16,7 @@ class FavoritesViewModel(
 
 
 
-
+    val tracks = trackDatabase.getFavorites(true)
 
 
 

@@ -25,8 +25,12 @@ class SplashActivity : AppCompatActivity() {
 
             if (userDatabase.isUserInitialized() == null) {
                 startSetup()
+                // Prevent Backwards Navigation
+                finish()
             } else {
                 startMain()
+                // Prevent Backwards Navigation
+                finish()
             }
         }
 

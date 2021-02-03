@@ -5,17 +5,22 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import rhett.pezzuti.dailydose.database.domain.LocalTrack
+import rhett.pezzuti.dailydose.database.domain.Track
 import rhett.pezzuti.dailydose.network.BrowseFirebaseApi
+import rhett.pezzuti.dailydose.network.asDomainModel
 import timber.log.Timber
+import java.io.IOException
 
 class BrowseViewModel : ViewModel() {
 
@@ -26,8 +31,12 @@ class BrowseViewModel : ViewModel() {
     val response : LiveData<String>
         get() = _response
 
+    private val _playlist = MutableLiveData<List<Track>>()
+
     init {
-        getTracksFromFirebase()
+        _response.value = "fuck salt"
+        // getJSONFromFirebase()
+        // refreshTrackDatabase()
     }
 
     fun getStuff() {
@@ -43,16 +52,26 @@ class BrowseViewModel : ViewModel() {
     }
 
 
+    private fun refreshTrackDatabase() = viewModelScope.launch {
+        try {
+            val playlist = BrowseFirebaseApi.retrofitService.refreshDatbase().await()
+            _response.value = "it fucking worked"
+            _playlist.postValue(playlist.asDomainModel())
+
+        } catch (networkError: IOException) {
+            _response.value = "Failure: " + networkError.message
+        }
+    }
 
 
-    private fun getTracksFromFirebase() {
-        BrowseFirebaseApi.retrofitService.getAllTracks().enqueue( object: Callback<List<LocalTrack>>{
-            override fun onFailure(call: Call<List<LocalTrack>>, t: Throwable) {
+    private fun getJSONFromFirebase() {
+        BrowseFirebaseApi.retrofitService.getJson().enqueue( object: Callback<JSONObject>{
+            override fun onFailure(call: Call<JSONObject>, t: Throwable) {
                 _response.value = "Failure: " + t.message
             }
 
-            override fun onResponse(call: Call<List<LocalTrack>>, response: Response<List<LocalTrack>>) {
-                _response.value = "Success: ${response.body()?.size} Mars properties retrieved"
+            override fun onResponse(call: Call<JSONObject>, response: Response<JSONObject>) {
+                _response.value = response.body().toString()
             }
         })
     }

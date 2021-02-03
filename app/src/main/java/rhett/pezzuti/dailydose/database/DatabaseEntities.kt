@@ -25,7 +25,10 @@ data class DatabaseTrack (
     val image: String,
 
     @ColumnInfo(name = "track_timestamp")
-    val timestamp: Long
+    val timestamp: Long,
+
+    @ColumnInfo(name = "is_favorite")
+    var favorite: Boolean
 )
 
 fun List<DatabaseTrack>.asDomainModel(): List<Track> {
@@ -36,7 +39,8 @@ fun List<DatabaseTrack>.asDomainModel(): List<Track> {
             artist = it.artist,
             genre = it.genre,
             image = it.image,
-            timestamp = it.timestamp
+            timestamp = it.timestamp,
+            favorite = it.favorite
                 )
     }
 }
