@@ -5,6 +5,7 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import rhett.pezzuti.dailydose.database.DatabaseTrack
 import rhett.pezzuti.dailydose.database.TrackDatabaseDao
 import rhett.pezzuti.dailydose.database.User
 import rhett.pezzuti.dailydose.database.UserPreferencesDao
@@ -105,6 +106,21 @@ class HomeViewModel(
             trackDatabase.clearAll()
         }
     }
+
+    fun onFavorite(url: String) {
+        viewModelScope.launch {
+            favorite(url)
+        }
+    }
+
+    private suspend fun favorite(url: String) {
+        withContext(Dispatchers.IO) {
+            val track = trackDatabase.getTrack(url)
+            track.favorite = true
+            trackDatabase.favorite(track)
+        }
+    }
+
 
 
 }

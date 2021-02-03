@@ -2,6 +2,8 @@ package rhett.pezzuti.dailydose.utils
 
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import rhett.pezzuti.dailydose.R
 import rhett.pezzuti.dailydose.database.DatabaseTrack
 import rhett.pezzuti.dailydose.database.User
 
@@ -30,5 +32,15 @@ fun TextView.setTrackGenre(item: DatabaseTrack?) {
 fun TextView.setWelcomeHome(item: User?) {
     item?.let {
         text = "~ Welcome, ${item.username}! ~"
+    }
+}
+
+@BindingAdapter("isFavorite")
+fun FloatingActionButton.favorite(item: DatabaseTrack?) {
+    item?.let {
+        when(item.favorite){
+            false -> setImageResource(R.drawable.ic_eigth_note)
+            true -> setImageResource(R.drawable.ic_heart)
+        }
     }
 }

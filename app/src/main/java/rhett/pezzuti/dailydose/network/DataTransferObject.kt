@@ -1,8 +1,9 @@
 package rhett.pezzuti.dailydose.network
 
-import androidx.room.Database
+
 import com.squareup.moshi.JsonClass
 import rhett.pezzuti.dailydose.database.DatabaseTrack
+import rhett.pezzuti.dailydose.database.domain.Track
 
 @JsonClass(generateAdapter = true)
 data class NetworkTrackContainer (val tracks: List<NetworkTrack>)
@@ -14,8 +15,23 @@ data class NetworkTrack(
     val artist: String,
     val genre: String,
     val image: String,
-    val timestamp: Long
+    val timestamp: Long,
+    val favorite: Boolean
 )
+
+fun NetworkTrackContainer.asDomainModel(): List<Track> {
+    return tracks.map {
+        Track (
+            url = it.url,
+            title = it.title,
+            artist = it.artist,
+            genre = it.genre,
+            image = it.image,
+            timestamp = it.timestamp,
+            favorite = it.favorite
+        )
+    }
+}
 
 fun NetworkTrackContainer.asDatabaseModel(): Array<DatabaseTrack> {
     return tracks.map {
@@ -25,7 +41,8 @@ fun NetworkTrackContainer.asDatabaseModel(): Array<DatabaseTrack> {
             artist = it.artist,
             genre = it.genre,
             image = it.image,
-            timestamp = it.timestamp
+            timestamp = it.timestamp,
+            favorite = it.favorite
                 )
     }.toTypedArray()
 }
