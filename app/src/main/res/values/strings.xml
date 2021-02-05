@@ -29,6 +29,9 @@
     <string name="text_recent_uploads">Recent Uploads:</string>
     <string name="text_view_preferences_welcome">What do you like?</string>
     <string name="text_hello">Hello!</string>
+    <string name="textview_title">Title:</string>
+    <string name="textview_artist">Artist:</string>
+    <string name="text_click_me">Click Me!</string>
 
 
     <!--    Hints    -->
@@ -46,6 +49,7 @@
     <string name="button_clear_all">Clear All</string>
     <string name="button_next">Next</string>
     <string name="button_done">Done</string>
+    <string name="button_finish">Finish</string>
 
 
     <!--    Menu    -->
@@ -88,9 +92,7 @@
 
     <!-- Content Descriptions -->
     <string name="content_description_favorites_fab">Favorites Fab</string>
-    <string name="textview_title">Title:</string>
-    <string name="textview_artist">Artist:</string>
-    <string name="button_finish">Finish</string>
+    <string name="cd_cat_picture">Self Portrait</string>
 
     <!-- Fragment Screen Titles -->
     <string name="fragment_home_title">Home</string>
@@ -99,5 +101,12 @@
     <string name="fragment_info_title">Info</string>
     <string name="fragment_favorites_title">Favorites</string>
     <string name="fragment_preferences_title">Preferences</string>
+
+    <!-- Info Fragment Strings -->
+    <string name="info_rhett_pezzuti">Rhett Pezzuti</string>
+    <string name="info_bout_me">Cats and computers</string>
+    <string name="info_more">More music ~</string>
+    <string name="info_soundcloud">https://soundcloud.com/rhettp</string>
+    <string name="info_spotify">https://open.spotify.com/user/1212805377</string>
 
 </resources>

@@ -53,4 +53,5 @@ class TrackDiffCallback : DiffUtil.ItemCallback<DatabaseTrack>() {
 
 class DatabaseTrackListener(val clickListener: (trackUrl: String) -> Unit) {
     fun onClick(track: DatabaseTrack) = clickListener(track.url)
+    // fun onFavorite(track: DatabaseTrack) = fabListener(track.favorite)
 }
