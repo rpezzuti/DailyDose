@@ -97,8 +97,6 @@ class PreferencesViewModel(private val app: Application) : AndroidViewModel(app)
 
     fun checkDubstep() {
 
-        MainActivity.sharedPref?.edit()?.putInt("dubstep", 0)?.apply()
-
         val checked = _checkBoxDubstep.value
         if (checked != true) {
             _checkBoxDubstep.value = true

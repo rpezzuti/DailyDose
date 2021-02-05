@@ -3,17 +3,19 @@ package rhett.pezzuti.dailydose.activities
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import rhett.pezzuti.dailydose.R
 
 class MainActivity : AppCompatActivity() {
 
-    companion object {
-        val sharedPref: SharedPreferences? = null
-    }
+
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
