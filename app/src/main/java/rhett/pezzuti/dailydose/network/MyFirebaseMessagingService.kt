@@ -89,7 +89,7 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
                 remoteMessage.data["artist"]!!,
                 remoteMessage.data["genre"]!!,
                 remoteMessage.data["image"]!!,
-                remoteMessage.data["timestamp"]!!.toLong(),
+                timestamp,
                 false
             )
         }
@@ -115,8 +115,10 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
 
         val firebaseDatabase = Firebase.database.reference
 
-        firebaseDatabase.child("tracks").child(track.genre).child(track.title).setValue(track)
+        val list = listOf(track)
 
+        // firebaseDatabase.child("tracks").child(track.genre).child(track.title).setValue(track)
+        firebaseDatabase.child("tracks").child(track.title).setValue(list)
     }
 
     private fun sendNotification(messageBody: String) {

@@ -15,7 +15,6 @@ import rhett.pezzuti.dailydose.viewmodels.FavoritesViewModel
 import rhett.pezzuti.dailydose.R
 import rhett.pezzuti.dailydose.adapters.DatabaseTrackListener
 import rhett.pezzuti.dailydose.adapters.TrackAdapter
-import rhett.pezzuti.dailydose.database.domain.Track
 import rhett.pezzuti.dailydose.database.getInstance
 import rhett.pezzuti.dailydose.databinding.FragmentFavoritesBinding
 import rhett.pezzuti.dailydose.factory.FavoritesViewModelFactory

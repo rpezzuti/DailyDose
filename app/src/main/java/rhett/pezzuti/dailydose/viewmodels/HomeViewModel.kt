@@ -5,10 +5,8 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import rhett.pezzuti.dailydose.database.DatabaseTrack
-import rhett.pezzuti.dailydose.database.TrackDatabaseDao
-import rhett.pezzuti.dailydose.database.User
-import rhett.pezzuti.dailydose.database.UserPreferencesDao
+import rhett.pezzuti.dailydose.database.*
+import rhett.pezzuti.dailydose.repository.TrackRepository
 import timber.log.Timber
 
 class HomeViewModel(
@@ -40,6 +38,9 @@ class HomeViewModel(
 
     val tracks = trackDatabase.getRecentTracks()
 
+    private val database = getInstance(getApplication())
+    private val trackRepository = TrackRepository(database)
+
 
     private val currentUser = MediatorLiveData<User>()
     fun getCurrentUser() = currentUser
@@ -52,6 +53,13 @@ class HomeViewModel(
         _eventBrowse.value = false
         _showSnackBarEvent.value = false
         currentUser.addSource(userDatabase.getCurrentUser(), currentUser::setValue)
+
+
+/*        viewModelScope.launch {
+            trackRepository.refreshTracks()
+        }
+        val allTracks = trackRepository.tracks*/
+
     }
 
     fun navigateToFavorites(){

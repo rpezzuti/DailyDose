@@ -34,7 +34,7 @@ interface BrowseFirebaseApiService {
             Call<JSONObject>
 
     @GET (".json")
-    fun refreshDatbase(): Deferred<NetworkTrackContainer>
+    fun refreshDatabase(): Deferred<NetworkTrackContainer>
 }
 
 object BrowseFirebaseApi {

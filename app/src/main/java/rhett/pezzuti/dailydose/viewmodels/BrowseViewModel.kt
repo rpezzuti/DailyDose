@@ -15,7 +15,6 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import rhett.pezzuti.dailydose.database.domain.LocalTrack
 import rhett.pezzuti.dailydose.database.domain.Track
 import rhett.pezzuti.dailydose.network.BrowseFirebaseApi
 import rhett.pezzuti.dailydose.network.asDomainModel
@@ -34,9 +33,9 @@ class BrowseViewModel : ViewModel() {
     private val _playlist = MutableLiveData<List<Track>>()
 
     init {
-        _response.value = "fuck salt"
+        refreshTrackDatabase()
+        // _response.value = "fuck salt"
         // getJSONFromFirebase()
-        // refreshTrackDatabase()
     }
 
     fun getStuff() {
@@ -54,7 +53,7 @@ class BrowseViewModel : ViewModel() {
 
     private fun refreshTrackDatabase() = viewModelScope.launch {
         try {
-            val playlist = BrowseFirebaseApi.retrofitService.refreshDatbase().await()
+            val playlist = BrowseFirebaseApi.retrofitService.refreshDatabase().await()
             _response.value = "it fucking worked"
             _playlist.postValue(playlist.asDomainModel())
 

@@ -17,6 +17,9 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.RemoteMessage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -41,6 +44,8 @@ class UploadFragment : Fragment() {
     private val TOPIC_GARAGE = "garage"
     private val TOPIC_PIANO_AMBIENT = "piano-ambient"
     private val TOPIC_TEST = "Test"
+
+    private val SENDER_ID = 792171633337
 
     companion object {
         private const val TAG = "UploadFragment"
@@ -78,7 +83,6 @@ class UploadFragment : Fragment() {
         )
 
 
-
         // To make new topics, subscribe to them through here.
         viewModel.subscribeTopic(TOPIC_TEST)
 
@@ -102,6 +106,22 @@ class UploadFragment : Fragment() {
 
                 // sendNotificaitonWithIntent(databaseTrack, app)
 
+                val fm = FirebaseMessaging.getInstance()
+
+                val message = RemoteMessage.Builder("$SENDER_ID@fcm.googleapis.com")
+                    .setMessageId(SENDER_ID.toString())
+                    .addData("url", binding.etUploadLink.text.toString())
+                    .addData("title", binding.etUploadTitle.text.toString())
+                    .addData("artist", binding.etUploadArtist.text.toString())
+                    .addData("genre", "DUMMYGENRE")
+                    .addData("image", "DUMMYIMAGE")
+                    .addData("timestamp", System.currentTimeMillis().toString())
+                    .build()
+
+                fm.send(message)
+
+
+/*
                 val builder = AlertDialog.Builder(context)
                     .setTitle("Upload?")
                     .setMessage("Are you sure you want to upload?")
@@ -121,6 +141,7 @@ class UploadFragment : Fragment() {
                     )
                     .create()
                     .show()
+*/
 
                 viewModel.doneUploadCheck()
             }
