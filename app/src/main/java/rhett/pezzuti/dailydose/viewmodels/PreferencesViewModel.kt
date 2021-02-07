@@ -95,6 +95,14 @@ class PreferencesViewModel(private val app: Application) : AndroidViewModel(app)
 
     }
 
+    fun subTest() {
+        subscribeTopic(TOPIC_TEST)
+    }
+
+    fun unsubTest() {
+        unSubscribeTopic(TOPIC_TEST)
+    }
+
     fun checkDubstep() {
 
         val checked = _checkBoxDubstep.value
@@ -249,10 +257,6 @@ class PreferencesViewModel(private val app: Application) : AndroidViewModel(app)
             unSubscribeTopic(TOPIC_LIVE_PERFORMANCES)
         }
     }
-
-
-
-
 
 
 

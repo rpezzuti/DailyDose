@@ -90,36 +90,6 @@ class HomeFragment : Fragment() {
         binding.homeRecyclerView.adapter = viewModelAdapter
 
 
-        /** Navigation **/
-        viewModel.eventFavorites.observe(viewLifecycleOwner, { event ->
-            if (event == true){
-                Timber.i("called")
-                navController.navigate(HomeFragmentDirections.actionHomeFragmentToFavoritesFragment())
-                viewModel.doneNavigatingFavorites()
-            }
-        })
-        viewModel.eventUpload.observe(viewLifecycleOwner, { event ->
-            if (event == true){
-                Timber.i("called")
-                navController.navigate(HomeFragmentDirections.actionHomeFragmentToUploadFragment())
-                viewModel.doneNavigatingUpload()
-            }
-        })
-        viewModel.eventPreferences.observe(viewLifecycleOwner, { event ->
-            if (event == true){
-                navController.navigate(HomeFragmentDirections.actionHomeFragmentToPreferencesFragment())
-                viewModel.doneNavigatingPreferences()
-            }
-
-        })
-        viewModel.eventBrowse.observe(viewLifecycleOwner, { event ->
-            if (event == true){
-                navController.navigate(HomeFragmentDirections.actionHomeFragmentToBrowseFragment())
-                viewModel.doneNavigatingBrowse()
-            }
-
-        })
-
         viewModel.showSnackBarEvent.observe(viewLifecycleOwner, { event ->
             if (event == true){
                 Snackbar.make(

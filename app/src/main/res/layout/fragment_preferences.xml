@@ -22,10 +22,34 @@
             android:text="@string/text_view_preferences_welcome"
             android:textColor="@color/black"
             android:textSize="44sp"
-            app:layout_constraintBottom_toTopOf="@+id/tv_preferences_EDM"
+            app:layout_constraintBottom_toTopOf="@+id/btn_sub_test"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btn_sub_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_test"
+            android:onClick="@{() -> preferencesViewModelXML.subTest()}"
+            android:layout_marginBottom="@dimen/margin_medium"
+            app:layout_constraintBottom_toTopOf="@+id/tv_preferences_EDM"
+            app:layout_constraintEnd_toStartOf="@+id/btn_unsub_test"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/btn_unsub_test"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button_unsub_test"
+            android:onClick="@{() -> preferencesViewModelXML.unsubTest()}"
+            android:layout_marginBottom="@dimen/margin_medium"
+            app:layout_constraintBottom_toTopOf="@+id/tv_preferences_EDM"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btn_sub_test" />
 
         <TextView
             android:id="@+id/tv_preferences_EDM"
@@ -37,15 +61,6 @@
             android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/checkbox_group_EDM"
             app:layout_constraintStart_toStartOf="@+id/checkbox_group_EDM" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/checkbox_melodic_dubstep"
-            app:layout_constraintBaseline_toBaselineOf="@+id/tv_preferences_EDM"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.877"
-            app:layout_constraintStart_toStartOf="parent" />
 
         <RadioGroup
             android:id="@+id/checkbox_group_EDM"
