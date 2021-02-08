@@ -108,5 +108,8 @@
     <string name="info_more">More music ~</string>
     <string name="info_soundcloud">https://soundcloud.com/rhettp</string>
     <string name="info_spotify">https://open.spotify.com/user/1212805377</string>
+    <string name="cd_task_header_image">Task Header Image</string>
+    <string name="button_test">Test</string>
+    <string name="button_unsub_test">No-Test</string>
 
 </resources>

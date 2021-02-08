@@ -43,7 +43,6 @@ class PreferencesFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(PreferencesViewModel::class.java)
         binding.preferencesViewModelXML = viewModel
         binding.lifecycleOwner = this
-        viewModel.subscribeTopic(TOPIC_TEST)
 
         initializeBoxes(binding)
 

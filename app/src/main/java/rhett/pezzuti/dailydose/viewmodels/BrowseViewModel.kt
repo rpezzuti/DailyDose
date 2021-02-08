@@ -33,8 +33,8 @@ class BrowseViewModel : ViewModel() {
     private val _playlist = MutableLiveData<List<Track>>()
 
     init {
-        refreshTrackDatabase()
-        // _response.value = "fuck salt"
+        // refreshTrackDatabase()
+        _response.value = "broken AF"
         // getJSONFromFirebase()
     }
 

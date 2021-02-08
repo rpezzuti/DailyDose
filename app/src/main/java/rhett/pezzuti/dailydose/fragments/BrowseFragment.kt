@@ -36,7 +36,6 @@ class BrowseFragment : Fragment() {
         binding.lifecycleOwner = this
 
 
-        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.fragment_browse_title)
         return binding.root
     }
 
