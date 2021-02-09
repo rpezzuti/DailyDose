@@ -46,6 +46,7 @@ class UploadFragment : Fragment() {
     private val TOPIC_TEST = "Test"
 
     private val SENDER_ID = 792171633337
+    private val MESSAGE_ID = Math.random().toInt().toString()
 
     companion object {
         private const val TAG = "UploadFragment"
@@ -69,22 +70,12 @@ class UploadFragment : Fragment() {
         binding.uploadViewModelXML = viewModel
         binding.lifecycleOwner = this
 
-
-        /** FCM Notification Channel **/
-        createChannel(
-            getString(R.string.fcm_notification_channel_id),
-            getString(R.string.fcm_notification_channel_name)
-        )
-
-        /** Local Notification Channel **/
-        createChannel(
-            getString(R.string.notification_channel_id),
-            getString(R.string.notification_channel_name)
-        )
-
-
         // To make new topics, subscribe to them through here.
-        viewModel.subscribeTopic(TOPIC_TEST)
+       // viewModel.subscribeTopic(TOPIC_TEST)
+
+
+
+        binding.textFirebaseToken.text = FirebaseMessaging.getInstance().token.toString()
 
         /** Upload Button Observer **/
         viewModel.eventUploadCheck.observe(viewLifecycleOwner, { event ->
@@ -109,7 +100,7 @@ class UploadFragment : Fragment() {
                 val fm = FirebaseMessaging.getInstance()
 
                 val message = RemoteMessage.Builder("$SENDER_ID@fcm.googleapis.com")
-                    .setMessageId(SENDER_ID.toString())
+                    .setMessageId(MESSAGE_ID)
                     .addData("url", binding.etUploadLink.text.toString())
                     .addData("title", binding.etUploadTitle.text.toString())
                     .addData("artist", binding.etUploadArtist.text.toString())
@@ -117,7 +108,6 @@ class UploadFragment : Fragment() {
                     .addData("image", "DUMMYIMAGE")
                     .addData("timestamp", System.currentTimeMillis().toString())
                     .build()
-
                 fm.send(message)
 
 
@@ -150,25 +140,27 @@ class UploadFragment : Fragment() {
 
 
 
-        fun uploadTrack() {
-            val track = Track(
-                binding.etUploadLink.text.toString(),
-                binding.etUploadTitle.text.toString(),
-                binding.etUploadArtist.text.toString(),
-                "genre",
-                "image",
-                System.currentTimeMillis(),
-                favorite = false
-            )
-
-            sendNotificaitonWithIntent(track, app)
-
-        }
-
         return binding.root
     }
 
-    fun sendNotification(notification: TrackNotification){
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /** Failed Retrofit Attempts **/
+    /*fun sendNotification(notification: TrackNotification){
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val response = RetrofitInstance.api.postNotification(notification)
@@ -183,29 +175,6 @@ class UploadFragment : Fragment() {
             }
     }
     }
-
-
-    // Creates notification Channel
-    private fun createChannel(channelId: String, channelName: String) {
-
-        // API 26+
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            val notificationChannel = NotificationChannel(
-                channelId,
-                channelName,
-                NotificationManager.IMPORTANCE_DEFAULT
-            )
-
-            notificationChannel.enableLights(true)
-            notificationChannel.lightColor = Color.RED
-            notificationChannel.enableVibration(true)
-            notificationChannel.description = "Music's pretty cool"
-
-            val notificationManager = requireActivity().getSystemService(NotificationManager::class.java)
-            notificationManager.createNotificationChannel(notificationChannel)
-        }
-    }
-
     private fun sendNotificaitonWithIntent(track: Track, app: Application) {
         val notificationManager = ContextCompat.getSystemService(
             app.applicationContext,
@@ -213,5 +182,5 @@ class UploadFragment : Fragment() {
         ) as NotificationManager
 
         notificationManager.sendNotificationWithIntent(track.title, track.artist, track.url, app.applicationContext)
-    }
+    }*/
 }

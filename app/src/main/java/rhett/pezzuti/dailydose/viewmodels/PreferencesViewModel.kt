@@ -6,12 +6,20 @@ import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.messaging.FirebaseMessaging
-import rhett.pezzuti.dailydose.activities.MainActivity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import rhett.pezzuti.dailydose.R
+import rhett.pezzuti.dailydose.database.User
 import rhett.pezzuti.dailydose.database.getInstance
+import rhett.pezzuti.dailydose.databinding.FragmentPreferencesBinding
 
-class PreferencesViewModel(private val app: Application) : AndroidViewModel(app) {
+class PreferencesViewModel(
+    private val app: Application,
+    private val binding: FragmentPreferencesBinding
+) : AndroidViewModel(app) {
 
     /** GENRES / TOPICS **/
     private val TOPIC_DUBSTEP = "dubstep"
@@ -33,6 +41,8 @@ class PreferencesViewModel(private val app: Application) : AndroidViewModel(app)
     private val TOPIC_TEST = "Test"
 
     private val preferences = getInstance(app.applicationContext).userPreferencesDao
+
+    private lateinit var user: User
 
     /** Encapsulated Checkbox Triggers **/
     private val _checkBoxDubstep = MutableLiveData<Boolean>()
@@ -91,9 +101,34 @@ class PreferencesViewModel(private val app: Application) : AndroidViewModel(app)
     val checkBoxLivePerformances : LiveData<Boolean>
         get() = _checkBoxLivePerformances
 
-    init {
+    private var _currentUser = MutableLiveData<User>()
+    val currentUser : LiveData<User>
+        get() = _currentUser
 
+    init {
+        initializeUser()
     }
+
+    private fun initializeUser() {
+        viewModelScope.launch {
+            _currentUser.value = getCurrentUserFromDatabase()
+        }
+    }
+
+    private suspend fun getCurrentUserFromDatabase(): User {
+        return withContext(Dispatchers.IO) {
+
+            val user = preferences.getCurrentDomainUser()
+            user
+        }
+    }
+
+    fun initializeBoxes(binding:FragmentPreferencesBinding) {
+        if (!user.dubstep){
+            binding.checkboxDubstep.isChecked = true
+        }
+    }
+
 
     fun subTest() {
         subscribeTopic(TOPIC_TEST)

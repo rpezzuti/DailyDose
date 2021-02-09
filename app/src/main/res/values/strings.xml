@@ -50,11 +50,18 @@
     <string name="button_next">Next</string>
     <string name="button_done">Done</string>
     <string name="button_finish">Finish</string>
+    <string name="button_test">Test</string>
+    <string name="button_unsub_test">No-Test</string>
+
 
 
     <!--    Menu    -->
     <string name="menu_about">About</string>
     <string name="menu_info">Info</string>
+
+    <string name="menu_filter">Filter</string>
+    <string name="menu_edm">EDM</string>
+    <string name="menu_acoustic">Acoustic</string>
 
 
     <!--    Notification Stuff    -->
@@ -109,7 +116,6 @@
     <string name="info_soundcloud">https://soundcloud.com/rhettp</string>
     <string name="info_spotify">https://open.spotify.com/user/1212805377</string>
     <string name="cd_task_header_image">Task Header Image</string>
-    <string name="button_test">Test</string>
-    <string name="button_unsub_test">No-Test</string>
-
+    <string name="menu_themes">Themes</string>
+    <string name="fragment_themes_title">Themes</string>
 </resources>

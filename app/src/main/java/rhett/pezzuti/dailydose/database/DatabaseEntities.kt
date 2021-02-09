@@ -52,45 +52,45 @@ data class User (
     val username: String,
 
     @ColumnInfo
-    val dubstep : Boolean = false,
+    var dubstep : Boolean = false,
 
     @ColumnInfo
-    val melodicDubstep: Boolean = false,
+    var melodicDubstep: Boolean = false,
 
     @ColumnInfo
-    val loFi: Boolean = false,
+    var loFi: Boolean = false,
 
     @ColumnInfo
-    val chillstep: Boolean = false,
+    var chillstep: Boolean = false,
 
     @ColumnInfo
-    val futureGarage: Boolean = false,
+    var futureGarage: Boolean = false,
 
     @ColumnInfo
-    val pianoAmbient: Boolean = false,
+    var pianoAmbient: Boolean = false,
 
     @ColumnInfo
-    val experimentalBass: Boolean = false,
+    var experimentalBass: Boolean = false,
 
     @ColumnInfo
-    val liquidDnB: Boolean = false,
+    var liquidDnB: Boolean = false,
 
     @ColumnInfo
-    val ambientBass: Boolean = false,
+    var ambientBass: Boolean = false,
 
     @ColumnInfo
-    val metalcore: Boolean = false,
+    var metalcore: Boolean = false,
 
     @ColumnInfo
-    val acousticBallads: Boolean = false,
+    var acousticBallads: Boolean = false,
 
     @ColumnInfo
-    val instrumentalRock: Boolean = false,
+    var instrumentalRock: Boolean = false,
 
     @ColumnInfo
-    val deathMetal: Boolean = false,
+    var deathMetal: Boolean = false,
 
     @ColumnInfo
-    val livePerformances: Boolean = false
+    var livePerformances: Boolean = false
 
 )

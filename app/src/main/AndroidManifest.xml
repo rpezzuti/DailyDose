@@ -23,7 +23,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.MainActivity" /> <!-- Copy paste from the FCM lesson on Udacity -->
+        <activity android:name=".activities.MainActivity" />
+
+
+
+
+
+        <!-- Copy paste from the FCM lesson on Udacity -->
         <!-- The service itself and default metadata (variables) for the system notification -->
         <service
             android:name=".network.MyFirebaseMessagingService"
