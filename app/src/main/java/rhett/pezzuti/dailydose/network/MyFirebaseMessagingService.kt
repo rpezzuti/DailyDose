@@ -104,7 +104,7 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
                 remoteMessage.data["genre"]!!,
                 remoteMessage.data["image"]!!,
                 timestamp,
-                false
+                true
             )
         }
     }

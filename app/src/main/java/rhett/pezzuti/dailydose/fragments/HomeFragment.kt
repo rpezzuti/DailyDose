@@ -71,7 +71,6 @@ class HomeFragment : Fragment() {
             container,
             false
         )
-        val navController = this.findNavController()
 
         binding.homeViewModelXML = viewModel
         binding.lifecycleOwner = this
@@ -119,12 +118,12 @@ class HomeFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // This return statement works when the id of the menu item matches the id of the fragment in the nav graph.
 
-        if (item.itemId == R.id.menu_filter) {
+        return if (item.itemId == R.id.menu_filter) {
             showFilteringPopUpMenu()
-            return true
+            true
         } else {
-            return NavigationUI.onNavDestinationSelected(item!!, requireView().findNavController())
-                    || super.onOptionsItemSelected(item)
+            (NavigationUI.onNavDestinationSelected(item!!, requireView().findNavController())
+                    || super.onOptionsItemSelected(item))
         }
     }
 

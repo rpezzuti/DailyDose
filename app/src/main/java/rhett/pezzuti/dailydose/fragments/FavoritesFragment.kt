@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
@@ -93,7 +94,34 @@ class FavoritesFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // This return statement works when the id of the menu item matches the id of the fragment in the nav graph.
-        return NavigationUI.onNavDestinationSelected(item!!, requireView().findNavController())
-                || super.onOptionsItemSelected(item)
+
+
+        return if (item.itemId == R.id.menu_filter) {
+            showFilteringPopUpMenu()
+            true
+        } else {
+            (NavigationUI.onNavDestinationSelected(item!!, requireView().findNavController())
+                    || super.onOptionsItemSelected(item))
+        }
+    }
+
+    private fun showFilteringPopUpMenu() {
+        val view = activity?.findViewById<View>(R.id.menu_filter) ?: return
+        PopupMenu(requireContext(), view).run {
+            menuInflater.inflate(R.menu.filter_tracks, menu)
+
+            /**
+            setOnMenuItemClickListener {
+            viewModel.setFiltering(
+            when (it.itemId) {
+            R.id.active -> TasksFilterType.ACTIVE_TASKS
+            R.id.completed -> TasksFilterType.COMPLETED_TASKS
+            else -> TasksFilterType.ALL_TASKS
+            }
+            )
+            true
+            }**/
+            show()
+        }
     }
 }
