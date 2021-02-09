@@ -1,5 +1,7 @@
 package rhett.pezzuti.dailydose
 
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.RemoteMessage
 import org.junit.Test
 
 import org.junit.Assert.*

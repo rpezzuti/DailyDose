@@ -1,6 +1,9 @@
 package rhett.pezzuti.dailydose
 
 import android.app.Application
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.graphics.Color
 import android.os.Build
 import androidx.work.*
 import kotlinx.coroutines.CoroutineScope
@@ -33,6 +36,7 @@ class DailyDoseApplication : Application() {
         Timber.plant(Timber.DebugTree())
 
         // delayedInit()
+
     }
 
     private fun delayedInit() = applicationScope.launch {
@@ -107,7 +111,6 @@ class DailyDoseApplication : Application() {
 
 
     }
-
 
 }
 

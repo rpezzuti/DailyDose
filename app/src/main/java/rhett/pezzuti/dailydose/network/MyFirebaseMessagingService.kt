@@ -12,6 +12,7 @@ import rhett.pezzuti.dailydose.database.getInstance
 import rhett.pezzuti.dailydose.utils.sendNotification
 import rhett.pezzuti.dailydose.utils.sendNotificationWithIntent
 import timber.log.Timber
+import java.lang.Exception
 
 class MyFirebaseMessagingService: FirebaseMessagingService() {
 
@@ -66,6 +67,19 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
         Timber.i("Here is your token: $token")
 
         sendRegistrationToServer(token)
+    }
+
+
+    override fun onMessageSent(messageId: String) {
+        super.onMessageSent(messageId)
+
+        Timber.i("Send Message $messageId")
+    }
+
+    override fun onSendError(messageId: String, e: Exception) {
+        super.onSendError(messageId, e)
+
+        Timber.i("Error: ${e.message}")
     }
 
     /**

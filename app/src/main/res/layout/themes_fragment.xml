@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/colorPrimaryVariant"
+        tools:context=".fragments.ThemesFragment">
+
+        <TextView
+            android:id="@+id/text_themes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/menu_themes"
+            android:textSize="32sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="@dimen/margin_medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RelativeLayout
+            android:id="@+id/theme_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_themes">
+
+            <ImageView
+                android:id="@+id/img_primary"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@color/primaryColor" />
+
+            <ImageView
+                android:id="@+id/img_primary_dark"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/primaryDarkColor" />
+
+            <ImageView
+                android:id="@+id/img_primary_varient"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@color/primaryLightColor" />
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/img_primary_dark"
+                android:background="@color/secondaryColor" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/img_primary_dark"
+                android:background="@color/secondaryLightColor" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/theme_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_themes">
+
+            <ImageView
+                android:id="@+id/img_primary_2"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@color/altPrimaryColor" />
+
+            <ImageView
+                android:id="@+id/img_primary_dark_2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/altPrimaryDarkColor" />
+
+            <ImageView
+                android:id="@+id/img_primary_varient_2"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@color/altPrimaryLightColor" />
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/img_primary_dark_2"
+                android:background="@color/altSecondaryColor" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/img_primary_dark_2"
+                android:background="@color/altSecondaryLightColor" />
+        </RelativeLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -57,7 +57,7 @@ class SetupNameFragment : Fragment() {
         fadeInOut.addAnimation(fadeIn)
         fadeInOut.addAnimation(fadeOut)
 
-        binding.textSetupHello.startAnimation(fadeInOut)
+        // binding.textSetupHello.startAnimation(fadeInOut)
 
 
 

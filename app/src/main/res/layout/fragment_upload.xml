@@ -13,13 +13,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragments.UploadFragment">
+        tools:context=".fragments.UploadFragment"
+        android:background="?attr/colorSecondaryVariant">
 
         <TextView
             android:id="@+id/tv_upload_link"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/magin_small"
+            android:layout_margin="@dimen/margin_small"
             android:text="@string/text_view_link"
             android:textColor="@color/black"
             android:textSize="24sp"
@@ -30,7 +31,7 @@
             android:id="@+id/et_upload_link"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/magin_small"
+            android:layout_margin="@dimen/margin_small"
             android:hint="@string/hint_enter_link"
             android:importantForAutofill="no"
             android:inputType="textWebEmailAddress"
@@ -42,7 +43,7 @@
             android:id="@+id/tv_upload_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/magin_small"
+            android:layout_marginStart="@dimen/margin_small"
             android:text="@string/textview_title"
             android:textColor="@color/black"
             android:textSize="24sp"
@@ -53,7 +54,7 @@
             android:id="@+id/et_upload_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/magin_small"
+            android:layout_margin="@dimen/margin_small"
             android:hint="@string/hint_track_title"
             android:importantForAutofill="no"
             android:inputType="textPersonName"
@@ -65,7 +66,7 @@
             android:id="@+id/tv_upload_artist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/magin_small"
+            android:layout_marginStart="@dimen/margin_small"
             android:text="@string/textview_artist"
             android:textColor="@color/black"
             android:textSize="24sp"
@@ -76,7 +77,7 @@
             android:id="@+id/et_upload_artist"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/magin_small"
+            android:layout_margin="@dimen/margin_small"
             android:importantForAutofill="no"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
@@ -85,118 +86,33 @@
             tools:ignore="LabelFor" />
 
         <TextView
-            android:id="@+id/tv_preferences_EDM"
+            android:id="@+id/text_firebase_token"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/magin_small"
-            android:text="@string/text_view_electronic_music"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/checkbox_group_EDM"
-            app:layout_constraintStart_toStartOf="@+id/checkbox_group_EDM" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/checkbox_melodic_dubstep"
-            app:layout_constraintBaseline_toBaselineOf="@+id/tv_preferences_EDM"
+            android:layout_marginTop="48dp"
+            android:text="SUp"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.877"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <RadioGroup
-            android:id="@+id/checkbox_group_EDM"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/magin_small"
-            app:layout_constraintBottom_toTopOf="@+id/button_upload"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.076"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/checkbox_melodic_dubstep" />
-
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/checkbox_lo_fi" />
-
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/checkbox_chillstep" />
-
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/checkbox_future_garage" />
-
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/checkbox_piano_ambient" />
-
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/checkbox_experimental_bass" />
-
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/checkbox_liquid_dnb" />
-
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/checkbox_ambient_bass" />
-        </RadioGroup>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_upload_artist" />
 
         <TextView
-            android:id="@+id/text_view_acoustic"
+            android:id="@+id/text_firebase_token_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/magin_small"
-            android:text="@string/text_view_acoustic"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/checkbox_group_Acoustic"
-            app:layout_constraintStart_toStartOf="@+id/checkbox_group_Acoustic" />
-
-        <RadioGroup
-            android:id="@+id/checkbox_group_Acoustic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/magin_small"
-            app:layout_constraintBottom_toTopOf="@+id/button_upload"
+            android:layout_marginTop="68dp"
+            android:text="Double sup"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/checkbox_group_EDM">
-
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/checkbox_metalcore" />
-
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/checkbox_acoustic_ballads" />
-
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/checkbox_death_metal" />
-
-        </RadioGroup>
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_firebase_token" />
 
         <Button
             android:id="@+id/button_upload"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/magin_small"
+            android:layout_marginBottom="@dimen/margin_small"
             android:onClick="@{() -> uploadViewModelXML.uploadCheck()}"
             android:text="@string/button_upload"
             app:layout_constraintBottom_toBottomOf="parent"

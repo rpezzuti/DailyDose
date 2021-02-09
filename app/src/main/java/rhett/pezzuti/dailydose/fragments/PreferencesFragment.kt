@@ -9,7 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LiveData
 import rhett.pezzuti.dailydose.R
+import rhett.pezzuti.dailydose.database.User
+import rhett.pezzuti.dailydose.database.getInstance
 import rhett.pezzuti.dailydose.databinding.FragmentPreferencesBinding
 import rhett.pezzuti.dailydose.factory.PreferencesViewModelFactory
 import rhett.pezzuti.dailydose.viewmodels.PreferencesViewModel
@@ -21,6 +24,16 @@ class PreferencesFragment : Fragment() {
     private lateinit var viewModelFactory: PreferencesViewModelFactory
 
     private val TOPIC_TEST = "Test"
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val app = requireNotNull(this.activity).application
+        val preferences = getInstance(app.applicationContext).userPreferencesDao
+
+
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,30 +52,17 @@ class PreferencesFragment : Fragment() {
 
         val app = requireNotNull(this.activity).application
 
-        viewModelFactory = PreferencesViewModelFactory(app)
+        viewModelFactory = PreferencesViewModelFactory(app, binding)
         viewModel = ViewModelProvider(this, viewModelFactory).get(PreferencesViewModel::class.java)
         binding.preferencesViewModelXML = viewModel
         binding.lifecycleOwner = this
 
-        initializeBoxes(binding)
+
+
+
 
         (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.fragment_preferences_title)
         return binding.root
-    }
-
-
-
-    private fun initializeBoxes(binding: FragmentPreferencesBinding) {
-
-        val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
-        val defaultToNotChecked = 0
-
-        if (sharedPref?.getInt("dubstep", defaultToNotChecked) == 1){
-            binding.checkboxDubstep.isChecked = true
-        }
-
-
-
     }
 
 

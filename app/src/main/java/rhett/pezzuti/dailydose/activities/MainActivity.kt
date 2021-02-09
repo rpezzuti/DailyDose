@@ -1,6 +1,10 @@
 package rhett.pezzuti.dailydose.activities
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.SharedPreferences
+import android.graphics.Color
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.drawerlayout.widget.DrawerLayout
@@ -42,9 +46,17 @@ class MainActivity : AppCompatActivity() {
             .setupWithNavController(navController)
 
 
-       /* // setupActionBarWithNavController(navController, appBarConfiguration)
-        // NavigationUI.setupWithNavController(findViewById(R.id.main_drawerLayout), navController)
-        NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)*/
+        /** Firebase Notification Channel **/
+        createChannel(
+            getString(R.string.fcm_notification_channel_id),
+            getString(R.string.fcm_notification_channel_name)
+        )
+
+        /** Local Notification Channel **/
+        createChannel(
+            getString(R.string.notification_channel_id),
+            getString(R.string.notification_channel_name)
+        )
 
     }
 
@@ -63,5 +75,26 @@ class MainActivity : AppCompatActivity() {
             .apply {
                 setStatusBarBackground(R.color.design_default_color_primary_dark)
             }
+    }
+
+    // Creates notification Channel
+    private fun createChannel(channelId: String, channelName: String) {
+
+        // API 26+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            val notificationChannel = NotificationChannel(
+                channelId,
+                channelName,
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
+
+            notificationChannel.enableLights(true)
+            notificationChannel.lightColor = Color.RED
+            notificationChannel.enableVibration(true)
+            notificationChannel.description = "Music's pretty cool"
+
+            val notificationManager = this.getSystemService(NotificationManager::class.java)
+            notificationManager.createNotificationChannel(notificationChannel)
+        }
     }
 }

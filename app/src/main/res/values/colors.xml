@@ -12,13 +12,23 @@
     <color name="primaryColor">#7e57c2</color>
     <color name="primaryLightColor">#b085f5</color>
     <color name="primaryDarkColor">#4d2c91</color>
-
+    <!-- Secondary brand color. -->
     <color name="secondaryColor">#64b5f6</color>
     <color name="secondaryLightColor">#9be7ff</color>
     <color name="secondaryDarkColor">#2286c3</color>
-
+    <!-- Brand Text color. -->
     <color name="primaryTextColor">#ffffff</color>
     <color name="secondaryTextColor">#000000</color>
+
+    <!-- Alternate Brand color. -->
+    <color name="altPrimaryColor">#fb8c00</color>
+    <color name="altPrimaryLightColor">#ffbd45</color>
+    <color name="altPrimaryDarkColor">#c25e00</color>
+    <color name="altSecondaryColor">#fdd835</color>
+    <color name="altSecondaryLightColor">#ffff6b</color>
+    <color name="altSecondaryDarkColor">#c6a700</color>
+    <color name="altPrimaryTextColor">#000000</color>
+    <color name="altSecondaryTextColor">#000000</color>
 
     <!--My Colors-->
     <color name="background">#5E8CE6</color>

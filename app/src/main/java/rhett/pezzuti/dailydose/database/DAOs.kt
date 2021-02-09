@@ -47,6 +47,9 @@ interface UserPreferencesDao {
     fun update(user: User)
 
     @Query("SELECT * FROM user_preferences")
+    fun getCurrentDomainUser(): User
+
+    @Query("SELECT * FROM user_preferences")
     fun getCurrentUser(): LiveData<User?>
 
     @Query("SELECT * FROM user_preferences")
