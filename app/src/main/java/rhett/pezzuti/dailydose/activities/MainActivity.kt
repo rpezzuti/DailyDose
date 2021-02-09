@@ -2,6 +2,7 @@ package rhett.pezzuti.dailydose.activities
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Build
@@ -24,12 +25,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        // Must be called before onCreate to reset the theme back to non-launcher
-        setTheme(R.style.Theme_DailyDose)
+        val sharedPref = getPreferences(Context.MODE_PRIVATE)
+        sharedPref.edit().putInt(getString(R.string.main_activity_theme_key), 0).apply()
+
+        val themeKey = sharedPref.getInt(getString(R.string.main_activity_theme_key), 0)
+        setupTheme(themeKey)
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setupNavigationDrawer()
+        setupNotificationChannels()
         setSupportActionBar(findViewById(R.id.main_toolbar))
 
         val navController: NavController = findNavController(R.id.myMainNavHostFragment)
@@ -46,18 +51,19 @@ class MainActivity : AppCompatActivity() {
             .setupWithNavController(navController)
 
 
-        /** Firebase Notification Channel **/
-        createChannel(
-            getString(R.string.fcm_notification_channel_id),
-            getString(R.string.fcm_notification_channel_name)
-        )
 
-        /** Local Notification Channel **/
-        createChannel(
-            getString(R.string.notification_channel_id),
-            getString(R.string.notification_channel_name)
-        )
 
+
+
+
+    }
+
+    private fun setupTheme(key: Int) {
+        when (key) {
+            0 -> setTheme(R.style.Theme_DailyDose)
+            1 -> setTheme(R.style.Theme_DailyDose_Variant)
+            else -> setTheme(R.style.Theme_DailyDose)
+        }
     }
 
     // Code for the sandwich Icon.
@@ -75,6 +81,19 @@ class MainActivity : AppCompatActivity() {
             .apply {
                 setStatusBarBackground(R.color.design_default_color_primary_dark)
             }
+    }
+
+    private fun setupNotificationChannels() {
+        /** Firebase Notification Channel **/
+        createChannel(
+            getString(R.string.fcm_notification_channel_id),
+            getString(R.string.fcm_notification_channel_name)
+        )
+        /** Local Notification Channel **/
+        createChannel(
+            getString(R.string.notification_channel_id),
+            getString(R.string.notification_channel_name)
+        )
     }
 
     // Creates notification Channel

@@ -1,6 +1,7 @@
 package rhett.pezzuti.dailydose.fragments
 
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -33,7 +34,6 @@ class ThemesFragment : Fragment() {
         )
 
         val activity = requireActivity()
-
 
 
 
