@@ -8,11 +8,10 @@
         <item name="colorOnPrimary">@color/primaryTextColor</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/secondaryColor</item>
-        <item name="colorSecondaryVariant">@color/secondaryDarkColor</item>
+        <item name="colorSecondaryVariant">@color/secondaryLightColor</item>
         <item name="colorOnSecondary">@color/secondaryTextColor</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
 
 
 
@@ -23,7 +22,20 @@
 <!--        &lt;!&ndash; specify enter and exit transitions &ndash;&gt;-->
 <!--        <item name="android:windowEnterTransition">@transition/explode</item>-->
 <!--        <item name="android:windowExitTransition">@transition/explode</item>-->
+    </style>
 
+    <style name="Theme.DailyDose.Variant" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/altPrimaryColor</item>
+        <item name="colorPrimaryDark">@color/altPrimaryDarkColor</item>
+        <item name="colorPrimaryVariant">@color/altPrimaryLightColor</item>
+        <item name="colorOnPrimary">@color/altPrimaryTextColor</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/altSecondaryColor</item>
+        <item name="colorSecondaryVariant">@color/altSecondaryLightColor</item>
+        <item name="colorOnSecondary">@color/altSecondaryTextColor</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
 
 
     </style>

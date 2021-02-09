@@ -13,6 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="?attr/colorSecondaryVariant"
         tools:context=".fragments.PreferencesFragment">
 
         <TextView
@@ -55,7 +56,7 @@
             android:id="@+id/tv_preferences_EDM"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/magin_small"
+            android:layout_marginBottom="@dimen/margin_small"
             android:text="@string/text_view_electronic_music"
             android:textColor="@color/black"
             android:textSize="20sp"
@@ -66,7 +67,7 @@
             android:id="@+id/checkbox_group_EDM"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/magin_small"
+            android:layout_marginBottom="@dimen/margin_small"
             app:layout_constraintBottom_toTopOf="@+id/button_upload"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.076"
@@ -140,7 +141,7 @@
             android:id="@+id/text_view_acoustic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/magin_small"
+            android:layout_marginBottom="@dimen/margin_small"
             android:text="@string/text_view_acoustic"
             android:textColor="@color/black"
             android:textSize="20sp"
@@ -151,7 +152,7 @@
             android:id="@+id/checkbox_group_Acoustic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/magin_small"
+            android:layout_marginBottom="@dimen/margin_small"
             app:layout_constraintBottom_toTopOf="@+id/button_upload"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/checkbox_group_EDM">
@@ -197,7 +198,7 @@
             android:id="@+id/button_upload"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/magin_small"
+            android:layout_marginBottom="@dimen/margin_small"
             android:text="@string/button_done"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
