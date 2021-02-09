@@ -25,11 +25,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        val sharedPref = getPreferences(Context.MODE_PRIVATE)
-        sharedPref.edit().putInt(getString(R.string.main_activity_theme_key), 0).apply()
-
-        val themeKey = sharedPref.getInt(getString(R.string.main_activity_theme_key), 0)
-        setupTheme(themeKey)
+        setupTheme()
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -58,8 +54,11 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun setupTheme(key: Int) {
-        when (key) {
+    private fun setupTheme() {
+
+        val sharedPref = getPreferences(Context.MODE_PRIVATE)
+
+        when (sharedPref.getInt(getString(R.string.main_activity_theme_key), 0)) {
             0 -> setTheme(R.style.Theme_DailyDose)
             1 -> setTheme(R.style.Theme_DailyDose_Variant)
             else -> setTheme(R.style.Theme_DailyDose)
