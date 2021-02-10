@@ -90,7 +90,7 @@
         android:id="@+id/themesFragment"
         android:name="rhett.pezzuti.dailydose.fragments.ThemesFragment"
         android:label="themes_fragment"
-        tools:layout="@layout/themes_fragment" >
+        tools:layout="@layout/fragment_themes" >
         <action
             android:id="@+id/action_themesFragment_to_homeFragment"
             app:destination="@id/homeFragment" />

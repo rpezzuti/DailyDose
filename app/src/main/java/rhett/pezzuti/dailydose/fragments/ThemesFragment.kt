@@ -1,6 +1,7 @@
 package rhett.pezzuti.dailydose.fragments
 
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,8 +10,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import rhett.pezzuti.dailydose.R
-
-import rhett.pezzuti.dailydose.databinding.ThemesFragmentBinding
+import rhett.pezzuti.dailydose.databinding.FragmentThemesBinding
 import rhett.pezzuti.dailydose.viewmodels.ThemesViewModel
 
 
@@ -18,7 +18,7 @@ class ThemesFragment : Fragment() {
 
 
     private lateinit var viewModel: ThemesViewModel
-    private lateinit var binding: ThemesFragmentBinding
+    private lateinit var binding: FragmentThemesBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,12 +27,10 @@ class ThemesFragment : Fragment() {
 
         binding = DataBindingUtil.inflate(
             inflater,
-            R.layout.themes_fragment,
+            R.layout.fragment_themes,
             container,
             false
         )
-
-        val activity = requireActivity()
 
 
 
@@ -41,15 +39,23 @@ class ThemesFragment : Fragment() {
 
         binding.theme1.setOnClickListener {
 
-            activity.setTheme(R.style.Theme_DailyDose)
+            activity?.setTheme(R.style.Theme_DailyDose)
+
+            val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
+            sharedPref?.edit()?.putInt(getString(R.string.main_activity_theme_key), 0)?.apply()
+
+            activity?.recreate()
 
         }
 
         binding.theme2.setOnClickListener {
 
-            activity.setTheme(R.style.Theme_DailyDose_Variant)
+            activity?.setTheme(R.style.Theme_DailyDose_Variant)
 
+            val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
+            sharedPref?.edit()?.putInt(getString(R.string.main_activity_theme_key), 1)?.apply()
 
+            activity?.recreate()
         }
 
 

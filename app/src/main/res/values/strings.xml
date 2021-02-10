@@ -108,6 +108,7 @@
     <string name="fragment_info_title">Info</string>
     <string name="fragment_favorites_title">Favorites</string>
     <string name="fragment_preferences_title">Preferences</string>
+    <string name="fragment_themes_title">Themes</string>
 
     <!-- Info Fragment Strings -->
     <string name="info_rhett_pezzuti">Rhett Pezzuti</string>
@@ -117,5 +118,30 @@
     <string name="info_spotify">https://open.spotify.com/user/1212805377</string>
     <string name="cd_task_header_image">Task Header Image</string>
     <string name="menu_themes">Themes</string>
-    <string name="fragment_themes_title">Themes</string>
+
+    <!-- SharedPref Keys -->
+    <string name="user_preferences_key">rhett.pezzuti.dailydose.usersharedprefs</string>
+    <string name="main_activity_theme_key">Activity Theme Key</string>
+
+    <!-- TOPICS *** TOPICS *** TOPICS DON'T TOUCH -->
+    <string name="TOPIC_TEST">Test</string>
+
+    <string name="TOPIC_DUBSTEP">dubstep</string>
+    <string name="TOPIC_MELODIC_DUBSTEP">melodic-dubstep</string>
+    <string name="TOPIC_LO_FI">lo-fi</string>
+    <string name="TOPIC_CHILLSTEP">chillstep</string>
+    <string name="TOPIC_FUTURE_GARAGE">future-garage</string>
+    <string name="TOPIC_PIANO_AMBIENT">piano-ambient</string>
+    <string name="TOPIC_EXPERIMENTAL_BASS">experimental-bass</string>
+    <string name="TOPIC_LIQUID_DNB">liquid-dnb</string>
+    <string name="TOPIC_AMBIENT_BASS">ambient-bass</string>
+
+    <string name="TOPIC_METALCORE">metalcore</string>
+    <string name="TOPIC_ACOUSTIC_BALLADS">acoustic-ballads</string>
+    <string name="TOPIC_INSTRUMENTAL_ROCK">instrumental-rock</string>
+    <string name="TOPIC_DEATH_METAL">death-metal</string>
+    <string name="TOPIC_LIVE_PERFORMANCES">live-performances</string>
+
+
+
 </resources>

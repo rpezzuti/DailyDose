@@ -37,14 +37,6 @@ class UploadFragment : Fragment() {
     private lateinit var binding: FragmentUploadBinding
     private lateinit var viewModel: UploadViewModel
 
-    private val TOPIC_DUBSTEP = "dubstep"
-    private val TOPIC_MELODIC_DUBSTEP = "melodic-dubstep"
-    private val TOPIC_LO_FI = "lo-fi"
-    private val TOPIC_CHILLSTEP = "chillstep"
-    private val TOPIC_GARAGE = "garage"
-    private val TOPIC_PIANO_AMBIENT = "piano-ambient"
-    private val TOPIC_TEST = "Test"
-
     private val SENDER_ID = 792171633337
     private val MESSAGE_ID = Math.random().toInt().toString()
 
