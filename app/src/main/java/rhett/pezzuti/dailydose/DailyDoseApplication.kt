@@ -11,7 +11,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import rhett.pezzuti.dailydose.database.getInstance
 import rhett.pezzuti.dailydose.work.RefreshDataWorker
+import rhett.pezzuti.dailydose.work.UploadPreferencesWorker
 import timber.log.Timber
+import java.time.Period
 import java.util.concurrent.TimeUnit
 
 class DailyDoseApplication : Application() {
@@ -36,16 +38,44 @@ class DailyDoseApplication : Application() {
         Timber.plant(Timber.DebugTree())
 
         // delayedInit()
-
+        // anotherDelayedInit()
     }
 
     private fun delayedInit() = applicationScope.launch {
         setupRecurringWork()
     }
 
+    private fun anotherDelayedInit() = applicationScope.launch {
+        setupRecurringUserPrefUpload()
+    }
+
+    private fun setupRecurringUserPrefUpload() {
+        val constraints = Constraints.Builder()
+            .setRequiresCharging(true)
+            .setRequiredNetworkType(NetworkType.UNMETERED)
+            .setRequiresBatteryNotLow(true)
+            .apply {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    setRequiresDeviceIdle(true)
+                }
+            }
+            .build()
+
+
+        val repeatingRequest = PeriodicWorkRequestBuilder<UploadPreferencesWorker>(1, TimeUnit.DAYS)
+            .setConstraints(constraints)
+            .build()
+
+        WorkManager.getInstance().enqueueUniquePeriodicWork(
+            UploadPreferencesWorker.WORK_NAME,
+            ExistingPeriodicWorkPolicy.REPLACE,
+            repeatingRequest
+        )
+    }
+
     private fun setupRecurringWork() {
 
-        // UNMETERED network means that the OS reports that the user wont be charged for the netowrk request.
+        // UNMETERED network means that the OS reports that the user wont be charged for the network request.
 
 
 
