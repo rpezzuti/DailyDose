@@ -7,6 +7,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import rhett.pezzuti.dailydose.database.DatabaseTrack
+import rhett.pezzuti.dailydose.database.User
 import rhett.pezzuti.dailydose.database.domain.Track
 import rhett.pezzuti.dailydose.database.getInstance
 import rhett.pezzuti.dailydose.utils.sendNotification
@@ -133,6 +134,26 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
 
         // firebaseDatabase.child("tracks").child(track.genre).child(track.title).setValue(track)
         firebaseDatabase.child("tracks").child(track.title).setValue(list)
+
+        val user = User(
+            "dummyName",
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+        )
+
+        firebaseDatabase.child("users").child(user.username).setValue(user)
     }
 
     private fun sendNotification(messageBody: String) {
