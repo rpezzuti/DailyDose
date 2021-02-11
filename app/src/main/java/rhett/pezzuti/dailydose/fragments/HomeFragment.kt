@@ -14,10 +14,14 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import rhett.pezzuti.dailydose.viewmodels.HomeViewModel
 import rhett.pezzuti.dailydose.R
 import rhett.pezzuti.dailydose.adapters.DatabaseTrackListener
 import rhett.pezzuti.dailydose.adapters.TrackAdapter
+import rhett.pezzuti.dailydose.database.User
 import rhett.pezzuti.dailydose.database.getInstance
 import rhett.pezzuti.dailydose.databinding.FragmentHomeBinding
 import rhett.pezzuti.dailydose.factory.HomeViewModelFactory

@@ -40,24 +40,6 @@
             app:popUpTo="@id/homeFragment" />
     </fragment>
     <fragment
-        android:id="@+id/aboutFragment"
-        android:name="rhett.pezzuti.dailydose.fragments.AboutFragment"
-        android:label="AboutFragment"
-        tools:layout="@layout/fragment_about">
-        <action
-            android:id="@+id/action_aboutFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/infoFragment"
-        android:name="rhett.pezzuti.dailydose.fragments.InfoFragment"
-        android:label="fragment_info"
-        tools:layout="@layout/fragment_info" >
-        <action
-            android:id="@+id/action_infoFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/uploadFragment"
         android:name="rhett.pezzuti.dailydose.fragments.UploadFragment"
         android:label="UploadFragment"
@@ -93,6 +75,24 @@
         tools:layout="@layout/fragment_themes" >
         <action
             android:id="@+id/action_themesFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/infoFragment"
+        android:name="rhett.pezzuti.dailydose.fragments.InfoFragment"
+        android:label="InfoFragment"
+        tools:layout="@layout/fragment_info">
+        <action
+            android:id="@+id/action_infoFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="rhett.pezzuti.dailydose.fragments.AboutFragment"
+        android:label="AboutFragment"
+        tools:layout="@layout/fragment_about">
+        <action
+            android:id="@+id/action_aboutFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
     </fragment>
 </navigation>

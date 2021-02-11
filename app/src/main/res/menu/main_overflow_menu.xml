@@ -8,12 +8,12 @@
         android:icon="@drawable/ic_filter_list"
         app:showAsAction="always" />
     <item
-        android:id="@+id/aboutFragment"
-        android:title="@string/menu_about" />
+        android:id="@+id/themesFragment"
+        android:title="@string/menu_themes" />
     <item
         android:id="@+id/infoFragment"
         android:title="@string/menu_info" />
     <item
-        android:id="@+id/themesFragment"
-        android:title="@string/menu_themes" />
+        android:id="@+id/aboutFragment"
+        android:title="@string/menu_about" />
 </menu>
