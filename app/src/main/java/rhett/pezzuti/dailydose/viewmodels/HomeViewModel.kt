@@ -5,6 +5,7 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okhttp3.Dispatcher
 import rhett.pezzuti.dailydose.database.*
 import rhett.pezzuti.dailydose.repository.TrackRepository
 import timber.log.Timber
@@ -62,7 +63,7 @@ class HomeViewModel(
         }
     }
 
-    fun onFavorite(url: String) {
+    fun addToFavorites(url: String) {
         viewModelScope.launch {
             favorite(url)
         }
@@ -72,7 +73,21 @@ class HomeViewModel(
         withContext(Dispatchers.IO) {
             val track = trackDatabase.getTrack(url)
             track.favorite = true
-            trackDatabase.favorite(track)
+            trackDatabase.update(track)
+        }
+    }
+
+    fun removeFromFavorites(url: String) {
+        viewModelScope.launch {
+            unFavorite(url)
+        }
+    }
+
+    private suspend fun unFavorite(url: String) {
+        withContext(Dispatchers.IO){
+            val track = trackDatabase.getTrack(url)
+            track.favorite = false
+            trackDatabase.update(track)
         }
     }
 
