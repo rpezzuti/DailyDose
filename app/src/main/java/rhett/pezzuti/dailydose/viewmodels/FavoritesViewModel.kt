@@ -6,10 +6,8 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import rhett.pezzuti.dailydose.database.DatabaseTrack
 import rhett.pezzuti.dailydose.database.TrackDatabaseDao
 import rhett.pezzuti.dailydose.database.UserPreferencesDao
-import timber.log.Timber
 
 class FavoritesViewModel(
     val trackDatabase: TrackDatabaseDao,

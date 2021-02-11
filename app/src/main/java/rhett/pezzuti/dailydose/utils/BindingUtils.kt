@@ -39,7 +39,7 @@ fun TextView.setWelcomeHome(item: User?) {
 fun FloatingActionButton.favorite(item: DatabaseTrack?) {
     item?.let {
         when(item.favorite){
-            false -> setImageResource(R.drawable.ic_eigth_note)
+            false -> setImageResource(R.drawable.ic_favorite_border_24px)
             true -> setImageResource(R.drawable.ic_heart)
         }
     }
