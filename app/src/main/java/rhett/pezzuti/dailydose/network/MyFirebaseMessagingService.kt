@@ -1,6 +1,7 @@
 package rhett.pezzuti.dailydose.network
 
 import android.app.NotificationManager
+import android.content.SharedPreferences
 import androidx.core.content.ContextCompat
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -19,6 +20,15 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
 
     companion object {
         private const val TAG = "MyFirebaseMsgService"
+        var sharedPref: SharedPreferences? = null
+
+        var token: String?
+            get() {
+                return sharedPref?.getString("token", "")
+            }
+            set(value) {
+                sharedPref?.edit()?.putString("token", value)?.apply()
+            }
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
@@ -70,13 +80,11 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
         sendRegistrationToServer(token)
     }
 
-
     override fun onMessageSent(messageId: String) {
         super.onMessageSent(messageId)
 
         Timber.i("Send Message $messageId")
     }
-
     override fun onSendError(messageId: String, e: Exception) {
         super.onSendError(messageId, e)
 
@@ -129,11 +137,8 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
     private fun saveTrackToFirebase(track: Track) {
 
         val firebaseDatabase = Firebase.database.reference
-
         val firebaseTrack = FirebaseTrack(track.title, track)
-
         firebaseDatabase.child("tracks").child(track.genre).setValue(firebaseTrack)
-
     }
 
     private fun sendNotification(messageBody: String) {

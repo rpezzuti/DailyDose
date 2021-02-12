@@ -45,13 +45,6 @@ class MainActivity : AppCompatActivity() {
         // Code for the menu navigation
         findViewById<NavigationView>(R.id.main_nav_view)
             .setupWithNavController(navController)
-
-
-
-
-
-
-
     }
 
     private fun setupTheme() {
