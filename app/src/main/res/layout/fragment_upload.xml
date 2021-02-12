@@ -85,11 +85,18 @@
             app:layout_constraintTop_toBottomOf="@+id/et_upload_title"
             tools:ignore="LabelFor" />
 
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_upload_artist" />
+
         <TextView
             android:id="@+id/text_firebase_token"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="104dp"
             android:text="SUp"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -97,16 +104,35 @@
             app:layout_constraintTop_toBottomOf="@+id/et_upload_artist" />
 
         <TextView
-            android:id="@+id/text_firebase_token_2"
+            android:id="@+id/retrofit_response"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="68dp"
+            android:layout_marginTop="40dp"
             android:text="Double sup"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_firebase_token" />
+
+        <EditText
+            android:id="@+id/etToken"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/retrofit_error"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/retrofit_response" />
+
+        <TextView
+            android:id="@+id/retrofit_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Yo"
+            android:layout_margin="@dimen/margin_medium"
+            app:layout_constraintBottom_toTopOf="@+id/button_upload"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/button_upload"

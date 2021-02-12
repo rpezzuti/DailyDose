@@ -7,5 +7,24 @@
         <item>What is your name?</item>
     </string-array>
 
+    <string-array name="genre_spinner">
+        <item>@string/TOPIC_TEST</item>
+
+        <item>@string/TOPIC_DUBSTEP</item>
+        <item>@string/TOPIC_MELODIC_DUBSTEP</item>
+        <item>@string/TOPIC_LO_FI</item>
+        <item>@string/TOPIC_CHILLSTEP</item>
+        <item>@string/TOPIC_FUTURE_GARAGE</item>
+        <item>@string/TOPIC_PIANO_AMBIENT</item>
+        <item>@string/TOPIC_EXPERIMENTAL_BASS</item>
+        <item>@string/TOPIC_LIQUID_DNB</item>
+        <item>@string/TOPIC_AMBIENT_BASS</item>
+
+        <item>@string/TOPIC_METALCORE</item>
+        <item>@string/TOPIC_ACOUSTIC_BALLADS</item>
+        <item>@string/TOPIC_INSTRUMENTAL_ROCK</item>
+        <item>@string/TOPIC_DEATH_METAL</item>
+        <item>@string/TOPIC_LIVE_PERFORMANCES</item>
+    </string-array>
 
 </resources>
