@@ -20,24 +20,13 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
 
     companion object {
         private const val TAG = "MyFirebaseMsgService"
-        var sharedPref: SharedPreferences? = null
-
-        var token: String?
-            get() {
-                return sharedPref?.getString("token", "")
-            }
-            set(value) {
-                sharedPref?.edit()?.putString("token", value)?.apply()
-            }
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
 
         // Can't use context outside of a function in this class
 
-        /**
-         *                              TODO
-         * STILL NEED TO HANDLE ALL THIS WHEN THE APP IS NOT IN THE FOREGROUND **/
+
 
         // This chunk is triggered when the remoteMessage is received when the app is in the foreground. any fragment
         // When the app is in the background, the device receives the notification as displayed is the Firebase Console
@@ -65,7 +54,7 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
                 sendNotificationWithIntent(track)
 
                 /** Send back to Firebase Database **/
-                saveTrackToFirebase(track)
+                // saveTrackToFirebase(track)
 
                 /** Save to Database **/
                 saveTrackToDatabase(track)

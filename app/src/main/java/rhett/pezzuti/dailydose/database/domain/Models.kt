@@ -33,19 +33,10 @@ data class LocalTrack (
     val timestamp: Long
 )
 
-data class NotificationData (
-    val url: String,
-    val title: String,
-    val artist: String,
-    val genre: String,
-    val image: String,
-    val timestamp: Long = System.currentTimeMillis()
-)
-
 // For Retrofit to accept the notification data, there must be a variable
 // annotated "data" for the payload to go through.
 // The TO defines the TOPIC
 data class TrackNotification(
-    val data: NotificationData,
+    val data: Track,
     val to: String
 )

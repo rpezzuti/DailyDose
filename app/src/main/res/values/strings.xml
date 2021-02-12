@@ -24,7 +24,7 @@
     <string name="text_welcome">~ Welcome! ~</string>
     <string name="text_favorites">Favorites</string>
     <string name="text_view_electronic_music">Electronic Music:</string>
-    <string name="text_view_link">Link:</string>
+    <string name="text_view_url">Url:</string>
     <string name="text_view_acoustic">Acoustic:</string>
     <string name="text_recent_uploads">Recent Uploads:</string>
     <string name="text_view_preferences_welcome">What do you like?</string>
@@ -39,6 +39,7 @@
     <string name="hint_artist_name">Enter Artist Name</string>
     <string name="hint_track_title">Enter Track Title</string>
     <string name="hint_enter_your_name">Enter your name</string>
+    <string name="hint_enter_track_artist">Enter Track Artist</string>
 
 
     <!--    Buttons    -->
@@ -91,11 +92,17 @@
     <string name="fcm_notification_channel_id">fcm_channel_id</string>
     <string name="fcm_notification_channel_name">FCM Channel</string>
 
-    <!-- Alerts -->
+    <!--    Alerts      -->
     <string name="cleared_message">All tracks deleted!</string>
     <string name="message_subscribed">Subscribed to topic</string>
     <string name="message_subscribe_failed">Failed to subscribe to topic</string>
     <string name="message_unsubscribe_failed">Failed to unsubscribe</string>
+
+    <!--    Upload Alert      -->
+    <string name="upload_alert_upload">Upload?</string>
+    <string name="upload_alert_message">Are you sure you want to upload?</string>
+    <string name="upload_alert_positive_button">Yes, Upload</string>
+    <string name="upload_alert_negative_button">No, wait</string>
 
     <!-- Content Descriptions -->
     <string name="content_description_favorites_fab">Favorites Fab</string>
@@ -141,7 +148,6 @@
     <string name="TOPIC_INSTRUMENTAL_ROCK">instrumental-rock</string>
     <string name="TOPIC_DEATH_METAL">death-metal</string>
     <string name="TOPIC_LIVE_PERFORMANCES">live-performances</string>
-
 
 
 </resources>
