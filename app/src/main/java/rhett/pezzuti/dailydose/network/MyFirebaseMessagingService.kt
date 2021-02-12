@@ -20,15 +20,6 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
 
     companion object {
         private const val TAG = "MyFirebaseMsgService"
-        var sharedPref: SharedPreferences? = null
-
-        var token: String?
-            get() {
-                return sharedPref?.getString("token", "")
-            }
-            set(value) {
-                sharedPref?.edit()?.putString("token", value)?.apply()
-            }
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {

@@ -1,55 +1,28 @@
 package rhett.pezzuti.dailydose.fragments
 
 import android.app.AlertDialog
-import android.app.Application
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.content.DialogInterface
-import android.content.Intent
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
-import com.google.firebase.database.ktx.database
-import com.google.firebase.iid.FirebaseInstanceId
-import com.google.firebase.iid.FirebaseInstanceIdReceiver
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.messaging.FirebaseMessaging
-import com.google.firebase.messaging.RemoteMessage
-import kotlinx.android.synthetic.main.fragment_upload.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import rhett.pezzuti.dailydose.R
-import rhett.pezzuti.dailydose.database.domain.NotificationData
 import rhett.pezzuti.dailydose.database.domain.Track
 import rhett.pezzuti.dailydose.database.domain.TrackNotification
 import rhett.pezzuti.dailydose.databinding.FragmentUploadBinding
-import rhett.pezzuti.dailydose.network.FirebaseService
-import rhett.pezzuti.dailydose.network.FirebaseTrack
-import rhett.pezzuti.dailydose.network.MyFirebaseMessagingService
-import rhett.pezzuti.dailydose.network.RetrofitInstance
-import rhett.pezzuti.dailydose.utils.sendNotificationWithIntent
 import rhett.pezzuti.dailydose.viewmodels.UploadViewModel
-import timber.log.Timber
 
-class UploadFragment : Fragment(), AdapterView.OnItemSelectedListener {
+class UploadFragment : DialogFragment(), AdapterView.OnItemSelectedListener {
 
     private lateinit var binding: FragmentUploadBinding
     private lateinit var viewModel: UploadViewModel
-
-    private val SENDER_ID = 792171633337
-    private val MESSAGE_ID = Math.random().toInt().toString()
+    private lateinit var TOPIC: String
 
     companion object {
         private const val TAG = "UploadFragment"
@@ -74,55 +47,11 @@ class UploadFragment : Fragment(), AdapterView.OnItemSelectedListener {
         binding.uploadViewModelXML = viewModel
         binding.lifecycleOwner = this
 
-        FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener {
-            MyFirebaseMessagingService.token = it.token
-            etToken.setText(it.token)
-        }
-
-
-        val newT = FirebaseMessaging.getInstance().token.toString()
-        binding.textFirebaseToken.text = newT
 
         /** Upload Button Observer **/
         viewModel.eventUploadCheck.observe(viewLifecycleOwner, { event ->
             if (event == true) {
-
-                TrackNotification(
-                    NotificationData(
-                        "https://www.youtube.com",
-                        "dummy-title",
-                        "dummy-artist",
-                        "dummy-genre",
-                        "dummy-image"
-                    ), "/topics/${getString(R.string.TOPIC_TEST)}"
-                ).also {
-                    sendNotification(it)
-                }
-                
-
-
-/*
-                val builder = AlertDialog.Builder(context)
-                    .setTitle("Upload?")
-                    .setMessage("Are you sure you want to upload?")
-                    .setCancelable(false)
-
-                    .setPositiveButton(
-                        "Yes, Upload",
-                    DialogInterface.OnClickListener { dialog, id ->
-                        Toast.makeText(context, "Uploaded", Toast.LENGTH_SHORT).show()
-                    })
-
-                    .setNegativeButton(
-                        "No, wait",
-                        DialogInterface.OnClickListener { dialog, id ->
-                            Toast.makeText(context, "Didn't upload", Toast.LENGTH_SHORT).show()
-                        }
-                    )
-                    .create()
-                    .show()
-*/
-
+                uploadAlert()
                 viewModel.doneUploadCheck()
             }
         })
@@ -131,6 +60,46 @@ class UploadFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
 
         return binding.root
+    }
+
+    private
+    fun uploadAlert() {
+        AlertDialog.Builder(context)
+            .setTitle(getString(R.string.upload_alert_upload))
+            .setMessage(getString(R.string.upload_alert_message))
+            .setCancelable(false)
+
+            .setPositiveButton(
+                getString(R.string.upload_alert_positive_button),
+                DialogInterface.OnClickListener { dialog, id ->
+                    buildNotification()
+                })
+
+            .setNegativeButton(
+                getString(R.string.upload_alert_negative_button),
+                DialogInterface.OnClickListener { dialog, id ->
+                    Toast.makeText(context, "Didn't upload", Toast.LENGTH_SHORT).show()
+                }
+            )
+            .create()
+            .show()
+    }
+
+    private
+    fun buildNotification() {
+        TrackNotification(
+            Track(
+                "https://www.youtube.com",
+                binding.etUploadTitle.text.toString(),
+                binding.etUploadArtist.text.toString(),
+                "dummy-genre",
+                "dummy-image",
+                System.currentTimeMillis(),
+                false
+            ), "/topics/$TOPIC"
+        ).also {
+            viewModel.sendNotification(it)
+        }
     }
 
     private
@@ -149,45 +118,24 @@ class UploadFragment : Fragment(), AdapterView.OnItemSelectedListener {
         binding.uploadSpinner.onItemSelectedListener = this
     }
 
+    // Spinner
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
         when (pos) {
-            0 -> Toast.makeText(this.requireContext(), "Hello", Toast.LENGTH_SHORT).show()
-            else -> Toast.makeText(this.requireContext(), "Sup", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    override fun onNothingSelected(parent: AdapterView<*>?) {
-        Toast.makeText(this.requireContext(), "Yo", Toast.LENGTH_SHORT).show()
-    }
-
-    /** Failed Retrofit Attempts **/
-    private
-    fun sendNotification(notification: TrackNotification) {
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val response = RetrofitInstance.api.postNotification(notification)
-                if (response.isSuccessful) {
-                    // binding.retrofitResponse.text = "Success:${response.body().toString()}"
-                    Timber.i("Success: ${response.body().toString()}")
-                    Timber.i("Code: ${response.code()}")
-                } else {
-                    // binding.retrofitResponse.text = "Failure:${response.errorBody().toString()}"
-                    Timber.i("Success: ${response.errorBody().toString()}")
-                }
-            } catch (e: Exception) {
-                // binding.retrofitError.text = e.toString()
-                Timber.i("Error: ${e.toString()}")
-                Timber.i("Error: ${e.message}")
+            0 -> {
+                TOPIC = getString(R.string.TOPIC_TEST)
+                Toast.makeText(this.requireContext(), "Hello", Toast.LENGTH_SHORT).show()
+            }
+            else -> {
+                TOPIC = "dummy"
+                Toast.makeText(this.requireContext(), "Sup", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private
-    fun saveTrackToFirebase(track: Track) {
-
-        val firebaseDatabase = Firebase.database.reference
-        val firebaseTrack = FirebaseTrack(track.title, track)
-        firebaseDatabase.child("tracks").child(track.genre).setValue(firebaseTrack)
+    // Spinner
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        TOPIC = getString(R.string.TOPIC_TEST)
+        Toast.makeText(this.requireContext(), "Yo", Toast.LENGTH_SHORT).show()
     }
 
 }
