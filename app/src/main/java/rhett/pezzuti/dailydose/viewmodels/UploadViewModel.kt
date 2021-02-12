@@ -36,7 +36,7 @@ class UploadViewModel(private val app: Application) : AndroidViewModel(app) {
     }
 
 
-    /** Failed Retrofit Attempts **/
+
     fun sendNotification(notification: TrackNotification) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -45,6 +45,7 @@ class UploadViewModel(private val app: Application) : AndroidViewModel(app) {
                     // binding.retrofitResponse.text = "Success:${response.body().toString()}"
                     Timber.i("Success: ${response.body().toString()}")
                     Timber.i("Code: ${response.code()}")
+                    saveTrackToFirebase(notification.data)
                 } else {
                     // binding.retrofitResponse.text = "Failure:${response.errorBody().toString()}"
                     Timber.i("Error: ${response.errorBody().toString()}")
@@ -57,8 +58,7 @@ class UploadViewModel(private val app: Application) : AndroidViewModel(app) {
         }
     }
 
-    private
-    fun saveTrackToFirebase(track: Track) {
+    private suspend fun saveTrackToFirebase(track: Track) {
         val firebaseDatabase = Firebase.database.reference
         val firebaseTrack = FirebaseTrack(track.title, track)
         firebaseDatabase.child("tracks").child(track.genre).setValue(firebaseTrack)
