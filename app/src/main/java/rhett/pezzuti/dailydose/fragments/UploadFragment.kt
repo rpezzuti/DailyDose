@@ -14,6 +14,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -41,7 +43,7 @@ import rhett.pezzuti.dailydose.utils.sendNotificationWithIntent
 import rhett.pezzuti.dailydose.viewmodels.UploadViewModel
 import timber.log.Timber
 
-class UploadFragment : Fragment() {
+class UploadFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private lateinit var binding: FragmentUploadBinding
     private lateinit var viewModel: UploadViewModel
@@ -64,6 +66,7 @@ class UploadFragment : Fragment() {
             container,
             false
         )
+        setupSpinner()
 
         val app = requireNotNull(this.activity).application
 
@@ -91,30 +94,11 @@ class UploadFragment : Fragment() {
                         "dummy-artist",
                         "dummy-genre",
                         "dummy-image"
-                    ), "/topics/dubstep"
+                    ), "/topics/${getString(R.string.TOPIC_TEST)}"
                 ).also {
                     sendNotification(it)
                 }
-
-
-
-/*
-                val newT = FirebaseInstanceId.getInstance().token
-
-                val fm = FirebaseMessaging.getInstance()
-                val message = RemoteMessage.Builder("$newT@fcm.googleapis.com")
-                    .setMessageId(MESSAGE_ID)
-                    .addData("url", binding.etUploadLink.text.toString())
-                    .addData("title", binding.etUploadTitle.text.toString())
-                    .addData("artist", binding.etUploadArtist.text.toString())
-                    .addData("genre", "DUMMYGENRE")
-                    .addData("image", "DUMMYIMAGE")
-                    .addData("timestamp", System.currentTimeMillis().toString())
-                    .build()
-                fm.send(message)
-
-
-*/
+                
 
 
 /*
@@ -149,6 +133,32 @@ class UploadFragment : Fragment() {
         return binding.root
     }
 
+    private
+    fun setupSpinner() {
+        // Creating an Array Adapter using the string array and default spinner item layout.
+        ArrayAdapter.createFromResource(
+            this.requireContext(),
+            R.array.genre_spinner,
+            android.R.layout.simple_spinner_item
+        ).also { arrayAdapter ->
+            // Set the layout when the list of choices appears. Default Android again
+            arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            // Apply adapter to Spinner View
+            binding.uploadSpinner.adapter = arrayAdapter
+        }
+        binding.uploadSpinner.onItemSelectedListener = this
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
+        when (pos) {
+            0 -> Toast.makeText(this.requireContext(), "Hello", Toast.LENGTH_SHORT).show()
+            else -> Toast.makeText(this.requireContext(), "Sup", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        Toast.makeText(this.requireContext(), "Yo", Toast.LENGTH_SHORT).show()
+    }
 
     /** Failed Retrofit Attempts **/
     private
@@ -179,4 +189,5 @@ class UploadFragment : Fragment() {
         val firebaseTrack = FirebaseTrack(track.title, track)
         firebaseDatabase.child("tracks").child(track.genre).setValue(firebaseTrack)
     }
+
 }
