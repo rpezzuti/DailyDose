@@ -121,13 +121,24 @@ class UploadFragment : DialogFragment(), AdapterView.OnItemSelectedListener {
     // Spinner
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) {
         when (pos) {
-            0 -> {
-                TOPIC = getString(R.string.TOPIC_TEST)
-                Toast.makeText(this.requireContext(), "Hello", Toast.LENGTH_SHORT).show()
-            }
+            0 -> TOPIC = getString(R.string.TOPIC_TEST)
+            1 -> TOPIC = getString(R.string.TOPIC_MELODIC_DUBSTEP)
+            2 -> TOPIC = getString(R.string.TOPIC_LO_FI)
+            3 -> TOPIC = getString(R.string.TOPIC_CHILLSTEP)
+            4 -> TOPIC = getString(R.string.TOPIC_FUTURE_GARAGE)
+            5 -> TOPIC = getString(R.string.TOPIC_PIANO_AMBIENT)
+            6 -> TOPIC = getString(R.string.TOPIC_EXPERIMENTAL_BASS)
+            7 -> TOPIC = getString(R.string.TOPIC_LIQUID_DNB)
+            8 -> TOPIC = getString(R.string.TOPIC_AMBIENT_BASS)
+
+            9 -> TOPIC = getString(R.string.TOPIC_METALCORE)
+            10 -> TOPIC = getString(R.string.TOPIC_ACOUSTIC_BALLADS)
+            11 -> TOPIC = getString(R.string.TOPIC_INSTRUMENTAL_ROCK)
+            12 -> TOPIC = getString(R.string.TOPIC_DEATH_METAL)
+            13 -> TOPIC = getString(R.string.TOPIC_LIVE_PERFORMANCES)
             else -> {
                 TOPIC = "dummy"
-                Toast.makeText(this.requireContext(), "Sup", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this.requireContext(), "Hi Rhett", Toast.LENGTH_SHORT).show()
             }
         }
     }
