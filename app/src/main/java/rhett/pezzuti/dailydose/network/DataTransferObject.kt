@@ -46,3 +46,8 @@ fun NetworkTrackContainer.asDatabaseModel(): Array<DatabaseTrack> {
                 )
     }.toTypedArray()
 }
+
+data class FirebaseTrack(
+    val title: String,
+    val track: Track
+)

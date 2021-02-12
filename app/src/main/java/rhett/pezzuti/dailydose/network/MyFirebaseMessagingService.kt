@@ -130,30 +130,10 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
 
         val firebaseDatabase = Firebase.database.reference
 
-        val list = listOf(track)
+        val firebaseTrack = FirebaseTrack(track.title, track)
 
-        // firebaseDatabase.child("tracks").child(track.genre).child(track.title).setValue(track)
-        firebaseDatabase.child("tracks").child(track.title).setValue(list)
+        firebaseDatabase.child("tracks").child(track.genre).setValue(firebaseTrack)
 
-        val user = User(
-            "dummyName",
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-        )
-
-        firebaseDatabase.child("users").child(user.username).setValue(user)
     }
 
     private fun sendNotification(messageBody: String) {

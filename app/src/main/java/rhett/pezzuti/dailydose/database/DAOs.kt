@@ -18,7 +18,7 @@ interface TrackDatabaseDao {
     fun getTrack(url: String): DatabaseTrack
 
     @Update
-    fun favorite(track: DatabaseTrack)
+    fun update(track: DatabaseTrack)
 
     @Query ("SELECT * FROM track_table ORDER BY track_timestamp DESC")
     fun getAllTracks() : LiveData<List<DatabaseTrack>>

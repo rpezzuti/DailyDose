@@ -6,6 +6,7 @@ import android.net.Uri
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
@@ -67,8 +68,7 @@ class FavoritesFragment : Fragment() {
         binding.lifecycleOwner = this
 
 
-
-        viewModelAdapter = TrackAdapter( DatabaseTrackListener { url ->
+        viewModelAdapter = TrackAdapter( DatabaseTrackListener ({ url ->
             val contentIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             val contentPendingIntent = PendingIntent.getActivity(
                 requireContext(),
@@ -77,7 +77,16 @@ class FavoritesFragment : Fragment() {
                 PendingIntent.FLAG_ONE_SHOT
             ).send()
 
+        }, { favorite, url ->
+            if (!favorite) {
+                viewModel.addToFavorites(url)
+                Toast.makeText(this.requireContext(), "Added to Favorites", Toast.LENGTH_SHORT).show()
+            } else {
+                viewModel.removeFromFavorites(url)
+                Toast.makeText(this.requireContext(), "Removed from Favorites", Toast.LENGTH_SHORT).show()
+            }
         })
+        )
         binding.favoritesRecyclerView.adapter = viewModelAdapter
 
 
