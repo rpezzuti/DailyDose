@@ -17,18 +17,18 @@
         android:background="?attr/colorSecondaryVariant">
 
         <TextView
-            android:id="@+id/tv_upload_link"
+            android:id="@+id/tv_upload_url"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_small"
             android:text="@string/text_view_url"
             android:textColor="@color/black"
             android:textSize="24sp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/et_upload_link"
+            app:layout_constraintBaseline_toBaselineOf="@+id/et_upload_url"
             app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
-            android:id="@+id/et_upload_link"
+            android:id="@+id/et_upload_url"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_small"
@@ -36,7 +36,7 @@
             android:importantForAutofill="no"
             android:inputType="textWebEmailAddress"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tv_upload_link"
+            app:layout_constraintStart_toEndOf="@+id/tv_upload_url"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -59,8 +59,8 @@
             android:importantForAutofill="no"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/et_upload_link"
-            app:layout_constraintTop_toBottomOf="@+id/et_upload_link" />
+            app:layout_constraintStart_toEndOf="@+id/tv_upload_title"
+            app:layout_constraintTop_toBottomOf="@+id/et_upload_url" />
 
         <TextView
             android:id="@+id/tv_upload_artist"

@@ -1,27 +1,31 @@
 package rhett.pezzuti.dailydose.viewmodels
 
 import android.annotation.SuppressLint
+import android.app.Application
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import rhett.pezzuti.dailydose.database.TrackDatabaseDao
 import rhett.pezzuti.dailydose.database.domain.Track
 import rhett.pezzuti.dailydose.network.BrowseFirebaseApi
+import rhett.pezzuti.dailydose.network.NetworkTrackContainer
 import rhett.pezzuti.dailydose.network.asDomainModel
 import timber.log.Timber
 import java.io.IOException
 
-class BrowseViewModel : ViewModel() {
+class BrowseViewModel(
+    val trackDatabase: TrackDatabaseDao,
+    app: Application
+) : AndroidViewModel(app) {
 
 
     private val MELODIC_DUBSTEP = "/Melodic%20Dubstep/Drop%20Our%20Hearts%20Pt%20II"
@@ -30,12 +34,16 @@ class BrowseViewModel : ViewModel() {
     val response : LiveData<String>
         get() = _response
 
-    private val _playlist = MutableLiveData<List<Track>>()
+    private val _playlist = MutableLiveData<List<Track>?>()
+    val playlist : LiveData<List<Track>?>
+        get() = _playlist
+
+
 
     init {
-        // refreshTrackDatabase()
-        _response.value = "broken AF"
-        // getJSONFromFirebase()
+        // _response.value = "broken AF"
+        // getOneTrackFromFirebase()
+        getOneGenreFromFirebase()
     }
 
     fun getStuff() {
@@ -63,14 +71,26 @@ class BrowseViewModel : ViewModel() {
     }
 
 
-    private fun getJSONFromFirebase() {
-        BrowseFirebaseApi.retrofitService.getJson().enqueue( object: Callback<JSONObject>{
-            override fun onFailure(call: Call<JSONObject>, t: Throwable) {
-                _response.value = "Failure: " + t.message
+    private fun getOneTrackFromFirebase() {
+        BrowseFirebaseApi.retrofitService.getOneTrackFromFirebase().enqueue( object: Callback<Track>{
+            override fun onResponse(call: Call<Track>, response: Response<Track>) {
+                _response.value = response.body().toString()
             }
 
-            override fun onResponse(call: Call<JSONObject>, response: Response<JSONObject>) {
+            override fun onFailure(call: Call<Track>, t: Throwable) {
+                _response.value = "Failure: " + t.message
+            }
+        })
+    }
+
+    private fun getOneGenreFromFirebase() {
+        BrowseFirebaseApi.retrofitService.getOneGenreFromFirebase().enqueue( object: Callback<List<Track>>{
+            override fun onResponse(call: Call<List<Track>>, response: Response<List<Track>>) {
                 _response.value = response.body().toString()
+                _playlist.value = response.body()
+            }
+            override fun onFailure(call: Call<List<Track>>, t: Throwable) {
+                _response.value = "Failure: " + t.message
             }
         })
     }
