@@ -36,7 +36,7 @@ class BrowseFragment : Fragment() {
     private var viewModelAdapter: TrackAdapter? = null
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.playlist.observe(viewLifecycleOwner, { playlist ->
+        viewModel.testTracks.observe(viewLifecycleOwner, { playlist ->
             playlist?.apply {
                 viewModelAdapter?.submitList(playlist)
             }

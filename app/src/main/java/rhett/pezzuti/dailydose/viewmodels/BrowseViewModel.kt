@@ -17,9 +17,11 @@ import retrofit2.Callback
 import retrofit2.Response
 import rhett.pezzuti.dailydose.database.TrackDatabaseDao
 import rhett.pezzuti.dailydose.database.domain.Track
+import rhett.pezzuti.dailydose.database.getInstance
 import rhett.pezzuti.dailydose.network.BrowseFirebaseApi
 import rhett.pezzuti.dailydose.network.NetworkTrackContainer
 import rhett.pezzuti.dailydose.network.asDomainModel
+import rhett.pezzuti.dailydose.repository.TrackRepository
 import timber.log.Timber
 import java.io.IOException
 
@@ -27,9 +29,6 @@ class BrowseViewModel(
     val trackDatabase: TrackDatabaseDao,
     app: Application
 ) : AndroidViewModel(app) {
-
-
-    private val MELODIC_DUBSTEP = "/Melodic%20Dubstep/Drop%20Our%20Hearts%20Pt%20II"
 
     private val _response = MutableLiveData<String>()
     val response : LiveData<String>
@@ -39,13 +38,21 @@ class BrowseViewModel(
     val playlist : LiveData<List<Track>?>
         get() = _playlist
 
+    private val database = getInstance(getApplication())
+    private val trackRepository = TrackRepository(database)
 
 
     init {
         // _response.value = "broken AF"
         // getOneTrackFromFirebase()
         getOneGenreFromFirebase()
+
+        viewModelScope.launch {
+            trackRepository.refreshTestTracks()
+        }
     }
+
+    val testTracks = trackRepository.tracks
 
     fun getStuff() {
 
@@ -152,14 +159,3 @@ class BrowseViewModel(
         }
     }
 }
-
-/**
- *
- *
- *
- * val someData = ArrayList<FirebaseTrack>()
-for (data in snapshot.children){
-var model = data.getValue(FirebaseTrack::class.java)
-someData.add(model as FirebaseTrack)
- *
- */

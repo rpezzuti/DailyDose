@@ -41,13 +41,12 @@ class HomeViewModel(
         _showSnackBarEvent.value = false
         currentUser.addSource(userDatabase.getCurrentUser(), currentUser::setValue)
 
-
-/*        viewModelScope.launch {
-            trackRepository.refreshTracks()
+        viewModelScope.launch {
+            trackRepository.refreshTestTracks()
         }
-        val allTracks = trackRepository.tracks*/
-
     }
+
+    val testTracks = trackRepository.tracks
 
 
     /** Snackbar Event **/
