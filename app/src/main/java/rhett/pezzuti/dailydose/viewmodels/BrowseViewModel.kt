@@ -8,6 +8,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
@@ -121,6 +122,34 @@ class BrowseViewModel(
             }
         })
 
+    }
+
+    fun addToFavorites(url: String) {
+        viewModelScope.launch {
+            favorite(url)
+        }
+    }
+
+    private suspend fun favorite(url: String) {
+        withContext(Dispatchers.IO) {
+            val track = trackDatabase.getTrack(url)
+            track.favorite = true
+            trackDatabase.update(track)
+        }
+    }
+
+    fun removeFromFavorites(url: String) {
+        viewModelScope.launch {
+            unFavorite(url)
+        }
+    }
+
+    private suspend fun unFavorite(url: String) {
+        withContext(Dispatchers.IO) {
+            val track = trackDatabase.getTrack(url)
+            track.favorite = false
+            trackDatabase.update(track)
+        }
     }
 }
 

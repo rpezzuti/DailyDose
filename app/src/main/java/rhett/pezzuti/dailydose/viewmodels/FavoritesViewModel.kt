@@ -2,12 +2,14 @@ package rhett.pezzuti.dailydose.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import rhett.pezzuti.dailydose.database.TrackDatabaseDao
 import rhett.pezzuti.dailydose.database.UserPreferencesDao
+import rhett.pezzuti.dailydose.database.asDomainModel
 
 class FavoritesViewModel(
     val trackDatabase: TrackDatabaseDao,
@@ -18,7 +20,9 @@ class FavoritesViewModel(
 
 
 
-    val tracks = trackDatabase.getFavorites(true)
+    val tracks = Transformations.map(trackDatabase.getFavorites(true)){
+        it.asDomainModel()
+    }
 
 
 

@@ -30,7 +30,8 @@
                 android:text="@{browseViewModelXML.response}" />
         </androidx.core.widget.NestedScrollView>
 
-       <!-- <androidx.recyclerview.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/browse_recycler_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="@dimen/margin_small"
@@ -38,7 +39,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nestedScrollView" />-->
+            app:layout_constraintTop_toBottomOf="@+id/nestedScrollView" />
 
 
 

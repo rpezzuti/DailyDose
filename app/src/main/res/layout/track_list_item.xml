@@ -7,11 +7,11 @@
 
         <variable
             name="track"
-            type="rhett.pezzuti.dailydose.database.DatabaseTrack" />
+            type="rhett.pezzuti.dailydose.database.domain.Track" />
 
         <variable
             name="clickListener"
-            type="rhett.pezzuti.dailydose.adapters.DatabaseTrackListener" />
+            type="rhett.pezzuti.dailydose.adapters.TrackListener" />
 
         <variable
             name="favoritesViewModelXML"

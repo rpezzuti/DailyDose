@@ -15,7 +15,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import rhett.pezzuti.dailydose.viewmodels.FavoritesViewModel
 import rhett.pezzuti.dailydose.R
-import rhett.pezzuti.dailydose.adapters.DatabaseTrackListener
+import rhett.pezzuti.dailydose.adapters.TrackListener
 import rhett.pezzuti.dailydose.adapters.TrackAdapter
 import rhett.pezzuti.dailydose.database.getInstance
 import rhett.pezzuti.dailydose.databinding.FragmentFavoritesBinding
@@ -68,7 +68,7 @@ class FavoritesFragment : Fragment() {
         binding.lifecycleOwner = this
 
 
-        viewModelAdapter = TrackAdapter( DatabaseTrackListener ({ url ->
+        viewModelAdapter = TrackAdapter( TrackListener ({ url ->
             val contentIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             val contentPendingIntent = PendingIntent.getActivity(
                 requireContext(),
