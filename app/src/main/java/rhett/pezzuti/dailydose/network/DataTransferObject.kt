@@ -6,7 +6,7 @@ import rhett.pezzuti.dailydose.database.DatabaseTrack
 import rhett.pezzuti.dailydose.database.domain.Track
 
 @JsonClass(generateAdapter = true)
-data class NetworkTrackContainer (val tracks: List<NetworkTrack>)
+data class NetworkTrackContainer (val `test-genre`: List<NetworkTrack>)
 
 @JsonClass(generateAdapter = true)
 data class NetworkTrack(
@@ -20,7 +20,7 @@ data class NetworkTrack(
 )
 
 fun NetworkTrackContainer.asDomainModel(): List<Track> {
-    return tracks.map {
+    return `test-genre`.map {
         Track (
             url = it.url,
             title = it.title,
@@ -34,7 +34,7 @@ fun NetworkTrackContainer.asDomainModel(): List<Track> {
 }
 
 fun NetworkTrackContainer.asDatabaseModel(): Array<DatabaseTrack> {
-    return tracks.map {
+    return `test-genre`.map {
         DatabaseTrack (
             url = it.url,
             title = it.title,

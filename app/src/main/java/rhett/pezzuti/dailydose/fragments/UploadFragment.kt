@@ -89,7 +89,7 @@ class UploadFragment : DialogFragment(), AdapterView.OnItemSelectedListener {
     fun buildNotification() {
         TrackNotification(
             Track(
-                "https://www.youtube.com",
+                binding.etUploadUrl.text.toString(),
                 binding.etUploadTitle.text.toString(),
                 binding.etUploadArtist.text.toString(),
                 "dummy-genre",

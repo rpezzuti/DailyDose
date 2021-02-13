@@ -53,9 +53,6 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
                 /** Show Notification **/
                 sendNotificationWithIntent(track)
 
-                /** Send back to Firebase Database **/
-                // saveTrackToFirebase(track)
-
                 /** Save to Database **/
                 saveTrackToDatabase(track)
             }
@@ -121,22 +118,6 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
         )
 
         database.insert(databaseTrack)
-    }
-
-    private fun saveTrackToFirebase(track: Track) {
-
-        val firebaseDatabase = Firebase.database.reference
-        val firebaseTrack = FirebaseTrack(track.title, track)
-        firebaseDatabase.child("tracks").child(track.genre).setValue(firebaseTrack)
-    }
-
-    private fun sendNotification(messageBody: String) {
-        val notificationManager = ContextCompat.getSystemService(
-            applicationContext,
-            NotificationManager::class.java
-        ) as NotificationManager
-
-        notificationManager.sendNotification(messageBody, applicationContext)
     }
 
     private fun sendNotificationWithIntent(track: Track) {
