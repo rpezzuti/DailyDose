@@ -91,7 +91,7 @@ interface BrowseFirebaseApiService {
 
 
     // Gson, gives me a Json object to parse.
-    @GET ("tracks/test-genre.json")
+    @GET ("tracks/melodic-dubstep.json")
     fun getJsonObject():
             Call<JsonObject>
 

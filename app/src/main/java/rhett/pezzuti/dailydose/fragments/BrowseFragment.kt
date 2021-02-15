@@ -39,7 +39,6 @@ class BrowseFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.playlist.observe(viewLifecycleOwner, { playlist ->
-            Timber.i("CUNT OMEGA")
             playlist?.apply {
                 viewModelAdapter?.submitList(playlist)
             }

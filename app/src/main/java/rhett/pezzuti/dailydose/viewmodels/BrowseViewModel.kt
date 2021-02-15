@@ -59,7 +59,6 @@ class BrowseViewModel(
         // parseOneJson()
 
         /** Get a Json Object to be put into parser **/
-        Timber.i("CUNT ALPHA")
         getJson()
 
         /** Gets those two tracks from the test-genre-list and shows them in recycler view **/
@@ -70,7 +69,7 @@ class BrowseViewModel(
     }
 
     /** Observed playlist for the recycler View **/
-   val testTracks = trackRepository.tracks
+   // val testTracks = trackRepository.tracks
 
 
 
@@ -154,6 +153,10 @@ class BrowseViewModel(
 
 
     private fun parseJson2(data: JsonObject?) {
+
+        if (data?.size() == 1) {
+
+        }
 
         if (data != null) {
             Timber.i("FUCK")
