@@ -51,7 +51,7 @@ class HomeFragment : Fragment() {
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.testTracks.observe(viewLifecycleOwner, { tracks ->
+        viewModel.tracks.observe(viewLifecycleOwner, { tracks ->
             tracks?.apply {
                 viewModelAdapter?.submitList(tracks)
             }

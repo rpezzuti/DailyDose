@@ -1,25 +1,18 @@
 package rhett.pezzuti.dailydose.viewmodels
 
-import android.annotation.SuppressLint
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.*
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import rhett.pezzuti.dailydose.database.TrackDatabaseDao
 import rhett.pezzuti.dailydose.database.domain.Track
 import rhett.pezzuti.dailydose.database.getInstance
-import rhett.pezzuti.dailydose.network.BrowseFirebaseApi
-import rhett.pezzuti.dailydose.network.NetworkTrackContainer
+import rhett.pezzuti.dailydose.network.BrowseFirebaseMoshi
+import rhett.pezzuti.dailydose.network.BrowseFirebaseScalars
 import rhett.pezzuti.dailydose.network.asDomainModel
 import rhett.pezzuti.dailydose.repository.TrackRepository
 import timber.log.Timber
@@ -45,7 +38,9 @@ class BrowseViewModel(
     init {
         // _response.value = "broken AF"
         // getOneTrackFromFirebase()
-        getOneGenreFromFirebase()
+        // getTestGenreListTrack()
+        getTestGenreJsonString()
+
 
         viewModelScope.launch {
             trackRepository.refreshTestTracks()
@@ -54,22 +49,10 @@ class BrowseViewModel(
 
     val testTracks = trackRepository.tracks
 
-    fun getStuff() {
-
-        val aString: String = ""
-        val reader = JSONObject(aString)
-
-        val sys : JSONObject = reader.getJSONObject("sys")
-        val country = sys.getString("country")
-
-        
-
-    }
-
 
     private fun refreshTrackDatabase() = viewModelScope.launch {
         try {
-            val playlist = BrowseFirebaseApi.retrofitService.refreshDatabase().await()
+            val playlist = BrowseFirebaseMoshi.retrofitService.refreshDatabase().await()
             _response.value = "it fucking worked"
             _playlist.postValue(playlist.asDomainModel())
 
@@ -79,8 +62,10 @@ class BrowseViewModel(
     }
 
 
+
+
     private fun getOneTrackFromFirebase() {
-        BrowseFirebaseApi.retrofitService.getOneTrackFromFirebase().enqueue( object: Callback<Track>{
+        BrowseFirebaseMoshi.retrofitService.getOneTrackFromFirebase().enqueue( object: Callback<Track>{
             override fun onResponse(call: Call<Track>, response: Response<Track>) {
                 _response.value = response.body().toString()
             }
@@ -91,8 +76,11 @@ class BrowseViewModel(
         })
     }
 
-    private fun getOneGenreFromFirebase() {
-        BrowseFirebaseApi.retrofitService.getOneGenreFromFirebase().enqueue( object: Callback<List<Track>>{
+    // Moshi Works
+    // Scalars returns a converter error
+    private fun getTestGenreListTrack() {
+        Timber.i("FUCK")
+        BrowseFirebaseMoshi.retrofitService.getTestGenreListTrack().enqueue( object: Callback<List<Track>>{
             override fun onResponse(call: Call<List<Track>>, response: Response<List<Track>>) {
                 _response.value = response.body().toString()
                 _playlist.value = response.body()
@@ -103,32 +91,18 @@ class BrowseViewModel(
         })
     }
 
-    fun requestFromFirebase() {
-        Timber.i("requestFromFirebase called")
-
-
-        val firebaseDatabase = FirebaseDatabase.getInstance()
-        val reference = firebaseDatabase.getReference("testing/doubletest")
-
-        reference.setValue("fuck")
-
-
-
-        // Gives me https://daily-dose-f1709-default-rtdb.firebaseio.com/testing/doubletest with a value of "fuck"
-
-        reference.addValueEventListener(object : ValueEventListener{
-            @SuppressLint("LogNotTimber")
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val value = snapshot.value
-                Log.i("BrowseViewModel","Here is the value: $value")
+    // Scalars Works
+    // Moshi returns "Expected a string but was BEGIN_OBJECT at path $"
+    private fun getTestGenreJsonString() {
+        BrowseFirebaseScalars.retrofitService.getOneJsonString().enqueue( object: Callback<String>{
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                _response.value = response.body().toString()
             }
 
-            override fun onCancelled(error: DatabaseError) {
-                Timber.i("onCancelled called")
-                Timber.i("Error: ${error.code}")
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                _response.value = "Failure: " + t.message
             }
         })
-
     }
 
     fun addToFavorites(url: String) {
@@ -158,4 +132,35 @@ class BrowseViewModel(
             trackDatabase.update(track)
         }
     }
+
+
+    /**
+    fun requestFromFirebase() {
+        Timber.i("requestFromFirebase called")
+
+
+        val firebaseDatabase = FirebaseDatabase.getInstance()
+        val reference = firebaseDatabase.getReference("testing/doubletest")
+
+        reference.setValue("fuck")
+
+
+
+        // Gives me https://daily-dose-f1709-default-rtdb.firebaseio.com/testing/doubletest with a value of "fuck"
+
+        reference.addValueEventListener(object : ValueEventListener{
+            @SuppressLint("LogNotTimber")
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val value = snapshot.value
+                Log.i("BrowseViewModel","Here is the value: $value")
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Timber.i("onCancelled called")
+                Timber.i("Error: ${error.code}")
+            }
+        })
+
+    }
+    **/
 }

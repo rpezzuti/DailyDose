@@ -8,7 +8,7 @@ import rhett.pezzuti.dailydose.database.ClientDatabase
 import rhett.pezzuti.dailydose.database.asDomainModel
 import rhett.pezzuti.dailydose.database.domain.Track
 import rhett.pezzuti.dailydose.database.domain.asDatabaseModel
-import rhett.pezzuti.dailydose.network.BrowseFirebaseApi
+import rhett.pezzuti.dailydose.network.BrowseFirebaseMoshi
 import rhett.pezzuti.dailydose.network.asDatabaseModel
 
 class TrackRepository(private val database: ClientDatabase) {
@@ -22,20 +22,26 @@ class TrackRepository(private val database: ClientDatabase) {
             it.asDomainModel()
         }
 
+    val recentTracks: LiveData<List<Track>> =
+        Transformations.map(database.trackDatabaseDao.getRecentTracks())
+        {
+            it.asDomainModel()
+        }
+
     // val favorites: LiveData<List<Track>>()
 
 
     suspend fun refreshTracks() {
         withContext(Dispatchers.IO) {
             // Get all tracks from Firebase
-            val playlist = BrowseFirebaseApi.retrofitService.refreshDatabase().await()
+            val playlist = BrowseFirebaseMoshi.retrofitService.refreshDatabase().await()
             database.trackDatabaseDao.insertAll(*playlist.asDatabaseModel())
         }
     }
 
     suspend fun refreshTestTracks() {
         withContext(Dispatchers.IO) {
-            val playlist = BrowseFirebaseApi.retrofitService.getOneGenreFromFirebaseRepo().await()
+            val playlist = BrowseFirebaseMoshi.retrofitService.getOneGenreFromFirebaseRepo().await()
             database.trackDatabaseDao.insertAll(*playlist.asDatabaseModel())
         }
     }

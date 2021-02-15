@@ -87,7 +87,12 @@ class UploadViewModel(private val app: Application) : AndroidViewModel(app) {
             System.currentTimeMillis(),
             false
         )
-        firebaseDatabase.child("tracks").child("test-genre").setValue(listOf(track1, track2))
+        firebaseDatabase.child("tracks").child("test-genre-list").setValue(listOf(track1, track2))
+
+        /** WHAT I WANT **/
+        firebaseDatabase.child("tracks").child("test-genre").child(track1.title).setValue(track1)
+        firebaseDatabase.child("tracks").child("test-genre").child(track2.title).setValue(track2)
+
     }
 
 }

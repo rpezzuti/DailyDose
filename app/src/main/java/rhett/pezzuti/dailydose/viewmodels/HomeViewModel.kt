@@ -23,12 +23,6 @@ class HomeViewModel(
         get() = _showSnackBarEvent
 
 
-    val tracks: LiveData<List<Track>> = Transformations.map(trackDatabase.getRecentTracks()) {
-        it.asDomainModel()
-    }
-
-
-
     private val database = getInstance(getApplication())
     private val trackRepository = TrackRepository(database)
 
@@ -42,11 +36,11 @@ class HomeViewModel(
         currentUser.addSource(userDatabase.getCurrentUser(), currentUser::setValue)
 
         viewModelScope.launch {
-            trackRepository.refreshTestTracks()
+            // trackRepository.refreshTestTracks()
         }
     }
 
-    val testTracks = trackRepository.tracks
+    val tracks = trackRepository.recentTracks
 
 
     /** Snackbar Event **/
