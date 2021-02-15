@@ -2,6 +2,7 @@ package rhett.pezzuti.dailydose.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import rhett.pezzuti.dailydose.database.domain.Track
 
 @Dao
 interface TrackDatabaseDao {

@@ -16,7 +16,7 @@ import androidx.navigation.ui.NavigationUI
 import com.google.android.material.snackbar.Snackbar
 import rhett.pezzuti.dailydose.viewmodels.HomeViewModel
 import rhett.pezzuti.dailydose.R
-import rhett.pezzuti.dailydose.adapters.DatabaseTrackListener
+import rhett.pezzuti.dailydose.adapters.TrackListener
 import rhett.pezzuti.dailydose.adapters.TrackAdapter
 import rhett.pezzuti.dailydose.database.getInstance
 import rhett.pezzuti.dailydose.databinding.FragmentHomeBinding
@@ -76,7 +76,7 @@ class HomeFragment : Fragment() {
 
 
         /** Recycler View OnClick function **/
-        viewModelAdapter = TrackAdapter( DatabaseTrackListener ({ url ->
+        viewModelAdapter = TrackAdapter( TrackListener ({ url ->
             val contentIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             val contentPendingIntent = PendingIntent.getActivity(
                 requireContext(),

@@ -1,78 +1,81 @@
 package rhett.pezzuti.dailydose.viewmodels
 
-import android.annotation.SuppressLint
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.*
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.gson.JsonObject
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import rhett.pezzuti.dailydose.database.TrackDatabaseDao
+import rhett.pezzuti.dailydose.database.domain.LocalTrack
 import rhett.pezzuti.dailydose.database.domain.Track
-import rhett.pezzuti.dailydose.network.BrowseFirebaseApi
-import rhett.pezzuti.dailydose.network.NetworkTrackContainer
+import rhett.pezzuti.dailydose.database.getInstance
+import rhett.pezzuti.dailydose.network.BrowseFirebaseGson
+import rhett.pezzuti.dailydose.network.BrowseFirebaseMoshi
+import rhett.pezzuti.dailydose.network.BrowseFirebaseScalars
 import rhett.pezzuti.dailydose.network.asDomainModel
+import rhett.pezzuti.dailydose.repository.TrackRepository
 import timber.log.Timber
 import java.io.IOException
+
 
 class BrowseViewModel(
     val trackDatabase: TrackDatabaseDao,
     app: Application
 ) : AndroidViewModel(app) {
 
-
-    private val MELODIC_DUBSTEP = "/Melodic%20Dubstep/Drop%20Our%20Hearts%20Pt%20II"
-
     private val _response = MutableLiveData<String>()
     val response : LiveData<String>
         get() = _response
 
-    private val _playlist = MutableLiveData<List<Track>?>()
-    val playlist : LiveData<List<Track>?>
+    private val _playlist = MutableLiveData<List<Track>>()
+    val playlist : LiveData<List<Track>>
         get() = _playlist
+
+    private val database = getInstance(getApplication())
+    private val trackRepository = TrackRepository(database)
+
 
 
 
     init {
         // _response.value = "broken AF"
+
+        /** Returns null right now. No such track at path exists **/
         // getOneTrackFromFirebase()
-        getOneGenreFromFirebase()
-    }
 
-    fun getStuff() {
+        /** Displays a list of tracks from the test-genre-list child **/
+        // getTestGenreListTrack()
 
-        val aString: String = ""
-        val reader = JSONObject(aString)
+        /** Displays the JSON object of the test-genre child as a String **/
+        // getTestGenreJsonString()
 
-        val sys : JSONObject = reader.getJSONObject("sys")
-        val country = sys.getString("country")
+        /** GETS one track from test-genre, parses it into a LocalTrack, and displays the title of that track **/
+        // parseOneJson()
 
-        
+        /** Get a Json Object to be put into parser **/
+        getJson()
 
-    }
-
-
-    private fun refreshTrackDatabase() = viewModelScope.launch {
-        try {
-            val playlist = BrowseFirebaseApi.retrofitService.refreshDatabase().await()
-            _response.value = "it fucking worked"
-            _playlist.postValue(playlist.asDomainModel())
-
-        } catch (networkError: IOException) {
-            _response.value = "Failure: " + networkError.message
+        /** Gets those two tracks from the test-genre-list and shows them in recycler view **/
+        viewModelScope.launch {
+            trackRepository.refreshTestTracks()
+            getJson()
         }
     }
 
+    /** Observed playlist for the recycler View **/
+   // val testTracks = trackRepository.tracks
+
+
 
     private fun getOneTrackFromFirebase() {
-        BrowseFirebaseApi.retrofitService.getOneTrackFromFirebase().enqueue( object: Callback<Track>{
+        BrowseFirebaseMoshi.retrofitService.getOneTrackFromFirebase().enqueue(object :
+            Callback<Track> {
             override fun onResponse(call: Call<Track>, response: Response<Track>) {
                 _response.value = response.body().toString()
             }
@@ -83,54 +86,169 @@ class BrowseViewModel(
         })
     }
 
-    private fun getOneGenreFromFirebase() {
-        BrowseFirebaseApi.retrofitService.getOneGenreFromFirebase().enqueue( object: Callback<List<Track>>{
+    // Moshi Works
+    // Scalars returns a converter error
+    private fun getTestGenreListTrack() {
+        Timber.i("kek")
+        BrowseFirebaseMoshi.retrofitService.getTestGenreListTrack().enqueue(object :
+            Callback<List<Track>> {
             override fun onResponse(call: Call<List<Track>>, response: Response<List<Track>>) {
                 _response.value = response.body().toString()
                 _playlist.value = response.body()
             }
+
             override fun onFailure(call: Call<List<Track>>, t: Throwable) {
                 _response.value = "Failure: " + t.message
             }
         })
     }
 
-    fun requestFromFirebase() {
-        Timber.i("requestFromFirebase called")
-
-
-        val firebaseDatabase = FirebaseDatabase.getInstance()
-        val reference = firebaseDatabase.getReference("testing/doubletest")
-
-        reference.setValue("fuck")
-
-
-
-        // Gives me https://daily-dose-f1709-default-rtdb.firebaseio.com/testing/doubletest with a value of "fuck"
-
-        reference.addValueEventListener(object : ValueEventListener{
-            @SuppressLint("LogNotTimber")
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val value = snapshot.value
-                Log.i("BrowseViewModel","Here is the value: $value")
+    // Scalars Works
+    // Moshi returns "Expected a string but was BEGIN_OBJECT at path $"
+    private fun getTestGenreJsonString() {
+        BrowseFirebaseScalars.retrofitService.getOneJsonString().enqueue(object : Callback<String> {
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                _response.value = response.body()
             }
 
-            override fun onCancelled(error: DatabaseError) {
-                Timber.i("onCancelled called")
-                Timber.i("Error: ${error.code}")
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                _response.value = "Failure: " + t.message
             }
         })
+    }
+
+
+
+    private fun parseOneJson() {
+        BrowseFirebaseMoshi.retrofitService.parseOneJson().enqueue(object : Callback<LocalTrack> {
+            override fun onResponse(call: Call<LocalTrack>, response: Response<LocalTrack>) {
+                _response.value = "Success: ${response.body()?.title.toString()} was received"
+            }
+
+            override fun onFailure(call: Call<LocalTrack>, t: Throwable) {
+                _response.value = "Failure: " + t.message
+            }
+        })
+    }
+
+
+    // Gson works
+    // Now i have a Json object to play with =]
+    // If the Genre is empty, I just get a response onFailure error. The app does not crash and the RV
+    // just shows null. so theoretically, having nothing in a genre is okay :)
+    private fun getJson() {
+
+        BrowseFirebaseGson.retrofitService.getJsonObject().enqueue(object: Callback<JsonObject>{
+            override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                _response.value = "GREAT SUCCESS: ${response.body().toString()}"
+                parseJson2(response.body())
+                _response.value = _playlist.value?.size.toString()
+            }
+
+            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                _response.value = "Failure: " + t.message
+             }
+        })
+
 
     }
-}
 
-/**
- *
- *
- *
- * val someData = ArrayList<FirebaseTrack>()
-for (data in snapshot.children){
-var model = data.getValue(FirebaseTrack::class.java)
-someData.add(model as FirebaseTrack)
- *
- */
+
+    private fun parseJson2(data: JsonObject?) {
+
+        if (data == null) {
+            // Do Nothing
+        }
+
+        else if (data.size() == 1) {
+            val key = data.keySet().toList()
+            val jsonObject = data.get(key[0]).asJsonObject
+            val tempTrack = Track(
+                jsonObject.get("url").toString(),
+                jsonObject.get("title").toString(),
+                jsonObject.get("artist").toString(),
+                jsonObject.get("genre").toString(),
+                jsonObject.get("image").toString(),
+                jsonObject.get("timestamp")!!.asLong,
+                jsonObject.get("favorite")!!.asBoolean
+            )
+            _playlist.value = listOf(tempTrack)
+        }
+
+        else {
+            Timber.i("FUCK")
+            // Returns an Array of the track names. (the keys by which their children are all the data.)
+            Timber.i(data.keySet().toString())
+
+            val keys = data.keySet().toMutableList()
+            Timber.i(keys[0].toString())
+            Timber.i(keys[1].toString())
+
+
+            // Gives me the Json of the key. As a JsonElement!
+            Timber.i(data.get(keys[0]).toString())
+
+            val jsonObjects = mutableListOf<JsonObject?>()
+
+            for (i in 0 until keys.size) {
+                jsonObjects.add(i, data.get(keys[i]).asJsonObject)
+            }
+
+            Timber.i("HALLOO")
+            Timber.i("HALLOO ${jsonObjects[0]?.get("url")}")
+
+            val masterList = mutableListOf<Track>()
+
+            for (i in 0 until jsonObjects.size) {
+                val temp = Track(
+                    jsonObjects[i]?.get("url").toString(),
+                    jsonObjects[i]?.get("title").toString(),
+                    jsonObjects[i]?.get("artist").toString(),
+                    jsonObjects[i]?.get("genre").toString(),
+                    jsonObjects[i]?.get("image").toString(),
+                    jsonObjects[i]?.get("timestamp")!!.asLong,
+                    jsonObjects[i]?.get("favorite")!!.asBoolean
+                )
+                masterList.add(temp)
+            }
+
+            Timber.i("TRACKS: ${masterList.toString()}")
+
+            _playlist.value = masterList.toList()
+        }
+    }
+
+
+
+
+
+    /** Database Functions **/
+    fun addToFavorites(url: String) {
+        viewModelScope.launch {
+            favorite(url)
+        }
+    }
+
+    private suspend fun favorite(url: String) {
+        withContext(Dispatchers.IO) {
+            val track = trackDatabase.getTrack(url)
+            track.favorite = true
+            trackDatabase.update(track)
+        }
+    }
+
+    fun removeFromFavorites(url: String) {
+        viewModelScope.launch {
+            unFavorite(url)
+        }
+    }
+
+    private suspend fun unFavorite(url: String) {
+        withContext(Dispatchers.IO) {
+            val track = trackDatabase.getTrack(url)
+            track.favorite = false
+            trackDatabase.update(track)
+        }
+    }
+
+}

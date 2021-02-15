@@ -7,21 +7,21 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.Dispatcher
 import rhett.pezzuti.dailydose.database.*
+import rhett.pezzuti.dailydose.database.domain.Track
 import rhett.pezzuti.dailydose.repository.TrackRepository
 import timber.log.Timber
 
 class HomeViewModel(
     val trackDatabase: TrackDatabaseDao,
     val userDatabase: UserPreferencesDao,
-    app: Application) : AndroidViewModel(app) {
+    app: Application
+) : AndroidViewModel(app) {
 
     /** Encapsulated LiveData **/
     private val _showSnackBarEvent = MutableLiveData<Boolean>()
-    val showSnackBarEvent : LiveData<Boolean>
+    val showSnackBarEvent: LiveData<Boolean>
         get() = _showSnackBarEvent
 
-
-    val tracks = trackDatabase.getRecentTracks()
 
     private val database = getInstance(getApplication())
     private val trackRepository = TrackRepository(database)
@@ -35,17 +35,16 @@ class HomeViewModel(
         _showSnackBarEvent.value = false
         currentUser.addSource(userDatabase.getCurrentUser(), currentUser::setValue)
 
-
-/*        viewModelScope.launch {
-            trackRepository.refreshTracks()
+        viewModelScope.launch {
+            // trackRepository.refreshTestTracks()
         }
-        val allTracks = trackRepository.tracks*/
-
     }
+
+    val tracks = trackRepository.recentTracks
 
 
     /** Snackbar Event **/
-    fun doneShowingSnackBar(){
+    fun doneShowingSnackBar() {
         _showSnackBarEvent.value = false
     }
 
@@ -84,13 +83,12 @@ class HomeViewModel(
     }
 
     private suspend fun unFavorite(url: String) {
-        withContext(Dispatchers.IO){
+        withContext(Dispatchers.IO) {
             val track = trackDatabase.getTrack(url)
             track.favorite = false
             trackDatabase.update(track)
         }
     }
-
 
 
 }

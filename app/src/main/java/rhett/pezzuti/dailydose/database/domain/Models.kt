@@ -1,6 +1,7 @@
 package rhett.pezzuti.dailydose.database.domain
 
 import com.squareup.moshi.Json
+import rhett.pezzuti.dailydose.database.DatabaseTrack
 
 data class Track (
     val url: String,
@@ -11,6 +12,20 @@ data class Track (
     val timestamp: Long,
     var favorite: Boolean
 )
+
+fun List<Track>.asDatabaseModel(): Array<DatabaseTrack> {
+    return map {
+        DatabaseTrack(
+            url = it.url,
+            title = it.title,
+            artist = it.artist,
+            genre = it.genre,
+            image = it.image,
+            timestamp = it.timestamp,
+            favorite = it.favorite
+        )
+    }.toTypedArray()
+}
 
 data class LocalTrack (
 
@@ -30,7 +45,10 @@ data class LocalTrack (
     val image: String,
 
     @Json(name = "timestamp")
-    val timestamp: Long
+    val timestamp: Long,
+
+    @Json(name = "favorite")
+    val favorite: Boolean
 )
 
 // For Retrofit to accept the notification data, there must be a variable
