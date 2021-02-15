@@ -1,7 +1,6 @@
 package rhett.pezzuti.dailydose.database
 
 import androidx.room.ColumnInfo
-import androidx.room.Database
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import rhett.pezzuti.dailydose.database.domain.Track

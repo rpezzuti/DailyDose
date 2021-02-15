@@ -33,12 +33,14 @@ class BrowseViewModel(
     val response : LiveData<String>
         get() = _response
 
-    private val _playlist = MutableLiveData<List<Track>?>()
-    val playlist : LiveData<List<Track>?>
+    private val _playlist = MutableLiveData<List<Track>>()
+    val playlist : LiveData<List<Track>>
         get() = _playlist
 
     private val database = getInstance(getApplication())
     private val trackRepository = TrackRepository(database)
+
+
 
 
     init {
@@ -57,16 +59,19 @@ class BrowseViewModel(
         // parseOneJson()
 
         /** Get a Json Object to be put into parser **/
+        Timber.i("CUNT ALPHA")
         getJson()
 
         /** Gets those two tracks from the test-genre-list and shows them in recycler view **/
         viewModelScope.launch {
             trackRepository.refreshTestTracks()
+            getJson()
         }
     }
 
     /** Observed playlist for the recycler View **/
-    val testTracks = trackRepository.tracks
+   val testTracks = trackRepository.tracks
+
 
 
     private fun getOneTrackFromFirebase() {
@@ -130,71 +135,70 @@ class BrowseViewModel(
 
     // Gson works
     // Now i have a Json object to play with =]
-    private fun getJson(){
+    private fun getJson() {
+
         BrowseFirebaseGson.retrofitService.getJsonObject().enqueue(object: Callback<JsonObject>{
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                 _response.value = "GREAT SUCCESS: ${response.body().toString()}"
+                parseJson2(response.body())
+                _response.value = _playlist.value?.size.toString()
             }
 
             override fun onFailure(call: Call<JsonObject>, t: Throwable) {
                 _response.value = "Failure: " + t.message
              }
         })
+
+
     }
 
 
-    private fun parseJson(data: JSONObject?) {
+    private fun parseJson2(data: JsonObject?) {
 
         if (data != null) {
+            Timber.i("FUCK")
+            // Returns an Array of the track names. (the keys by which their children are all the data.)
+            Timber.i(data.keySet().toString())
 
-        }
-    }
+            val keys = data.keySet().toMutableList()
+            Timber.i(keys[0].toString())
+            Timber.i(keys[1].toString())
 
 
-    private fun parseJson1(data: JSONObject?) {
-        if (data != null) {
-            val it = data.keys()
-            while (it.hasNext()) {
-                val key = it.next()
-                try {
-                    if (data[key] is JSONArray) {
-                        val arry = data.getJSONArray(key)
-                        val size = arry.length()
-                        for (i in 0 until size) {
-                            parseJson(arry.getJSONObject(i))
-                        }
-                    } else if (data[key] is JSONObject) {
-                        parseJson(data.getJSONObject(key))
-                    } else {
-                        println(key + ":" + data.getString(key))
-                    }
-                } catch (e: Throwable) {
-                    try {
-                        println(key + ":" + data.getString(key))
-                    } catch (ee: Exception) {
-                    }
-                    e.printStackTrace()
-                }
+            // Gives me the Json of the key. As a JsonElement!
+            Timber.i(data.get(keys[0]).toString())
+
+            val jsonObjects = mutableListOf<JsonObject?>()
+
+            for (i in 0 until keys.size) {
+                jsonObjects.add(i, data.get(keys[i]).asJsonObject)
             }
+
+            Timber.i("HALLOO")
+            Timber.i("HALLOO ${jsonObjects[0]?.get("url")}")
+
+            val masterList = mutableListOf<Track>()
+
+            for (i in 0 until jsonObjects.size) {
+                val temp = Track(
+                    jsonObjects[i]?.get("url").toString(),
+                    jsonObjects[i]?.get("title").toString(),
+                    jsonObjects[i]?.get("artist").toString(),
+                    jsonObjects[i]?.get("genre").toString(),
+                    jsonObjects[i]?.get("image").toString(),
+                    jsonObjects[i]?.get("timestamp")!!.asLong,
+                    jsonObjects[i]?.get("favorite")!!.asBoolean,
+                )
+                masterList.add(temp)
+            }
+
+            Timber.i("TRACKS: ${masterList.toString()}")
+
+            _playlist.value = masterList.toList()
         }
     }
 
 
-
-
-
-
-
-    private fun refreshTrackDatabase() = viewModelScope.launch {
-        try {
-            val playlist = BrowseFirebaseMoshi.retrofitService.refreshDatabase().await()
-            _response.value = "it fucking worked"
-            _playlist.postValue(playlist.asDomainModel())
-
-        } catch (networkError: IOException) {
-            _response.value = "Failure: " + networkError.message
-        }
-    }
 
 
 
