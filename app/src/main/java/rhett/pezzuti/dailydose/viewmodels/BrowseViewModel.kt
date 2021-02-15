@@ -9,6 +9,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import rhett.pezzuti.dailydose.database.TrackDatabaseDao
+import rhett.pezzuti.dailydose.database.domain.LocalTrack
 import rhett.pezzuti.dailydose.database.domain.Track
 import rhett.pezzuti.dailydose.database.getInstance
 import rhett.pezzuti.dailydose.network.BrowseFirebaseMoshi
@@ -39,7 +40,8 @@ class BrowseViewModel(
         // _response.value = "broken AF"
         // getOneTrackFromFirebase()
         // getTestGenreListTrack()
-        getTestGenreJsonString()
+        // getTestGenreJsonString()
+        parseOneJson()
 
 
         viewModelScope.launch {
@@ -105,6 +107,32 @@ class BrowseViewModel(
         })
     }
 
+
+    private fun parseOneJson() {
+        BrowseFirebaseMoshi.retrofitService.parseOneJson().enqueue(object : Callback<LocalTrack> {
+            override fun onResponse(call: Call<LocalTrack>, response: Response<LocalTrack>) {
+                _response.value = "Success: ${response.body()?.title.toString()} was received"
+            }
+
+            override fun onFailure(call: Call<LocalTrack>, t: Throwable) {
+                _response.value = "Failure: " + t.message
+            }
+        })
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /** Database Functions **/
     fun addToFavorites(url: String) {
         viewModelScope.launch {
             favorite(url)
@@ -133,34 +161,4 @@ class BrowseViewModel(
         }
     }
 
-
-    /**
-    fun requestFromFirebase() {
-        Timber.i("requestFromFirebase called")
-
-
-        val firebaseDatabase = FirebaseDatabase.getInstance()
-        val reference = firebaseDatabase.getReference("testing/doubletest")
-
-        reference.setValue("fuck")
-
-
-
-        // Gives me https://daily-dose-f1709-default-rtdb.firebaseio.com/testing/doubletest with a value of "fuck"
-
-        reference.addValueEventListener(object : ValueEventListener{
-            @SuppressLint("LogNotTimber")
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val value = snapshot.value
-                Log.i("BrowseViewModel","Here is the value: $value")
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Timber.i("onCancelled called")
-                Timber.i("Error: ${error.code}")
-            }
-        })
-
-    }
-    **/
 }

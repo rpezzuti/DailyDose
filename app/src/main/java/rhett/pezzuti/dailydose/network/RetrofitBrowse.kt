@@ -67,6 +67,10 @@ interface BrowseFirebaseApiService {
     fun getOneGenreFromFirebaseRepo():
             Deferred<List<Track>>
 
+    @GET("tracks/test-genre/It%20Sounds%20Like%20We're%20Breaking.json")
+    fun parseOneJson():
+            Call<LocalTrack>
+
     @GET (".json")
     fun refreshDatabase(): Deferred<NetworkTrackContainer>
 }

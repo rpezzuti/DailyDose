@@ -45,7 +45,10 @@ data class LocalTrack (
     val image: String,
 
     @Json(name = "timestamp")
-    val timestamp: Long
+    val timestamp: Long,
+
+    @Json(name = "favorite")
+    val favorite: Boolean
 )
 
 // For Retrofit to accept the notification data, there must be a variable
