@@ -134,6 +134,8 @@ class BrowseViewModel(
 
     // Gson works
     // Now i have a Json object to play with =]
+    // If the Genre is empty, I just get a response onFailure error. The app does not crash and the RV
+    // just shows null. so theoretically, having nothing in a genre is okay :)
     private fun getJson() {
 
         BrowseFirebaseGson.retrofitService.getJsonObject().enqueue(object: Callback<JsonObject>{
@@ -154,11 +156,26 @@ class BrowseViewModel(
 
     private fun parseJson2(data: JsonObject?) {
 
-        if (data?.size() == 1) {
-
+        if (data == null) {
+            // Do Nothing
         }
 
-        if (data != null) {
+        else if (data.size() == 1) {
+            val key = data.keySet().toList()
+            val jsonObject = data.get(key[0]).asJsonObject
+            val tempTrack = Track(
+                jsonObject.get("url").toString(),
+                jsonObject.get("title").toString(),
+                jsonObject.get("artist").toString(),
+                jsonObject.get("genre").toString(),
+                jsonObject.get("image").toString(),
+                jsonObject.get("timestamp")!!.asLong,
+                jsonObject.get("favorite")!!.asBoolean
+            )
+            _playlist.value = listOf(tempTrack)
+        }
+
+        else {
             Timber.i("FUCK")
             // Returns an Array of the track names. (the keys by which their children are all the data.)
             Timber.i(data.keySet().toString())
@@ -190,7 +207,7 @@ class BrowseViewModel(
                     jsonObjects[i]?.get("genre").toString(),
                     jsonObjects[i]?.get("image").toString(),
                     jsonObjects[i]?.get("timestamp")!!.asLong,
-                    jsonObjects[i]?.get("favorite")!!.asBoolean,
+                    jsonObjects[i]?.get("favorite")!!.asBoolean
                 )
                 masterList.add(temp)
             }
