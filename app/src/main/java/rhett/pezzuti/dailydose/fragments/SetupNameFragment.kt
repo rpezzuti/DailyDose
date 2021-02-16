@@ -1,5 +1,6 @@
 package rhett.pezzuti.dailydose.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +14,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import rhett.pezzuti.dailydose.R
-import rhett.pezzuti.dailydose.database.getInstance
 import rhett.pezzuti.dailydose.databinding.FragmentSetupNameBinding
 import rhett.pezzuti.dailydose.factory.SetupNameViewModelFactory
 import rhett.pezzuti.dailydose.viewmodels.SetupNameViewModel
@@ -38,10 +38,10 @@ class SetupNameFragment : Fragment() {
             false
         )
 
-        val app = requireNotNull(this.activity).application
-        val userDatabase = getInstance(app.applicationContext).userPreferencesDao
+        val activity = requireActivity()
+        val sharedPref = activity.getSharedPreferences(getString(R.string.user_preferences_key), Context.MODE_PRIVATE)
 
-        viewModelFactory = SetupNameViewModelFactory(userDatabase, app)
+        viewModelFactory = SetupNameViewModelFactory()
         viewModel = ViewModelProvider(this, viewModelFactory).get(SetupNameViewModel::class.java)
         binding.setupNameViewModelXML = viewModel
         binding.lifecycleOwner = this
@@ -69,7 +69,7 @@ class SetupNameFragment : Fragment() {
             if (event == true) {
                 if (binding.editSetupName.text?.isNotEmpty() == true){
 
-                    viewModel.createNewUser(binding.editSetupName.text.toString())
+                    sharedPref.edit().putString("username", binding.editSetupName.text.toString()).apply()
 
                     this.findNavController().navigate(SetupNameFragmentDirections.actionSetupNameFragmentToSetupPreferencesFragment(binding.editSetupName.text.toString()))
                 } else {

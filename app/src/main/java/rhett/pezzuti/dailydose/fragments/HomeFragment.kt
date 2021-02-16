@@ -1,6 +1,7 @@
 package rhett.pezzuti.dailydose.fragments
 
 import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.lifecycle.ViewModelProvider
@@ -34,9 +35,8 @@ class HomeFragment : Fragment() {
         }
 
         val trackDataSource = getInstance(activity.applicationContext).trackDatabaseDao
-        val userDataSource = getInstance(activity.applicationContext).userPreferencesDao
 
-        ViewModelProvider(this, HomeViewModelFactory(trackDataSource, userDataSource, activity.application)).get(HomeViewModel::class.java)
+        ViewModelProvider(this, HomeViewModelFactory(trackDataSource, activity.application)).get(HomeViewModel::class.java)
     }
 
     private var viewModelAdapter: TrackAdapter? = null
@@ -69,6 +69,9 @@ class HomeFragment : Fragment() {
             container,
             false
         )
+        val sharedPref = this.activity?.getSharedPreferences(getString(R.string.user_preferences_key), Context.MODE_PRIVATE)
+        binding.tvHomeWelcome.text = "~ Welcome, ${sharedPref?.getString("username", "bob")}! ~"
+
 
         binding.homeViewModelXML = viewModel
         binding.lifecycleOwner = this
@@ -102,7 +105,6 @@ class HomeFragment : Fragment() {
         setHasOptionsMenu(true)
         return binding.root
     }
-
 
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

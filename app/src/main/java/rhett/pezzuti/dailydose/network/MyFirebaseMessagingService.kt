@@ -1,17 +1,14 @@
 package rhett.pezzuti.dailydose.network
 
 import android.app.NotificationManager
-import android.content.SharedPreferences
 import androidx.core.content.ContextCompat
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import rhett.pezzuti.dailydose.database.DatabaseTrack
-import rhett.pezzuti.dailydose.database.User
 import rhett.pezzuti.dailydose.database.domain.Track
 import rhett.pezzuti.dailydose.database.getInstance
-import rhett.pezzuti.dailydose.utils.sendNotification
 import rhett.pezzuti.dailydose.utils.sendNotificationWithIntent
 import timber.log.Timber
 import java.lang.Exception

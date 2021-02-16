@@ -13,7 +13,6 @@ import timber.log.Timber
 
 class HomeViewModel(
     val trackDatabase: TrackDatabaseDao,
-    val userDatabase: UserPreferencesDao,
     app: Application
 ) : AndroidViewModel(app) {
 
@@ -21,12 +20,8 @@ class HomeViewModel(
     private val trackRepository = TrackRepository(database)
 
 
-    private val currentUser = MediatorLiveData<User>()
-    fun getCurrentUser() = currentUser
-
     init {
         Timber.i("homeViewModel Init block")
-        currentUser.addSource(userDatabase.getCurrentUser(), currentUser::setValue)
 
         viewModelScope.launch {
             // trackRepository.refreshTestTracks()

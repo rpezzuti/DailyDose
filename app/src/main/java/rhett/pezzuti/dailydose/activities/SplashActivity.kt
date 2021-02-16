@@ -1,6 +1,8 @@
 package rhett.pezzuti.dailydose.activities
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.coroutines.CoroutineScope
@@ -14,16 +16,16 @@ class SplashActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySplashBinding
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        val app = requireNotNull(this).application
+        val sharedPref = getSharedPreferences(getString(R.string.user_preferences_key), Context.MODE_PRIVATE)
 
         CoroutineScope(Dispatchers.IO).launch {
-            val userDatabase = getInstance(app.applicationContext).userPreferencesDao
 
-            if (userDatabase.isUserInitialized() == null) {
+            if (sharedPref.getString("username", null) == null) {
                 startSetup()
                 // Prevent Backwards Navigation
                 finish()

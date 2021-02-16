@@ -3,20 +3,10 @@ package rhett.pezzuti.dailydose.viewmodels
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import android.widget.CheckBox
 import android.widget.Toast
-import androidx.annotation.Nullable
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.google.firebase.messaging.FirebaseMessaging
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import rhett.pezzuti.dailydose.R
-import rhett.pezzuti.dailydose.database.User
-import rhett.pezzuti.dailydose.database.getInstance
 import rhett.pezzuti.dailydose.databinding.FragmentPreferencesBinding
 
 class PreferencesViewModel(
@@ -24,32 +14,9 @@ class PreferencesViewModel(
     private val binding: FragmentPreferencesBinding
 ) : AndroidViewModel(app) {
 
-    private val preferences = getInstance(app.applicationContext).userPreferencesDao
-    private lateinit var user: User
-
-    private var _currentUser = MutableLiveData<User>()
-    val currentUser : LiveData<User>
-        get() = _currentUser
 
     private val sharedPref: SharedPreferences? = app.getSharedPreferences(app.getString(R.string.user_preferences_key), Context.MODE_PRIVATE)
 
-    init {
-        initializeUser()
-    }
-
-    private fun initializeUser() {
-        viewModelScope.launch {
-            _currentUser.value = getCurrentUserFromDatabase()
-        }
-    }
-
-    private suspend fun getCurrentUserFromDatabase(): User {
-        return withContext(Dispatchers.IO) {
-
-            val user = preferences.getCurrentDomainUser()
-            user
-        }
-    }
 
 
     fun subTest() {

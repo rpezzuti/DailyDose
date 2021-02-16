@@ -8,12 +8,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import rhett.pezzuti.dailydose.database.TrackDatabaseDao
-import rhett.pezzuti.dailydose.database.UserPreferencesDao
 import rhett.pezzuti.dailydose.database.asDomainModel
 
 class FavoritesViewModel(
     val trackDatabase: TrackDatabaseDao,
-    val userDatabase: UserPreferencesDao,
     app: Application) : AndroidViewModel(app) {
 
 

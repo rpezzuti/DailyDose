@@ -4,8 +4,6 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import rhett.pezzuti.dailydose.R
-import rhett.pezzuti.dailydose.database.DatabaseTrack
-import rhett.pezzuti.dailydose.database.User
 import rhett.pezzuti.dailydose.database.domain.Track
 
 @BindingAdapter("trackTitle")
@@ -26,13 +24,6 @@ fun TextView.setTrackArtist(item: Track?) {
 fun TextView.setTrackGenre(item: Track?) {
     item?.let {
         text = "Genre: ${item.genre}"
-    }
-}
-
-@BindingAdapter("welcomeUser")
-fun TextView.setWelcomeHome(item: User?) {
-    item?.let {
-        text = "~ Welcome, ${item.username}! ~"
     }
 }
 
