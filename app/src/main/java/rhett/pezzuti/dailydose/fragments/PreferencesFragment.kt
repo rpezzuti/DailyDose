@@ -25,10 +25,6 @@ class PreferencesFragment : Fragment() {
     // Called after onCreateView() returns
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val app = requireNotNull(this.activity).application
-        val preferences = getInstance(app.applicationContext).userPreferencesDao
-
     }
 
     override fun onCreateView(

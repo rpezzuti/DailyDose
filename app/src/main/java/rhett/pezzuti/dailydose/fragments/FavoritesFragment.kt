@@ -60,9 +60,8 @@ class FavoritesFragment : Fragment() {
 
         val app = requireNotNull(this.activity).application
         val trackDataSource = getInstance(app.applicationContext).trackDatabaseDao
-        val userDataSource = getInstance(app.applicationContext).userPreferencesDao
 
-        viewModelFactory = FavoritesViewModelFactory(trackDataSource, userDataSource, app)
+        viewModelFactory = FavoritesViewModelFactory(trackDataSource, app)
         viewModel = ViewModelProvider(this, viewModelFactory).get(FavoritesViewModel::class.java)
         binding.favoritesViewModelXML = viewModel
         binding.lifecycleOwner = this

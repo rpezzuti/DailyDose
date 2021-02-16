@@ -36,27 +36,3 @@ interface TrackDatabaseDao {
     @Query ("DELETE FROM track_table")
     fun clearAll()
 }
-
-// Only gonna be one user.
-@Dao
-interface UserPreferencesDao {
-
-    @Insert
-    fun insert(user: User)
-
-    @Update
-    fun update(user: User)
-
-    @Query("SELECT * FROM user_preferences")
-    fun getCurrentDomainUser(): User
-
-    @Query("SELECT * FROM user_preferences")
-    fun getCurrentUser(): LiveData<User?>
-
-    @Query("SELECT * FROM user_preferences")
-    fun isUserInitialized(): User?
-
-    @Query("DELETE FROM user_preferences")
-    fun clear()
-
-}

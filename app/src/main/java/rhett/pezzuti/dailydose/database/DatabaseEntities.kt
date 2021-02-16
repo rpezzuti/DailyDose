@@ -45,52 +45,21 @@ fun List<DatabaseTrack>.asDomainModel(): List<Track> {
     }
 }
 
-@Entity (tableName = "user_preferences")
 data class User (
-
-    @PrimaryKey
     val username: String,
-
-    @ColumnInfo
-    var dubstep : Boolean = false,
-
-    @ColumnInfo
-    var melodicDubstep: Boolean = false,
-
-    @ColumnInfo
-    var loFi: Boolean = false,
-
-    @ColumnInfo
-    var chillstep: Boolean = false,
-
-    @ColumnInfo
-    var futureGarage: Boolean = false,
-
-    @ColumnInfo
-    var pianoAmbient: Boolean = false,
-
-    @ColumnInfo
-    var experimentalBass: Boolean = false,
-
-    @ColumnInfo
-    var liquidDnB: Boolean = false,
-
-    @ColumnInfo
-    var ambientBass: Boolean = false,
-
-    @ColumnInfo
-    var metalcore: Boolean = false,
-
-    @ColumnInfo
-    var acousticBallads: Boolean = false,
-
-    @ColumnInfo
-    var instrumentalRock: Boolean = false,
-
-    @ColumnInfo
-    var deathMetal: Boolean = false,
-
-    @ColumnInfo
-    var livePerformances: Boolean = false
+    val dubstep : Boolean = false,
+    val melodicDubstep: Boolean = false,
+    val loFi: Boolean = false,
+    val chillstep: Boolean = false,
+    val futureGarage: Boolean = false,
+    val pianoAmbient: Boolean = false,
+    val experimentalBass: Boolean = false,
+    val liquidDnB: Boolean = false,
+    val ambientBass: Boolean = false,
+    val metalcore: Boolean = false,
+    val acousticBallads: Boolean = false,
+    val instrumentalRock: Boolean = false,
+    val deathMetal: Boolean = false,
+    val livePerformances: Boolean = false
 
 )

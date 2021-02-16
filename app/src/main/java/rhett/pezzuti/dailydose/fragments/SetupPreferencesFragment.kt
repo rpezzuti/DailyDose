@@ -1,5 +1,6 @@
 package rhett.pezzuti.dailydose.fragments
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -33,12 +34,16 @@ class SetupPreferencesFragment : Fragment() {
 
         val arguments = SetupPreferencesFragmentArgs.fromBundle(requireArguments())
 
+        val activity = requireActivity()
+        val sharedPref = activity.getSharedPreferences(getString(R.string.user_preferences_key), Context.MODE_PRIVATE)
+        val username = sharedPref.getString("username", "bob")
+
         viewModel = ViewModelProvider(this).get(SetupPreferencesViewModel::class.java)
         binding.setupPreferencesViewModelXML = viewModel
         binding.lifecycleOwner = this
 
 
-        binding.textPreferencesName.text = "What do you like, ${arguments.name}?"
+        binding.textPreferencesName.text = "What do you like, $username?"
 
 
         viewModel.donePreferences.observe(viewLifecycleOwner, { event ->
