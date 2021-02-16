@@ -12,6 +12,7 @@ import retrofit2.Response
 import rhett.pezzuti.dailydose.database.TrackDatabaseDao
 import rhett.pezzuti.dailydose.database.domain.LocalTrack
 import rhett.pezzuti.dailydose.database.domain.Track
+import rhett.pezzuti.dailydose.database.domain.asDatabaseModel
 import rhett.pezzuti.dailydose.database.getInstance
 import rhett.pezzuti.dailydose.network.BrowseFirebaseGson
 import rhett.pezzuti.dailydose.network.BrowseFirebaseMoshi
@@ -61,11 +62,13 @@ class BrowseViewModel(
             /** Get a Json Object to be put into parser **/
             // getJsonOneGenre()
             getAllTracks()
+
+            // trackRepository.getTracks()
         }
     }
 
     /** Observed playlist for the recycler View **/
-    // val testTracks = trackRepository.tracks
+    val testTracks = trackRepository.tracks
 
 
     private fun getOneTrackFromFirebase() {
@@ -265,8 +268,7 @@ class BrowseViewModel(
                 }
             }
 
-            _playlist.value = trackList
-
+            insertAll(trackList.toList())
         }
 
     }
@@ -300,5 +302,19 @@ class BrowseViewModel(
             trackDatabase.update(track)
         }
     }
+
+    private fun insertAll(trackList: List<Track>) {
+        viewModelScope.launch {
+            insertAllNow(trackList)
+        }
+    }
+
+    private suspend fun insertAllNow(trackList: List<Track>){
+        withContext(Dispatchers.IO) {
+            trackDatabase.insertAll(*trackList.asDatabaseModel())
+        }
+    }
+
+
 
 }

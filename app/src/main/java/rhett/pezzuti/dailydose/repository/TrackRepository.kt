@@ -8,8 +8,11 @@ import rhett.pezzuti.dailydose.database.ClientDatabase
 import rhett.pezzuti.dailydose.database.asDomainModel
 import rhett.pezzuti.dailydose.database.domain.Track
 import rhett.pezzuti.dailydose.database.domain.asDatabaseModel
+import rhett.pezzuti.dailydose.network.BrowseFirebaseGson
 import rhett.pezzuti.dailydose.network.BrowseFirebaseMoshi
 import rhett.pezzuti.dailydose.network.asDatabaseModel
+import rhett.pezzuti.dailydose.utils.asDatabaseModel
+
 
 class TrackRepository(private val database: ClientDatabase) {
 
@@ -42,6 +45,13 @@ class TrackRepository(private val database: ClientDatabase) {
     suspend fun refreshTestTracks() {
         withContext(Dispatchers.IO) {
             val playlist = BrowseFirebaseMoshi.retrofitService.getOneGenreFromFirebaseRepo().await()
+            database.trackDatabaseDao.insertAll(*playlist.asDatabaseModel())
+        }
+    }
+
+    suspend fun getTracks() {
+        withContext(Dispatchers.IO) {
+            val playlist = BrowseFirebaseGson.retrofitService.getAllTracksDeferred()
             database.trackDatabaseDao.insertAll(*playlist.asDatabaseModel())
         }
     }

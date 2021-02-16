@@ -97,6 +97,10 @@ interface BrowseFirebaseApiService {
     fun getAllTracks():
             Call<JsonObject>
 
+    @GET ("tracks.json")
+    fun getAllTracksDeferred():
+        JsonObject
+
 
 
 
