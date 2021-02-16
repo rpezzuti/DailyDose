@@ -6,8 +6,6 @@ import com.google.gson.JsonObject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.json.JSONArray
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -18,16 +16,15 @@ import rhett.pezzuti.dailydose.database.getInstance
 import rhett.pezzuti.dailydose.network.BrowseFirebaseGson
 import rhett.pezzuti.dailydose.network.BrowseFirebaseMoshi
 import rhett.pezzuti.dailydose.network.BrowseFirebaseScalars
-import rhett.pezzuti.dailydose.network.asDomainModel
 import rhett.pezzuti.dailydose.repository.TrackRepository
 import timber.log.Timber
-import java.io.IOException
 
 
 class BrowseViewModel(
     val trackDatabase: TrackDatabaseDao,
     app: Application
 ) : AndroidViewModel(app) {
+
 
     private val _response = MutableLiveData<String>()
     val response : LiveData<String>
@@ -58,13 +55,14 @@ class BrowseViewModel(
         /** GETS one track from test-genre, parses it into a LocalTrack, and displays the title of that track **/
         // parseOneJson()
 
-        /** Get a Json Object to be put into parser **/
-        getJson()
 
-        /** Gets those two tracks from the test-genre-list and shows them in recycler view **/
         viewModelScope.launch {
-            trackRepository.refreshTestTracks()
+            /** Gets those two tracks from the test-genre-list and shows them in recycler view **/
+            // trackRepository.refreshTestTracks()
+
+            /** Get a Json Object to be put into parser **/
             getJson()
+
         }
     }
 
@@ -141,8 +139,7 @@ class BrowseViewModel(
         BrowseFirebaseGson.retrofitService.getJsonObject().enqueue(object: Callback<JsonObject>{
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                 _response.value = "GREAT SUCCESS: ${response.body().toString()}"
-                parseJson2(response.body())
-                _response.value = _playlist.value?.size.toString()
+                parseJson(response.body())
             }
 
             override fun onFailure(call: Call<JsonObject>, t: Throwable) {
@@ -154,7 +151,7 @@ class BrowseViewModel(
     }
 
 
-    private fun parseJson2(data: JsonObject?) {
+    private fun parseJson(data: JsonObject?) {
 
         if (data == null) {
             // Do Nothing
@@ -176,26 +173,19 @@ class BrowseViewModel(
         }
 
         else {
-            Timber.i("FUCK")
-            // Returns an Array of the track names. (the keys by which their children are all the data.)
-            Timber.i(data.keySet().toString())
+            // Put the keys (track names) into a list
+            val keys = data.keySet().toList()
 
-            val keys = data.keySet().toMutableList()
-            Timber.i(keys[0].toString())
-            Timber.i(keys[1].toString())
-
-
-            // Gives me the Json of the key. As a JsonElement!
-            Timber.i(data.get(keys[0]).toString())
-
+            // Initialize the list of tracks as Json objects
             val jsonObjects = mutableListOf<JsonObject?>()
 
-            for (i in 0 until keys.size) {
+            // Parse the Genre object into track sized objects
+            // data.get() wants to return a JsonElement, so we cast it to JsonObject.
+            // Lets us get variables in the next for loop
+            for (i in keys.indices) {
                 jsonObjects.add(i, data.get(keys[i]).asJsonObject)
             }
 
-            Timber.i("HALLOO")
-            Timber.i("HALLOO ${jsonObjects[0]?.get("url")}")
 
             val masterList = mutableListOf<Track>()
 
@@ -211,8 +201,6 @@ class BrowseViewModel(
                 )
                 masterList.add(temp)
             }
-
-            Timber.i("TRACKS: ${masterList.toString()}")
 
             _playlist.value = masterList.toList()
         }

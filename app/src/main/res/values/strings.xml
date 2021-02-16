@@ -116,6 +116,7 @@
     <string name="fragment_favorites_title">Favorites</string>
     <string name="fragment_preferences_title">Preferences</string>
     <string name="fragment_themes_title">Themes</string>
+    <string name="fragment_upload_title">Upload</string>
 
     <!-- Info Fragment Strings -->
     <string name="info_rhett_pezzuti">Rhett Pezzuti</string>
