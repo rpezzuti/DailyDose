@@ -27,17 +27,15 @@ class BrowseViewModel(
 
 
     private val _response = MutableLiveData<String>()
-    val response : LiveData<String>
+    val response: LiveData<String>
         get() = _response
 
     private val _playlist = MutableLiveData<List<Track>>()
-    val playlist : LiveData<List<Track>>
+    val playlist: LiveData<List<Track>>
         get() = _playlist
 
     private val database = getInstance(getApplication())
     private val trackRepository = TrackRepository(database)
-
-
 
 
     init {
@@ -61,14 +59,13 @@ class BrowseViewModel(
             // trackRepository.refreshTestTracks()
 
             /** Get a Json Object to be put into parser **/
-            getJson()
-
+            // getJsonOneGenre()
+            getAllTracks()
         }
     }
 
     /** Observed playlist for the recycler View **/
-   // val testTracks = trackRepository.tracks
-
+    // val testTracks = trackRepository.tracks
 
 
     private fun getOneTrackFromFirebase() {
@@ -116,7 +113,6 @@ class BrowseViewModel(
     }
 
 
-
     private fun parseOneJson() {
         BrowseFirebaseMoshi.retrofitService.parseOneJson().enqueue(object : Callback<LocalTrack> {
             override fun onResponse(call: Call<LocalTrack>, response: Response<LocalTrack>) {
@@ -134,30 +130,28 @@ class BrowseViewModel(
     // Now i have a Json object to play with =]
     // If the Genre is empty, I just get a response onFailure error. The app does not crash and the RV
     // just shows null. so theoretically, having nothing in a genre is okay :)
-    private fun getJson() {
+    private fun getJsonOneGenre() {
 
-        BrowseFirebaseGson.retrofitService.getJsonObject().enqueue(object: Callback<JsonObject>{
-            override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
-                _response.value = "GREAT SUCCESS: ${response.body().toString()}"
-                parseJson(response.body())
-            }
+        BrowseFirebaseGson.retrofitService.getMelodicDubstep()
+            .enqueue(object : Callback<JsonObject> {
+                override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                    _response.value = "GREAT SUCCESS: ${response.body().toString()}"
+                    parseJsonOneGenre(response.body())
+                }
 
-            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-                _response.value = "Failure: " + t.message
-             }
-        })
+                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                    _response.value = "Failure: " + t.message
+                }
+            })
 
 
     }
 
-
-    private fun parseJson(data: JsonObject?) {
+    private fun parseJsonOneGenre(data: JsonObject?) {
 
         if (data == null) {
             // Do Nothing
-        }
-
-        else if (data.size() == 1) {
+        } else if (data.size() == 1) {
             val key = data.keySet().toList()
             val jsonObject = data.get(key[0]).asJsonObject
             val tempTrack = Track(
@@ -170,9 +164,7 @@ class BrowseViewModel(
                 jsonObject.get("favorite")!!.asBoolean
             )
             _playlist.value = listOf(tempTrack)
-        }
-
-        else {
+        } else {
             // Put the keys (track names) into a list
             val keys = data.keySet().toList()
 
@@ -206,8 +198,78 @@ class BrowseViewModel(
         }
     }
 
+    private fun getAllTracks() {
+
+        BrowseFirebaseGson.retrofitService.getAllTracks().enqueue(object : Callback<JsonObject> {
+            override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                _response.value = "GREAT SUCCESS: ${response.body().toString()}"
+                parseJsonAllTracks(response.body())
+            }
+
+            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                _response.value = "Failure: " + t.message
+            }
+        })
+    }
+
+    private fun parseJsonAllTracks(data: JsonObject?) {
+
+        if (data == null) {
+            // Do nothing
+        } else {
+            val genres = data.keySet().toList()
+            val jsonList = mutableListOf<JsonObject>()
+            val trackList = mutableListOf<Track>()
+            Timber.i("RHETT: List of data keys $genres")
+
+            for (i in genres) {
+                Timber.i("RHETT: Genre Indicator $i")
+                Timber.i("RHETT: Data of that genre ${data[i]}")
+
+                jsonList.add(data.getAsJsonObject(i))
+                Timber.i("RHETT: Json List ${jsonList}")
+            }
 
 
+            // Parse each genre
+            for (yo in jsonList) {
+                Timber.i("RHETT: Loop of calling PraseJsonOneGenre${parseJsonOneGenre(yo)}")
+
+
+                // Put the keys (track names) into a list
+                val keys = yo.keySet().toList()
+
+                // Initialize the list of tracks as Json objects
+                val jsonObjects = mutableListOf<JsonObject?>()
+
+                // Parse the Genre object into track sized objects
+                // data.get() wants to return a JsonElement, so we cast it to JsonObject.
+                // Lets us get variables in the next for loop
+                for (i in keys.indices) {
+                    jsonObjects.add(i, yo.get(keys[i]).asJsonObject)
+                }
+
+
+
+                for (i in 0 until jsonObjects.size) {
+                    val temp = Track(
+                        jsonObjects[i]?.get("url").toString(),
+                        jsonObjects[i]?.get("title").toString(),
+                        jsonObjects[i]?.get("artist").toString(),
+                        jsonObjects[i]?.get("genre").toString(),
+                        jsonObjects[i]?.get("image").toString(),
+                        jsonObjects[i]?.get("timestamp")!!.asLong,
+                        jsonObjects[i]?.get("favorite")!!.asBoolean
+                    )
+                    trackList.add(temp)
+                }
+            }
+
+            _playlist.value = trackList
+
+        }
+
+    }
 
 
     /** Database Functions **/
