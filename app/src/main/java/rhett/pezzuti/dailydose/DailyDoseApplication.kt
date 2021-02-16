@@ -1,19 +1,14 @@
 package rhett.pezzuti.dailydose
 
 import android.app.Application
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.graphics.Color
 import android.os.Build
 import androidx.work.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import rhett.pezzuti.dailydose.database.getInstance
 import rhett.pezzuti.dailydose.work.RefreshDataWorker
 import rhett.pezzuti.dailydose.work.UploadPreferencesWorker
 import timber.log.Timber
-import java.time.Period
 import java.util.concurrent.TimeUnit
 
 class DailyDoseApplication : Application() {
@@ -38,7 +33,7 @@ class DailyDoseApplication : Application() {
         Timber.plant(Timber.DebugTree())
 
         // delayedInit()
-        // anotherDelayedInit()
+        anotherDelayedInit()
     }
 
     private fun delayedInit() = applicationScope.launch {
@@ -46,10 +41,10 @@ class DailyDoseApplication : Application() {
     }
 
     private fun anotherDelayedInit() = applicationScope.launch {
-        setupRecurringUserPrefUpload()
+        setupRecurringUploadSharedPref()
     }
 
-    private fun setupRecurringUserPrefUpload() {
+    private fun setupRecurringUploadSharedPref() {
         val constraints = Constraints.Builder()
             .setRequiresCharging(true)
             .setRequiredNetworkType(NetworkType.UNMETERED)
@@ -76,14 +71,12 @@ class DailyDoseApplication : Application() {
     private fun setupRecurringWork() {
 
         // UNMETERED network means that the OS reports that the user wont be charged for the network request.
-
-
-
         val constraints = Constraints.Builder()
             .setRequiresCharging(true)
             .setRequiresBatteryNotLow(true)
             .setRequiredNetworkType(NetworkType.UNMETERED)
             .apply {
+                // Marshmallow +
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     setRequiresDeviceIdle(true)
                 }
@@ -100,46 +93,6 @@ class DailyDoseApplication : Application() {
             ExistingPeriodicWorkPolicy.KEEP,
             repeatingRequest
         )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*        val constraints = Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.UNMETERED)
-            .setRequiresBatteryNotLow(true)
-            .setRequiresCharging(true)
-            .apply {
-                // Marshmellow or higher
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-                    setRequiresDeviceIdle(true)
-                }
-            }.build()*/
-/*
-
-        val repeatingRequest = PeriodicWorkRequestBuilder<RefreshDataWorker>(1, TimeUnit.DAYS)
-            .setConstraints(constraints)
-            .build()
-
-        WorkManager.getInstance().enqueueUniquePeriodicWork(
-            RefreshDataWorker.WORK_NAME,
-            ExistingPeriodicWorkPolicy.KEEP,
-            repeatingRequest
-        )
-*/
-
-
     }
 
 }

@@ -177,10 +177,6 @@ class PreferencesViewModel(
                 }
                 Toast.makeText(app.applicationContext, msg, Toast.LENGTH_SHORT).show()
             }
-
-
-
-
     }
 
     private
