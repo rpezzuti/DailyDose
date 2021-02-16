@@ -9,9 +9,11 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.snackbar.Snackbar
 import rhett.pezzuti.dailydose.R
 import rhett.pezzuti.dailydose.database.domain.Track
 import rhett.pezzuti.dailydose.database.domain.TrackNotification
@@ -57,8 +59,20 @@ class UploadFragment : DialogFragment(), AdapterView.OnItemSelectedListener {
         })
 
 
+        viewModel.showSnackBarEvent.observe(viewLifecycleOwner, { event ->
+            if (event == true) {
+                Snackbar.make(
+                    requireActivity().findViewById(android.R.id.content),
+                    getString(R.string.cleared_message),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+                viewModel.doneShowingSnackBar()
+            }
+        })
 
 
+
+        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.fragment_upload_title)
         return binding.root
     }
 

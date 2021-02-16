@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
-import com.google.android.material.snackbar.Snackbar
 import rhett.pezzuti.dailydose.viewmodels.HomeViewModel
 import rhett.pezzuti.dailydose.R
 import rhett.pezzuti.dailydose.adapters.TrackListener
@@ -96,18 +95,6 @@ class HomeFragment : Fragment() {
         })
         )
         binding.homeRecyclerView.adapter = viewModelAdapter
-
-
-        viewModel.showSnackBarEvent.observe(viewLifecycleOwner, { event ->
-            if (event == true){
-                Snackbar.make(
-                    requireActivity().findViewById(android.R.id.content),
-                    getString(R.string.cleared_message),
-                    Snackbar.LENGTH_SHORT
-                ).show()
-                viewModel.doneShowingSnackBar()
-            }
-        })
 
 
 

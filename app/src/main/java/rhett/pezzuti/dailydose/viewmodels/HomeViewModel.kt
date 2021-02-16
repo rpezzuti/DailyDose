@@ -17,12 +17,6 @@ class HomeViewModel(
     app: Application
 ) : AndroidViewModel(app) {
 
-    /** Encapsulated LiveData **/
-    private val _showSnackBarEvent = MutableLiveData<Boolean>()
-    val showSnackBarEvent: LiveData<Boolean>
-        get() = _showSnackBarEvent
-
-
     private val database = getInstance(getApplication())
     private val trackRepository = TrackRepository(database)
 
@@ -32,7 +26,6 @@ class HomeViewModel(
 
     init {
         Timber.i("homeViewModel Init block")
-        _showSnackBarEvent.value = false
         currentUser.addSource(userDatabase.getCurrentUser(), currentUser::setValue)
 
         viewModelScope.launch {
@@ -41,20 +34,6 @@ class HomeViewModel(
     }
 
     val tracks = trackRepository.recentTracks
-
-
-    /** Snackbar Event **/
-    fun doneShowingSnackBar() {
-        _showSnackBarEvent.value = false
-    }
-
-
-    fun onClear() {
-        viewModelScope.launch {
-            clear()
-            _showSnackBarEvent.value = true
-        }
-    }
 
     private suspend fun clear() {
         withContext(Dispatchers.IO) {

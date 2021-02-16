@@ -83,6 +83,8 @@ class BrowseFragment : Fragment() {
         )
         binding.browseRecyclerView.adapter = viewModelAdapter
 
+
+
         (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.fragment_browse_title)
         return binding.root
     }

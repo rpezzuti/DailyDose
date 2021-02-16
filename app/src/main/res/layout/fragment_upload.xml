@@ -13,8 +13,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragments.UploadFragment"
-        android:background="?attr/colorSecondaryVariant">
+        android:background="?attr/colorSecondaryVariant"
+        tools:context=".fragments.UploadFragment">
 
         <TextView
             android:id="@+id/tv_upload_url"
@@ -34,7 +34,7 @@
             android:layout_margin="@dimen/margin_small"
             android:hint="@string/hint_enter_link"
             android:importantForAutofill="no"
-            android:inputType="textWebEmailAddress"
+            android:inputType="textUri"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_upload_url"
             app:layout_constraintTop_toTopOf="parent" />
@@ -96,14 +96,27 @@
 
         <Button
             android:id="@+id/button_upload"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_small"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/margin_large"
             android:onClick="@{() -> uploadViewModelXML.uploadCheck()}"
             android:text="@string/button_upload"
+            app:layout_constraintBottom_toTopOf="@+id/btn_clear_all"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/upload_spinner" />
+
+        <Button
+            android:id="@+id/btn_clear_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> uploadViewModelXML.onClear()}"
+            android:text="@string/button_clear_all"
+            android:layout_margin="@dimen/margin_small"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
