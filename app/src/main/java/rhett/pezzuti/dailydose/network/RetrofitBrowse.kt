@@ -99,7 +99,7 @@ interface BrowseFirebaseApiService {
 
     @GET ("tracks.json")
     fun getAllTracksDeferred():
-        JsonObject
+        Deferred<JsonObject>
 
 
 

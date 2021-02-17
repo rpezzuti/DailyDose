@@ -20,7 +20,6 @@ import rhett.pezzuti.dailydose.database.getInstance
 import rhett.pezzuti.dailydose.databinding.FragmentBrowseBinding
 import rhett.pezzuti.dailydose.factory.BrowseViewModelFactory
 import rhett.pezzuti.dailydose.viewmodels.BrowseViewModel
-import timber.log.Timber
 
 
 class BrowseFragment : Fragment() {
@@ -39,7 +38,7 @@ class BrowseFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.testTracks.observe(viewLifecycleOwner, { playlist ->
+        viewModel.tracks.observe(viewLifecycleOwner, { playlist ->
             playlist?.apply {
                 viewModelAdapter?.submitList(playlist)
             }

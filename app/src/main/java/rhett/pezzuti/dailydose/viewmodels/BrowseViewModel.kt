@@ -10,6 +10,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import rhett.pezzuti.dailydose.database.TrackDatabaseDao
+import rhett.pezzuti.dailydose.database.asDomainModel
 import rhett.pezzuti.dailydose.database.domain.LocalTrack
 import rhett.pezzuti.dailydose.database.domain.Track
 import rhett.pezzuti.dailydose.database.domain.asDatabaseModel
@@ -68,7 +69,7 @@ class BrowseViewModel(
     }
 
     /** Observed playlist for the recycler View **/
-    val testTracks = trackRepository.tracks
+    val tracks = trackRepository.tracks
 
 
     private fun getOneTrackFromFirebase() {
@@ -311,7 +312,18 @@ class BrowseViewModel(
 
     private suspend fun insertAllNow(trackList: List<Track>){
         withContext(Dispatchers.IO) {
-            trackDatabase.insertAll(*trackList.asDatabaseModel())
+
+            val tracks = trackDatabase.saveFavorites(true)
+
+            Timber.i("FUCK: The Size $tracks")
+            Timber.i("FUCK: The Size Value Size ${tracks.size}")
+
+            if (tracks.isNullOrEmpty()) {
+                trackDatabase.insertAll(*trackList.asDatabaseModel())
+            } else {
+                trackDatabase.insertAll(*trackList.asDatabaseModel())
+                trackDatabase.insertAll(*tracks.toTypedArray())
+            }
         }
     }
 
