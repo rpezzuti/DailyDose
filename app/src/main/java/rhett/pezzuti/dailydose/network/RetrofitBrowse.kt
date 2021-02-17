@@ -48,11 +48,6 @@ interface BrowseFirebaseApiService {
      * - :Call<String>
      */
 
-    @GET(".json")
-    fun getAllTracks():
-            Call<List<LocalTrack>>
-
-
     @GET("tracks/dummy-genre/track.json")
     fun getOneTrackFromFirebase():
             Call<Track>
@@ -92,10 +87,19 @@ interface BrowseFirebaseApiService {
 
     // Gson, gives me a Json object to parse.
     @GET ("tracks/melodic-dubstep.json")
-    fun getJsonObject():
+    fun getMelodicDubstep():
             Call<JsonObject>
 
 
+
+    // Gson, get all the babies.
+    @GET ("tracks.json")
+    fun getAllTracks():
+            Call<JsonObject>
+
+    @GET ("tracks.json")
+    fun getAllTracksDeferred():
+        Deferred<JsonObject>
 
 
 
