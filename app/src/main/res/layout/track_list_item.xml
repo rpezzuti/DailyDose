@@ -14,6 +14,10 @@
             type="rhett.pezzuti.dailydose.adapters.TrackListener" />
 
         <variable
+            name="fabListener"
+            type="rhett.pezzuti.dailydose.adapters.FabListener" />
+
+        <variable
             name="favoritesViewModelXML"
             type="rhett.pezzuti.dailydose.viewmodels.FavoritesViewModel" />
 
@@ -82,7 +86,7 @@
                 android:background="@color/white"
                 android:contentDescription="@string/content_description_favorites_fab"
                 isFavorite="@{track}"
-                android:onClick="@{() -> clickListener.onFavorite(track)}"
+                android:onClick="@{() -> fabListener.onFavorite(track)}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

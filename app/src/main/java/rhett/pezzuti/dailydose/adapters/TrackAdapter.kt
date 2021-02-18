@@ -8,11 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import rhett.pezzuti.dailydose.database.domain.Track
 import rhett.pezzuti.dailydose.databinding.TrackListItemBinding
 
-class TrackAdapter(val clickListener: TrackListener) : ListAdapter<Track, ViewHolder>(TrackDiffCallback()) {
+class TrackAdapter(val clickListener: TrackListener, val fabListener: FabListener) : ListAdapter<Track, ViewHolder>(TrackDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item, clickListener)
+        holder.bind(item, clickListener, fabListener)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -23,10 +23,11 @@ class TrackAdapter(val clickListener: TrackListener) : ListAdapter<Track, ViewHo
 
 class ViewHolder private constructor(val binding: TrackListItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(item: Track, clickListener: TrackListener) {
+    fun bind(item: Track, clickListener: TrackListener, fabListener: FabListener) {
 
         binding.track = item
         binding.clickListener = clickListener
+        binding.fabListener = fabListener
         binding.executePendingBindings()
     }
 
@@ -51,7 +52,10 @@ class TrackDiffCallback : DiffUtil.ItemCallback<Track>() {
     }
 }
 
-class TrackListener(val clickListener: (trackUrl: String) -> Unit, val fabListener: (isFavorite: Boolean, trackUrl: String) -> Unit) {
+class TrackListener(val clickListener: (trackUrl: String) -> Unit) {
     fun onClick(track: Track) = clickListener(track.url)
+}
+
+class FabListener(val fabListener: (isFavorite: Boolean, trackUrl: String) -> Unit ) {
     fun onFavorite(track: Track) = fabListener(track.favorite, track.url)
 }

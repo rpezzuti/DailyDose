@@ -15,6 +15,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import rhett.pezzuti.dailydose.viewmodels.FavoritesViewModel
 import rhett.pezzuti.dailydose.R
+import rhett.pezzuti.dailydose.adapters.FabListener
 import rhett.pezzuti.dailydose.adapters.TrackListener
 import rhett.pezzuti.dailydose.adapters.TrackAdapter
 import rhett.pezzuti.dailydose.database.getInstance
@@ -67,25 +68,26 @@ class FavoritesFragment : Fragment() {
         binding.lifecycleOwner = this
 
 
-        viewModelAdapter = TrackAdapter( TrackListener ({ url ->
+        viewModelAdapter = TrackAdapter( TrackListener { url ->
             val contentIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             val contentPendingIntent = PendingIntent.getActivity(
                 requireContext(),
                 0,
                 contentIntent,
-                PendingIntent.FLAG_ONE_SHOT
+                PendingIntent.FLAG_UPDATE_CURRENT
             ).send()
 
-        }, { favorite, url ->
+        }, FabListener { favorite, url ->
             if (!favorite) {
                 viewModel.addToFavorites(url)
-                Toast.makeText(this.requireContext(), "Added to Favorites", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this.requireContext(), "Added to Favorites", Toast.LENGTH_SHORT)
+                    .show()
             } else {
                 viewModel.removeFromFavorites(url)
-                Toast.makeText(this.requireContext(), "Removed from Favorites", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this.requireContext(), "Removed from Favorites", Toast.LENGTH_SHORT)
+                    .show()
             }
         })
-        )
         binding.favoritesRecyclerView.adapter = viewModelAdapter
 
 
