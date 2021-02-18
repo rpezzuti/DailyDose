@@ -14,12 +14,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import rhett.pezzuti.dailydose.R
+import rhett.pezzuti.dailydose.adapters.FabListener
 import rhett.pezzuti.dailydose.adapters.TrackAdapter
 import rhett.pezzuti.dailydose.adapters.TrackListener
 import rhett.pezzuti.dailydose.database.getInstance
 import rhett.pezzuti.dailydose.databinding.FragmentBrowseBinding
 import rhett.pezzuti.dailydose.factory.BrowseViewModelFactory
 import rhett.pezzuti.dailydose.viewmodels.BrowseViewModel
+import timber.log.Timber
+import java.lang.Exception
 
 
 class BrowseFragment : Fragment() {
@@ -61,25 +64,34 @@ class BrowseFragment : Fragment() {
 
 
         /** Recycler View OnClick function **/
-        viewModelAdapter = TrackAdapter( TrackListener ({ url ->
+        viewModelAdapter = TrackAdapter( TrackListener { url ->
             val contentIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             val contentPendingIntent = PendingIntent.getActivity(
                 requireContext(),
                 0,
                 contentIntent,
                 PendingIntent.FLAG_ONE_SHOT
-            ).send()
+            )
+            try {
+                contentPendingIntent.send()
+            } catch (e: Exception) {
+                Timber.i("Exception Found: ${e}")
+                Timber.i("Exception Found: ${e.message}")
+                Timber.i("Exception Found: ${e.message.toString()}")
+                Timber.i("Exception Found: ${e.stackTrace}")
+            }
 
-        }, { favorite, url ->
+        }, FabListener { favorite, url ->
             if (!favorite) {
                 viewModel.addToFavorites(url)
-                Toast.makeText(this.requireContext(), "Added to Favorites", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this.requireContext(), "Added to Favorites", Toast.LENGTH_SHORT)
+                    .show()
             } else {
                 viewModel.removeFromFavorites(url)
-                Toast.makeText(this.requireContext(), "Removed from Favorites", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this.requireContext(), "Removed from Favorites", Toast.LENGTH_SHORT)
+                    .show()
             }
         })
-        )
         binding.browseRecyclerView.adapter = viewModelAdapter
 
 

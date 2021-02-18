@@ -43,8 +43,6 @@ class UploadFragment : DialogFragment(), AdapterView.OnItemSelectedListener {
         )
         setupSpinner()
 
-        val app = requireNotNull(this.activity).application
-
         viewModel = ViewModelProvider(this).get(UploadViewModel::class.java)
         binding.uploadViewModelXML = viewModel
         binding.lifecycleOwner = this

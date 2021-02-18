@@ -256,7 +256,7 @@ class BrowseViewModel(
 
                 for (i in 0 until jsonObjects.size) {
                     val temp = Track(
-                        jsonObjects[i]?.get("url").toString(),
+                        jsonObjects[i]?.get("url").toString().trim(),
                         jsonObjects[i]?.get("title").toString(),
                         jsonObjects[i]?.get("artist").toString(),
                         jsonObjects[i]?.get("genre").toString(),
