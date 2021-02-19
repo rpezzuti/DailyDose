@@ -1,6 +1,7 @@
 package rhett.pezzuti.dailydose.viewmodels
 
 import android.app.Application
+import android.net.Uri
 import androidx.lifecycle.*
 import com.google.gson.JsonObject
 import kotlinx.coroutines.Dispatchers
@@ -256,7 +257,7 @@ class BrowseViewModel(
 
                 for (i in 0 until jsonObjects.size) {
                     val temp = Track(
-                        jsonObjects[i]?.get("url").toString().trim(),
+                        jsonObjects[i]?.get("url").toString().removeSurrounding("\""),
                         jsonObjects[i]?.get("title").toString(),
                         jsonObjects[i]?.get("artist").toString(),
                         jsonObjects[i]?.get("genre").toString(),
