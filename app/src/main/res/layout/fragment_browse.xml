@@ -6,14 +6,14 @@
     <data>
         <variable
             name="browseViewModelXML"
-            type="rhett.pezzuti.dailydose.viewmodels.BrowseViewModel" />
+            type="rhett.pezzuti.dailydose.main.browse.BrowseViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?attr/colorSecondaryVariant"
-        tools:context=".fragments.BrowseFragment">
+        tools:context=".main.browse.BrowseFragment">
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nestedScrollView"

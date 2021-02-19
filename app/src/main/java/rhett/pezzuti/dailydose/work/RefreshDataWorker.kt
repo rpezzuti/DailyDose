@@ -3,8 +3,8 @@ package rhett.pezzuti.dailydose.work
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import rhett.pezzuti.dailydose.database.getInstance
-import rhett.pezzuti.dailydose.repository.TrackRepository
+import rhett.pezzuti.dailydose.data.getInstance
+import rhett.pezzuti.dailydose.data.TrackRepository
 import java.net.HttpRetryException
 
 class RefreshDataWorker (appContext: Context, params: WorkerParameters): CoroutineWorker(appContext, params){

@@ -6,9 +6,9 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import rhett.pezzuti.dailydose.database.DatabaseTrack
-import rhett.pezzuti.dailydose.database.domain.Track
-import rhett.pezzuti.dailydose.database.getInstance
+import rhett.pezzuti.dailydose.data.DatabaseTrack
+import rhett.pezzuti.dailydose.data.domain.Track
+import rhett.pezzuti.dailydose.data.getInstance
 import rhett.pezzuti.dailydose.utils.sendNotificationWithIntent
 import timber.log.Timber
 import java.lang.Exception

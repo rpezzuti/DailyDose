@@ -17,8 +17,8 @@
         android:usesCleartextTraffic="true">
 
 
-        <activity android:name=".activities.SetupActivity" />
-        <activity android:name=".activities.SplashActivity"
+        <activity android:name=".setup.SetupActivity" />
+        <activity android:name=".splash.SplashActivity"
             android:theme="@style/Theme.DailyDose.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,7 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.MainActivity" />
+        <activity android:name=".main.MainActivity" />
 
 
 

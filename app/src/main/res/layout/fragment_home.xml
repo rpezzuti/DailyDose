@@ -6,14 +6,14 @@
     <data>
         <variable
             name="homeViewModelXML"
-            type="rhett.pezzuti.dailydose.viewmodels.HomeViewModel" />
+            type="rhett.pezzuti.dailydose.main.home.HomeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?attr/colorSecondaryVariant"
-        tools:context=".fragments.HomeFragment">
+        tools:context=".main.home.HomeFragment">
 
         <TextView
             android:id="@+id/tv_home_welcome"

@@ -6,13 +6,13 @@
     <data>
         <variable
             name="setupPreferencesViewModelXML"
-            type="rhett.pezzuti.dailydose.viewmodels.SetupPreferencesViewModel" />
+            type="rhett.pezzuti.dailydose.setup.preferences.SetupPreferencesViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragments.SetupPreferencesFragment">
+        tools:context=".setup.preferences.SetupPreferencesFragment">
 
         <TextView
             android:id="@+id/text_preferences_name"

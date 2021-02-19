@@ -7,7 +7,7 @@
 
         <variable
             name="track"
-            type="rhett.pezzuti.dailydose.database.domain.Track" />
+            type="rhett.pezzuti.dailydose.data.domain.Track" />
 
         <variable
             name="clickListener"
@@ -19,11 +19,11 @@
 
         <variable
             name="favoritesViewModelXML"
-            type="rhett.pezzuti.dailydose.viewmodels.FavoritesViewModel" />
+            type="rhett.pezzuti.dailydose.main.favorites.FavoritesViewModel" />
 
         <variable
             name="homeViewModelXML"
-            type="rhett.pezzuti.dailydose.viewmodels.HomeViewModel" />
+            type="rhett.pezzuti.dailydose.main.home.HomeViewModel" />
     </data>
 
     <androidx.cardview.widget.CardView

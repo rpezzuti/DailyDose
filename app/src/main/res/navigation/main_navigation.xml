@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="rhett.pezzuti.dailydose.fragments.HomeFragment"
+        android:name="rhett.pezzuti.dailydose.main.home.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home">
         <action
@@ -31,7 +31,7 @@
     </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
-        android:name="rhett.pezzuti.dailydose.fragments.FavoritesFragment"
+        android:name="rhett.pezzuti.dailydose.main.favorites.FavoritesFragment"
         android:label="FavoritesFragment"
         tools:layout="@layout/fragment_favorites">
         <action
@@ -41,7 +41,7 @@
     </fragment>
     <fragment
         android:id="@+id/uploadFragment"
-        android:name="rhett.pezzuti.dailydose.fragments.UploadFragment"
+        android:name="rhett.pezzuti.dailydose.main.upload.UploadFragment"
         android:label="UploadFragment"
         tools:layout="@layout/fragment_upload">
         <action
@@ -50,7 +50,7 @@
     </fragment>
     <fragment
         android:id="@+id/preferencesFragment"
-        android:name="rhett.pezzuti.dailydose.fragments.PreferencesFragment"
+        android:name="rhett.pezzuti.dailydose.main.preferences.PreferencesFragment"
         android:label="fragment_preferences"
         tools:layout="@layout/fragment_preferences" >
         <action
@@ -60,7 +60,7 @@
     </fragment>
     <fragment
         android:id="@+id/browseFragment"
-        android:name="rhett.pezzuti.dailydose.fragments.BrowseFragment"
+        android:name="rhett.pezzuti.dailydose.main.browse.BrowseFragment"
         android:label="BrowseFragment"
         tools:layout="@layout/fragment_browse">
         <action
@@ -70,7 +70,7 @@
     </fragment>
     <fragment
         android:id="@+id/themesFragment"
-        android:name="rhett.pezzuti.dailydose.fragments.ThemesFragment"
+        android:name="rhett.pezzuti.dailydose.main.themes.ThemesFragment"
         android:label="themes_fragment"
         tools:layout="@layout/fragment_themes" >
         <action
@@ -79,7 +79,7 @@
     </fragment>
     <fragment
         android:id="@+id/infoFragment"
-        android:name="rhett.pezzuti.dailydose.fragments.InfoFragment"
+        android:name="rhett.pezzuti.dailydose.main.InfoFragment"
         android:label="InfoFragment"
         tools:layout="@layout/fragment_info">
         <action
@@ -88,7 +88,7 @@
     </fragment>
     <fragment
         android:id="@+id/aboutFragment"
-        android:name="rhett.pezzuti.dailydose.fragments.AboutFragment"
+        android:name="rhett.pezzuti.dailydose.main.AboutFragment"
         android:label="AboutFragment"
         tools:layout="@layout/fragment_about">
         <action

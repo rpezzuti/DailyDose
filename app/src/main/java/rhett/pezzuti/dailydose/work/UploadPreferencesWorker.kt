@@ -5,7 +5,7 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.google.firebase.database.FirebaseDatabase
 import rhett.pezzuti.dailydose.R
-import rhett.pezzuti.dailydose.database.User
+import rhett.pezzuti.dailydose.data.User
 import java.net.HttpRetryException
 
 class UploadPreferencesWorker(appContext: Context, params: WorkerParameters) : CoroutineWorker(appContext, params) {

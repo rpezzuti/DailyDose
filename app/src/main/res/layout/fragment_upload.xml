@@ -7,14 +7,14 @@
 
         <variable
             name="uploadViewModelXML"
-            type="rhett.pezzuti.dailydose.viewmodels.UploadViewModel" />
+            type="rhett.pezzuti.dailydose.main.upload.UploadViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?attr/colorSecondaryVariant"
-        tools:context=".fragments.UploadFragment">
+        tools:context=".main.upload.UploadFragment">
 
         <TextView
             android:id="@+id/tv_upload_url"

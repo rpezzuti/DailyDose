@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activities.SplashActivity">
+        tools:context=".splash.SplashActivity">
 
         <TextView
             android:id="@+id/text_splash_screen"

@@ -4,7 +4,7 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import rhett.pezzuti.dailydose.R
-import rhett.pezzuti.dailydose.database.domain.Track
+import rhett.pezzuti.dailydose.data.domain.Track
 
 @BindingAdapter("trackTitle")
 fun TextView.setTrackTitle(item: Track?) {
