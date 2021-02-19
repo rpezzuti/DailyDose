@@ -1,6 +1,7 @@
 package rhett.pezzuti.dailydose.viewmodels
 
 import android.app.*
+import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

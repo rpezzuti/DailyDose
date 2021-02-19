@@ -1,6 +1,7 @@
 package rhett.pezzuti.dailydose.viewmodels
 
 import android.app.Application
+import android.net.Uri
 import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
