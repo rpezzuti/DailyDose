@@ -7,14 +7,14 @@
     <data>
         <variable
             name="favoritesViewModelXML"
-            type="rhett.pezzuti.dailydose.viewmodels.FavoritesViewModel" />
+            type="rhett.pezzuti.dailydose.main.favorites.FavoritesViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?attr/colorSecondaryVariant"
-        tools:context=".fragments.FavoritesFragment">
+        tools:context=".main.favorites.FavoritesFragment">
 
         <TextView
             android:id="@+id/text_favorites"

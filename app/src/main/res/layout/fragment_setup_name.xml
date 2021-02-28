@@ -6,13 +6,13 @@
     <data>
         <variable
             name="setupNameViewModelXML"
-            type="rhett.pezzuti.dailydose.viewmodels.SetupNameViewModel" />
+            type="rhett.pezzuti.dailydose.setup.name.SetupNameViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragments.SetupNameFragment">
+        tools:context=".setup.name.SetupNameFragment">
 
 
         <!-- app:texts wants an ARRAY resource type, even though we named it ARRAYS -->

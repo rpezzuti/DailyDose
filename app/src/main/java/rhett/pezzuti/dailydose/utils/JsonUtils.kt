@@ -1,7 +1,7 @@
 package rhett.pezzuti.dailydose.utils
 
 import com.google.gson.JsonObject
-import rhett.pezzuti.dailydose.database.DatabaseTrack
+import rhett.pezzuti.dailydose.data.DatabaseTrack
 import timber.log.Timber
 
 fun JsonObject.asDatabaseModel(): Array<DatabaseTrack> {

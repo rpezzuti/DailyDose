@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="aboutFragmentXML"
+            type="rhett.pezzuti.dailydose.main.AboutViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragments.AboutFragment">
+        tools:context=".main.AboutFragment">
 
         <TextView
             android:id="@+id/my_info"

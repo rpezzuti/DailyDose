@@ -6,29 +6,26 @@
     <data>
         <variable
             name="browseViewModelXML"
-            type="rhett.pezzuti.dailydose.viewmodels.BrowseViewModel" />
+            type="rhett.pezzuti.dailydose.main.browse.BrowseViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?attr/colorSecondaryVariant"
-        tools:context=".fragments.BrowseFragment">
+        tools:context=".main.browse.BrowseFragment">
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/nestedScrollView"
-            android:layout_width="0dp"
-            android:layout_height="200dp"
-            android:layout_margin="@dimen/margin_small"
+        <TextView
+            android:id="@+id/browse_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:layout_marginTop="@dimen/margin_small"
+            android:textColor="@color/black"
+            android:text="@string/fragment_browse_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{browseViewModelXML.response}" />
-        </androidx.core.widget.NestedScrollView>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/browse_recycler_view"
@@ -39,7 +36,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nestedScrollView" />
+            app:layout_constraintTop_toBottomOf="@+id/browse_text" />
 
 
 

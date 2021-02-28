@@ -7,14 +7,14 @@
     <data>
         <variable
             name="preferencesViewModelXML"
-            type="rhett.pezzuti.dailydose.viewmodels.PreferencesViewModel" />
+            type="rhett.pezzuti.dailydose.main.preferences.PreferencesViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?attr/colorSecondaryVariant"
-        tools:context=".fragments.PreferencesFragment">
+        tools:context=".main.preferences.PreferencesFragment">
 
         <TextView
             android:id="@+id/text_view_preferences_welcome"

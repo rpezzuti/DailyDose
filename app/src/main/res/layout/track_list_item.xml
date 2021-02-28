@@ -7,7 +7,7 @@
 
         <variable
             name="track"
-            type="rhett.pezzuti.dailydose.database.domain.Track" />
+            type="rhett.pezzuti.dailydose.data.domain.Track" />
 
         <variable
             name="clickListener"
@@ -16,14 +16,6 @@
         <variable
             name="fabListener"
             type="rhett.pezzuti.dailydose.adapters.FabListener" />
-
-        <variable
-            name="favoritesViewModelXML"
-            type="rhett.pezzuti.dailydose.viewmodels.FavoritesViewModel" />
-
-        <variable
-            name="homeViewModelXML"
-            type="rhett.pezzuti.dailydose.viewmodels.HomeViewModel" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -74,7 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_small"
-                trackGenre="@{track}"
+                setGenre="@{track}"
                 app:layout_constraintBottom_toBottomOf="@+id/song_item_album_image"
                 app:layout_constraintStart_toEndOf="@+id/song_item_album_image" />
 
