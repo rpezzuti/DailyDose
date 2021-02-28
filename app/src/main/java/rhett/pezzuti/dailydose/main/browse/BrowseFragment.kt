@@ -1,6 +1,5 @@
 package rhett.pezzuti.dailydose.main.browse
 
-
 import android.app.PendingIntent
 import android.content.Intent
 import android.net.Uri

@@ -1,12 +1,16 @@
 package rhett.pezzuti.dailydose.network
 
 
+import com.google.gson.JsonObject
 import com.squareup.moshi.JsonClass
 import rhett.pezzuti.dailydose.data.DatabaseTrack
 import rhett.pezzuti.dailydose.data.domain.Track
 
 @JsonClass(generateAdapter = true)
 data class NetworkTrackContainer (val tracks: List<NetworkTrack>)
+
+@JsonClass(generateAdapter = true)
+data class NetworkTrackContainerJson (val json: JsonObject)
 
 @JsonClass(generateAdapter = true)
 data class NetworkTrack(

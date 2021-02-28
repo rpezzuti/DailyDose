@@ -20,10 +20,10 @@ class UploadPreferencesWorker(appContext: Context, params: WorkerParameters) : C
         val sharedPref = applicationContext.getSharedPreferences(applicationContext.getString(R.string.user_preferences_key), Context.MODE_PRIVATE)
         return try {
             // Upload only if they have input their name.
-            if (sharedPref.getString("username", "dummyName") != "dummyName") {
+            if (sharedPref.getString(applicationContext.getString(R.string.sharedpref_username_key), "dummyName") != "dummyName") {
 
                 val user = User(
-                    sharedPref.getString("username", "dummyName")!!,
+                    sharedPref.getString(applicationContext.getString(R.string.sharedpref_username_key), "dummyName")!!,
                     sharedPref.getBoolean(applicationContext.getString(R.string.TOPIC_DUBSTEP), false),
                     sharedPref.getBoolean(applicationContext.getString(R.string.TOPIC_MELODIC_DUBSTEP), false),
                     sharedPref.getBoolean(applicationContext.getString(R.string.TOPIC_LO_FI), false),

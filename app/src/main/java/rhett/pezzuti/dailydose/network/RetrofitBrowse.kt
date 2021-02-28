@@ -1,5 +1,6 @@
 package rhett.pezzuti.dailydose.network
 
+import androidx.work.impl.constraints.trackers.NetworkStateTracker
 import com.google.gson.JsonObject
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
@@ -96,9 +97,11 @@ interface BrowseFirebaseApiService {
     fun getAllTracks():
             Call<JsonObject>
 
+
+    // Using Deferred<JsonObject> returns the same call adapter error.
     @GET ("tracks.json")
     fun getAllTracksDeferred():
-        Deferred<JsonObject>
+        Deferred<NetworkTrackContainerJson>
 
 
 

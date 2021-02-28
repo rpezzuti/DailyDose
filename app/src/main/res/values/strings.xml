@@ -55,7 +55,6 @@
     <string name="button_unsub_test">No-Test</string>
 
 
-
     <!--    Menu    -->
     <string name="menu_about">About</string>
     <string name="menu_info">Info</string>
@@ -130,6 +129,25 @@
     <!-- SharedPref Keys -->
     <string name="user_preferences_key">rhett.pezzuti.dailydose.usersharedprefs</string>
     <string name="main_activity_theme_key">Activity Theme Key</string>
+    <string name="sharedpref_username_key">username</string>
+
+    <!-- Genres (Test is just test) -->
+    <string name="genre_dubstep">Genre: Dubstep</string>
+    <string name="genre_melodic_dubstep">Genre: Melodic Dubstep</string>
+    <string name="genre_lo_fi">Genre: Lo-Fi</string>
+    <string name="genre_chillstep">Genre: Chillstep</string>
+    <string name="genre_future_garage">Genre: Future Garage</string>
+    <string name="genre_piano_ambient">Genre: Piano / Ambient</string>
+    <string name="genre_experimental_bass">Genre: Experimental Bass</string>
+    <string name="genre_liquid_dnb">Genre: Liquid DnB</string>
+    <string name="genre_ambient_bass">Genre: Ambient Bass</string>
+
+    <string name="genre_metalcore">Genre: Metalcore</string>
+    <string name="genre_acoustic_ballads">Genre: Acoustic / Ballads</string>
+    <string name="genre_instrumental_rock">Genre: Instrumental Rock</string>
+    <string name="genre_death_metal">Genre: Death Metal</string>
+    <string name="genre_live_performances">Live Performance</string>
+
 
     <!-- TOPICS *** TOPICS *** TOPICS DON'T TOUCH -->
     <string name="TOPIC_TEST">Test</string>
@@ -149,6 +167,11 @@
     <string name="TOPIC_INSTRUMENTAL_ROCK">instrumental-rock</string>
     <string name="TOPIC_DEATH_METAL">death-metal</string>
     <string name="TOPIC_LIVE_PERFORMANCES">live-performances</string>
+
+    <!-- the FutuRUE!u@U~)!@()U -->
+    <string name="text_minigame">Minigame Coming Soon! Thank you for downloading :)</string>
+
+
 
 
 </resources>

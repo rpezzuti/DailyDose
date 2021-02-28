@@ -50,12 +50,12 @@ class TrackRepository(private val database: ClientDatabase) {
         }
     }
 
-    suspend fun getTracks() {
+    /*suspend fun getTracks() {
         withContext(Dispatchers.IO) {
             val playlist = BrowseFirebaseGson.retrofitService.getAllTracksDeferred().await()
             database.trackDatabaseDao.insertAll(*playlist.asDatabaseModel())
         }
     }
-
+*/
 
 }

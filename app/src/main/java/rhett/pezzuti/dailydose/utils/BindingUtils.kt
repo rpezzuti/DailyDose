@@ -6,6 +6,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import rhett.pezzuti.dailydose.R
 import rhett.pezzuti.dailydose.data.domain.Track
 
+// The value is what determines the name in the XML code
 @BindingAdapter("trackTitle")
 fun TextView.setTrackTitle(item: Track?) {
     item?.let {
@@ -34,5 +35,30 @@ fun FloatingActionButton.favorite(item: Track?) {
             false -> setImageResource(R.drawable.ic_favorite_border_24px)
             true -> setImageResource(R.drawable.ic_heart)
         }
+    }
+}
+
+@BindingAdapter("setGenre")
+fun TextView.setGenre(item: Track?) {
+    item?.let {
+        when (item.genre)  {
+            context.getString(R.string.TOPIC_TEST) -> text = context.getString(R.string.TOPIC_TEST)
+
+            context.getString(R.string.TOPIC_DUBSTEP) -> text = context.getString(R.string.genre_dubstep)
+            context.getString(R.string.TOPIC_MELODIC_DUBSTEP) -> text = context.getString(R.string.genre_melodic_dubstep)
+            context.getString(R.string.TOPIC_LO_FI) -> text = context.getString(R.string.genre_lo_fi)
+            context.getString(R.string.TOPIC_CHILLSTEP) -> text = context.getString(R.string.genre_chillstep)
+            context.getString(R.string.TOPIC_PIANO_AMBIENT) -> text = context.getString(R.string.genre_piano_ambient)
+            context.getString(R.string.TOPIC_EXPERIMENTAL_BASS) -> text = context.getString(R.string.genre_experimental_bass)
+            context.getString(R.string.TOPIC_LIQUID_DNB) -> text = context.getString(R.string.genre_liquid_dnb)
+            context.getString(R.string.TOPIC_AMBIENT_BASS) -> text = context.getString(R.string.genre_ambient_bass)
+
+            context.getString(R.string.TOPIC_METALCORE) -> text = context.getString(R.string.genre_metalcore)
+            context.getString(R.string.TOPIC_ACOUSTIC_BALLADS) -> text = context.getString(R.string.genre_acoustic_ballads)
+            context.getString(R.string.TOPIC_INSTRUMENTAL_ROCK) -> text = context.getString(R.string.genre_instrumental_rock)
+            context.getString(R.string.TOPIC_DEATH_METAL) -> text = context.getString(R.string.genre_death_metal)
+            context.getString(R.string.TOPIC_LIVE_PERFORMANCES) -> text = context.getString(R.string.genre_live_performances)
+        }
+
     }
 }

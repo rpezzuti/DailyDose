@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.*
 
 
-@Database(entities = [DatabaseTrack::class], version = 8, exportSchema = false)
+@Database(entities = [DatabaseTrack::class], version = 9, exportSchema = false)
 abstract class ClientDatabase : RoomDatabase() {
     abstract val trackDatabaseDao : TrackDatabaseDao
 }

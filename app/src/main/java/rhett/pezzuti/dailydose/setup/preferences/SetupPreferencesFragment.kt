@@ -30,12 +30,8 @@ class SetupPreferencesFragment : Fragment() {
             false
         )
 
-
-        val arguments = SetupPreferencesFragmentArgs.fromBundle(requireArguments())
-
-        val activity = requireActivity()
-        val sharedPref = activity.getSharedPreferences(getString(R.string.user_preferences_key), Context.MODE_PRIVATE)
-        val username = sharedPref.getString("username", "bob")
+        val sharedPref = requireActivity().getSharedPreferences(getString(R.string.user_preferences_key), Context.MODE_PRIVATE)
+        val username = sharedPref.getString(getString(R.string.sharedpref_username_key), "bob")
 
         viewModel = ViewModelProvider(this).get(SetupPreferencesViewModel::class.java)
         binding.setupPreferencesViewModelXML = viewModel

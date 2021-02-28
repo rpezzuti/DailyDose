@@ -8,6 +8,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
+import retrofit2.HttpException
 import retrofit2.Response
 import rhett.pezzuti.dailydose.data.TrackDatabaseDao
 import rhett.pezzuti.dailydose.data.domain.LocalTrack
@@ -54,14 +55,16 @@ class BrowseViewModel(
         /** GETS one track from test-genre, parses it into a LocalTrack, and displays the title of that track **/
         // parseOneJson()
 
-
+        getAllTracks()
+        // Call adapter error
+        //getAllTracksDeferred()
         viewModelScope.launch {
             /** Gets those two tracks from the test-genre-list and shows them in recycler view **/
             // trackRepository.refreshTestTracks()
 
             /** Get a Json Object to be put into parser **/
             // getJsonOneGenre()
-            getAllTracks()
+
 
             // trackRepository.getTracks()
         }
@@ -70,6 +73,93 @@ class BrowseViewModel(
     /** Observed playlist for the recycler View **/
     val tracks = trackRepository.tracks
 
+
+    private fun getAllTracks() = viewModelScope.launch {
+
+        BrowseFirebaseGson.retrofitService.getAllTracks().enqueue(object : Callback<JsonObject> {
+            override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                _response.value = "GREAT SUCCESS: ${response.body().toString()}"
+                parseJsonAllTracks(response.body())
+            }
+
+            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                _response.value = "Failure: " + t.message
+            }
+        })
+    }
+
+    private fun getAllTracksDeferred() = viewModelScope.launch {
+
+        try {
+            Timber.i("RHETT: TRY BLOCK ")
+            val json = BrowseFirebaseGson.retrofitService.getAllTracksDeferred().await()
+            Timber.i("RHETT: JSON OBJECT $json ")
+            Timber.i("RHETT: JSON OBJECT as String ${json.toString()} ")
+            _response.value = json.toString()
+            parseJsonAllTracks(json.json)
+        } catch (exception: HttpException) {
+            _response.value = "Error motherfucker"
+        }
+    }
+
+    private fun parseJsonAllTracks(data: JsonObject?) {
+
+        if (data == null) {
+            // Do nothing
+        } else {
+            val keySet = data.keySet().toList()
+            val jsonList = mutableListOf<JsonObject>()
+            val trackList = mutableListOf<Track>()
+            Timber.i("RHETT: List of data keys $keySet")
+
+            // Make a list of JsonObjects, by genre
+            for (keys in keySet) {
+                Timber.i("RHETT: Genre Indicator $keys")
+                Timber.i("RHETT: Data of that genre ${data[keys]}")
+
+                jsonList.add(data.getAsJsonObject(keys))
+                Timber.i("RHETT: Json List ${jsonList}")
+            }
+
+
+            // Parse each genre
+            for (eachGenre in jsonList) {
+                Timber.i("RHETT: Loop of calling ParseJsonOneGenre${parseJsonOneGenre(eachGenre)}")
+
+
+                // Put the keys (track names) into a list
+                val trackKeys = eachGenre.keySet().toList()
+
+                // Initialize the list of tracks as Json objects
+                val jsonObjects = mutableListOf<JsonObject?>()
+
+                // Parse the Genre object into track sized objects
+                // data.get() wants to return a JsonElement, so we cast it to JsonObject.
+                // Lets us get variables in the next for loop
+                for (i in trackKeys.indices) {
+                    jsonObjects.add(i, eachGenre.get(trackKeys[i]).asJsonObject)
+                }
+
+
+
+                for (i in 0 until jsonObjects.size) {
+                    val temp = Track(
+                        jsonObjects[i]?.get("url").toString().removeSurrounding("\""),
+                        jsonObjects[i]?.get("title").toString().removeSurrounding("\""),
+                        jsonObjects[i]?.get("artist").toString().removeSurrounding("\""),
+                        jsonObjects[i]?.get("genre").toString().removeSurrounding("\""),
+                        jsonObjects[i]?.get("image").toString().removeSurrounding("\""),
+                        jsonObjects[i]?.get("timestamp")!!.asLong,
+                        jsonObjects[i]?.get("favorite")!!.asBoolean
+                    )
+                    trackList.add(temp)
+                }
+            }
+
+            // Add the new tracklist to database
+            insertAll(trackList.toList())
+        }
+    }
 
     private fun getOneTrackFromFirebase() {
         BrowseFirebaseMoshi.retrofitService.getOneTrackFromFirebase().enqueue(object :
@@ -201,77 +291,6 @@ class BrowseViewModel(
         }
     }
 
-    private fun getAllTracks() {
-
-        BrowseFirebaseGson.retrofitService.getAllTracks().enqueue(object : Callback<JsonObject> {
-            override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
-                _response.value = "GREAT SUCCESS: ${response.body().toString()}"
-                parseJsonAllTracks(response.body())
-            }
-
-            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-                _response.value = "Failure: " + t.message
-            }
-        })
-    }
-
-    private fun parseJsonAllTracks(data: JsonObject?) {
-
-        if (data == null) {
-            // Do nothing
-        } else {
-            val genres = data.keySet().toList()
-            val jsonList = mutableListOf<JsonObject>()
-            val trackList = mutableListOf<Track>()
-            Timber.i("RHETT: List of data keys $genres")
-
-            for (i in genres) {
-                Timber.i("RHETT: Genre Indicator $i")
-                Timber.i("RHETT: Data of that genre ${data[i]}")
-
-                jsonList.add(data.getAsJsonObject(i))
-                Timber.i("RHETT: Json List ${jsonList}")
-            }
-
-
-            // Parse each genre
-            for (yo in jsonList) {
-                Timber.i("RHETT: Loop of calling PraseJsonOneGenre${parseJsonOneGenre(yo)}")
-
-
-                // Put the keys (track names) into a list
-                val keys = yo.keySet().toList()
-
-                // Initialize the list of tracks as Json objects
-                val jsonObjects = mutableListOf<JsonObject?>()
-
-                // Parse the Genre object into track sized objects
-                // data.get() wants to return a JsonElement, so we cast it to JsonObject.
-                // Lets us get variables in the next for loop
-                for (i in keys.indices) {
-                    jsonObjects.add(i, yo.get(keys[i]).asJsonObject)
-                }
-
-
-
-                for (i in 0 until jsonObjects.size) {
-                    val temp = Track(
-                        jsonObjects[i]?.get("url").toString().removeSurrounding("\""),
-                        jsonObjects[i]?.get("title").toString(),
-                        jsonObjects[i]?.get("artist").toString(),
-                        jsonObjects[i]?.get("genre").toString(),
-                        jsonObjects[i]?.get("image").toString(),
-                        jsonObjects[i]?.get("timestamp")!!.asLong,
-                        jsonObjects[i]?.get("favorite")!!.asBoolean
-                    )
-                    trackList.add(temp)
-                }
-            }
-
-            insertAll(trackList.toList())
-        }
-
-    }
 
 
     /** Database Functions **/

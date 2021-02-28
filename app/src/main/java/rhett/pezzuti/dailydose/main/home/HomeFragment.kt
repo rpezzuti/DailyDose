@@ -14,6 +14,8 @@ import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
+import com.google.android.material.tabs.TabLayout
+import kotlinx.android.synthetic.main.fragment_home.*
 import rhett.pezzuti.dailydose.R
 import rhett.pezzuti.dailydose.adapters.FabListener
 import rhett.pezzuti.dailydose.adapters.TrackListener
@@ -74,7 +76,6 @@ class HomeFragment : Fragment() {
         val sharedPref = this.activity?.getSharedPreferences(getString(R.string.user_preferences_key), Context.MODE_PRIVATE)
         binding.tvHomeWelcome.text = "~ Welcome, ${sharedPref?.getString("username", "bob")}! ~"
 
-
         binding.homeViewModelXML = viewModel
         binding.lifecycleOwner = this
 
@@ -90,12 +91,12 @@ class HomeFragment : Fragment() {
             )
             try {
                 contentPendingIntent.send()
-            } catch (e: Exception) {
+            } catch (exception: Exception) {
                 Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_SHORT).show()
-                Timber.i("Exception Found: ${e}")
-                Timber.i("Exception Found: ${e.message}")
-                Timber.i("Exception Found: ${e.message.toString()}")
-                Timber.i("Exception Found: ${e.stackTraceToString()}")
+                Timber.i("Exception Found: $exception")
+                Timber.i("Exception Found: ${exception.message}")
+                Timber.i("Exception Found: ${exception.message.toString()}")
+                Timber.i("Exception Found: ${exception.stackTraceToString()}")
             }
 
         }, FabListener { favorite, url ->
