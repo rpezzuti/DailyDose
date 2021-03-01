@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="track"
             type="rhett.pezzuti.dailydose.data.domain.Track" />
@@ -32,7 +31,7 @@
                 android:layout_width="108dp"
                 android:layout_height="108dp"
                 android:layout_margin="@dimen/margin_small"
-                android:src="@drawable/ic_heart"
+                setImage="@{track}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -72,16 +71,15 @@
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/favorite_track_fab"
+                isFavorite="@{track}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
+                android:layout_margin="@dimen/margin_small"
                 android:background="@color/white"
                 android:contentDescription="@string/content_description_favorites_fab"
-                isFavorite="@{track}"
                 android:onClick="@{() -> fabListener.onFavorite(track)}"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

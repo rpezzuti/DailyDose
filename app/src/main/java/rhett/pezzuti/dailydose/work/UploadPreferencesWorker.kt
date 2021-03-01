@@ -28,7 +28,7 @@ class UploadPreferencesWorker(appContext: Context, params: WorkerParameters) : C
                     sharedPref.getBoolean(applicationContext.getString(R.string.TOPIC_MELODIC_DUBSTEP), false),
                     sharedPref.getBoolean(applicationContext.getString(R.string.TOPIC_LO_FI), false),
                     sharedPref.getBoolean(applicationContext.getString(R.string.TOPIC_CHILLSTEP), false),
-                    sharedPref.getBoolean(applicationContext.getString(R.string.TOPIC_FUTURE_GARAGE), false),
+                    sharedPref.getBoolean(applicationContext.getString(R.string.TOPIC_GARAGE), false),
                     sharedPref.getBoolean(applicationContext.getString(R.string.TOPIC_PIANO_AMBIENT), false),
                     sharedPref.getBoolean(applicationContext.getString(R.string.TOPIC_EXPERIMENTAL_BASS), false),
                     sharedPref.getBoolean(applicationContext.getString(R.string.TOPIC_LIQUID_DNB), false),

@@ -137,7 +137,7 @@ class UploadFragment : DialogFragment(), AdapterView.OnItemSelectedListener {
             2 -> TOPIC = getString(R.string.TOPIC_MELODIC_DUBSTEP)
             3 -> TOPIC = getString(R.string.TOPIC_LO_FI)
             4 -> TOPIC = getString(R.string.TOPIC_CHILLSTEP)
-            5 -> TOPIC = getString(R.string.TOPIC_FUTURE_GARAGE)
+            5 -> TOPIC = getString(R.string.TOPIC_GARAGE)
             6 -> TOPIC = getString(R.string.TOPIC_PIANO_AMBIENT)
             7 -> TOPIC = getString(R.string.TOPIC_EXPERIMENTAL_BASS)
             8 -> TOPIC = getString(R.string.TOPIC_LIQUID_DNB)

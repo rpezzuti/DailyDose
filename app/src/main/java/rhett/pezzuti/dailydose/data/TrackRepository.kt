@@ -33,29 +33,4 @@ class TrackRepository(private val database: ClientDatabase) {
         }
 
     var favorites = listOf<DatabaseTrack>()
-
-
-    suspend fun refreshTracks() {
-        withContext(Dispatchers.IO) {
-            // Get all tracks from Firebase
-            val playlist = BrowseFirebaseMoshi.retrofitService.refreshDatabase().await()
-            database.trackDatabaseDao.insertAll(*playlist.asDatabaseModel())
-        }
-    }
-
-    suspend fun refreshTestTracks() {
-        withContext(Dispatchers.IO) {
-            val playlist = BrowseFirebaseMoshi.retrofitService.getOneGenreFromFirebaseRepo().await()
-            database.trackDatabaseDao.insertAll(*playlist.asDatabaseModel())
-        }
-    }
-
-    /*suspend fun getTracks() {
-        withContext(Dispatchers.IO) {
-            val playlist = BrowseFirebaseGson.retrofitService.getAllTracksDeferred().await()
-            database.trackDatabaseDao.insertAll(*playlist.asDatabaseModel())
-        }
-    }
-*/
-
 }

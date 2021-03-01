@@ -72,7 +72,7 @@ class PreferencesFragment : Fragment() {
         if (sharedPref.getBoolean(getString(R.string.TOPIC_CHILLSTEP), false)) {
             binding.checkboxChillstep.isChecked = true
         }
-        if (sharedPref.getBoolean(getString(R.string.TOPIC_FUTURE_GARAGE), false)) {
+        if (sharedPref.getBoolean(getString(R.string.TOPIC_GARAGE), false)) {
             binding.checkboxFutureGarage.isChecked = true
         }
         if (sharedPref.getBoolean(getString(R.string.TOPIC_PIANO_AMBIENT), false)) {

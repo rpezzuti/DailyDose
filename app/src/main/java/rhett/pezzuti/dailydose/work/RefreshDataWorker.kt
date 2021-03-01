@@ -18,7 +18,7 @@ class RefreshDataWorker (appContext: Context, params: WorkerParameters): Corouti
         val repository = TrackRepository(database)
 
         return try {
-            repository.refreshTracks()
+            // repository.refreshTracks()
             Result.retry()
         } catch (exception: HttpRetryException) {
             Result.retry()
