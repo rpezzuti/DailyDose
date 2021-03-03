@@ -17,7 +17,7 @@ import rhett.pezzuti.dailydose.R
 import rhett.pezzuti.dailydose.adapters.FabListener
 import rhett.pezzuti.dailydose.adapters.TrackAdapter
 import rhett.pezzuti.dailydose.adapters.TrackListener
-import rhett.pezzuti.dailydose.data.getInstance
+import rhett.pezzuti.dailydose.data.source.local.getInstance
 import rhett.pezzuti.dailydose.databinding.FragmentBrowseBinding
 import timber.log.Timber
 import java.lang.Exception

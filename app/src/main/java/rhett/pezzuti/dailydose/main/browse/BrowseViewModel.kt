@@ -10,12 +10,12 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.HttpException
 import retrofit2.Response
-import rhett.pezzuti.dailydose.data.local.TrackDatabaseDao
+import rhett.pezzuti.dailydose.data.source.local.TrackDatabaseDao
 import rhett.pezzuti.dailydose.data.domain.Track
 import rhett.pezzuti.dailydose.data.domain.asDatabaseModel
-import rhett.pezzuti.dailydose.data.getInstance
 import rhett.pezzuti.dailydose.network.BrowseFirebaseGson
-import rhett.pezzuti.dailydose.data.TrackRepository
+import rhett.pezzuti.dailydose.data.source.DefaultTrackRepository
+import rhett.pezzuti.dailydose.data.source.local.getInstance
 import timber.log.Timber
 
 
@@ -29,7 +29,7 @@ class BrowseViewModel(
         get() = _playlist
 
     private val database = getInstance(getApplication())
-    private val trackRepository = TrackRepository(database)
+    private val trackRepository = DefaultTrackRepository(database)
 
 
     init {
@@ -39,9 +39,9 @@ class BrowseViewModel(
         //getAllTracksDeferred()
         viewModelScope.launch {
             /** Gets those two tracks from the test-genre-list and shows them in recycler view **/
-            // trackRepository.refreshTestTracks()
+            // defaultTrackRepository.refreshTestTracks()
 
-            // trackRepository.getTracks()
+            // defaultTrackRepository.getTracks()
         }
     }
 

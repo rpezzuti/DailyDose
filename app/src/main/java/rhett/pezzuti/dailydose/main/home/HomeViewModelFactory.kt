@@ -3,7 +3,7 @@ package rhett.pezzuti.dailydose.main.home
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import rhett.pezzuti.dailydose.data.local.TrackDatabaseDao
+import rhett.pezzuti.dailydose.data.source.local.TrackDatabaseDao
 
 class HomeViewModelFactory(
     private val trackDataSource: TrackDatabaseDao,

@@ -1,21 +1,14 @@
-package rhett.pezzuti.dailydose.data
+package rhett.pezzuti.dailydose.data.source
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import rhett.pezzuti.dailydose.data.ClientDatabase
 import rhett.pezzuti.dailydose.data.DatabaseTrack
 import rhett.pezzuti.dailydose.data.asDomainModel
 import rhett.pezzuti.dailydose.data.domain.Track
-import rhett.pezzuti.dailydose.data.domain.asDatabaseModel
-import rhett.pezzuti.dailydose.network.BrowseFirebaseGson
-import rhett.pezzuti.dailydose.network.BrowseFirebaseMoshi
-import rhett.pezzuti.dailydose.network.asDatabaseModel
-import rhett.pezzuti.dailydose.utils.asDatabaseModel
+import rhett.pezzuti.dailydose.data.source.local.ClientDatabase
 
 
-class TrackRepository(private val database: ClientDatabase) {
+class DefaultTrackRepository(private val database: ClientDatabase) : ITrackRepository {
 
 
     // Public access of all the tracks in the database.

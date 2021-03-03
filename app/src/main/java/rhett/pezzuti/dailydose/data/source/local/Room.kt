@@ -1,8 +1,9 @@
-package rhett.pezzuti.dailydose.data
+package rhett.pezzuti.dailydose.data.source.local
 
 import android.content.Context
 import androidx.room.*
-import rhett.pezzuti.dailydose.data.local.TrackDatabaseDao
+import rhett.pezzuti.dailydose.data.DatabaseTrack
+
 
 
 @Database(entities = [DatabaseTrack::class], version = 9, exportSchema = false)

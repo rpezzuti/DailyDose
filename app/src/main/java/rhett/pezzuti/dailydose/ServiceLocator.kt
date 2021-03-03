@@ -1,25 +1,26 @@
 package rhett.pezzuti.dailydose
 
 import android.content.Context
-import rhett.pezzuti.dailydose.data.TrackRepository
-import rhett.pezzuti.dailydose.data.getInstance
+import rhett.pezzuti.dailydose.data.source.DefaultTrackRepository
+import rhett.pezzuti.dailydose.data.source.local.getInstance
+
 
 object ServiceLocator {
 
     @Volatile
-    var trackRepository: TrackRepository? = null
+    var defaultTrackRepository: DefaultTrackRepository? = null
 
-    fun provideTrackRepository(context: Context): TrackRepository {
+    fun provideTrackRepository(context: Context): DefaultTrackRepository {
         synchronized(this) {
-            return trackRepository ?: createTrackRepository(context)
+            return defaultTrackRepository ?: createTrackRepository(context)
         }
     }
 
     private
-    fun createTrackRepository(context: Context): TrackRepository {
+    fun createTrackRepository(context: Context): DefaultTrackRepository {
 
-        // val newRepo = TrackRepository()
-        return TrackRepository(getInstance(context))
+        // val newRepo = DefaultTrackRepository()
+        return DefaultTrackRepository(getInstance(context))
     }
 
     private

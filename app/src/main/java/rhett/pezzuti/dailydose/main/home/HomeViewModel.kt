@@ -6,8 +6,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import rhett.pezzuti.dailydose.data.*
-import rhett.pezzuti.dailydose.data.TrackRepository
-import rhett.pezzuti.dailydose.data.local.TrackDatabaseDao
+import rhett.pezzuti.dailydose.data.source.DefaultTrackRepository
+import rhett.pezzuti.dailydose.data.source.local.TrackDatabaseDao
+import rhett.pezzuti.dailydose.data.source.local.getInstance
 import timber.log.Timber
 
 class HomeViewModel(
@@ -16,14 +17,14 @@ class HomeViewModel(
 ) : AndroidViewModel(app) {
 
     private val database = getInstance(getApplication())
-    private val trackRepository = TrackRepository(database)
+    private val trackRepository = DefaultTrackRepository(database)
 
 
     init {
         Timber.i("homeViewModel Init block")
 
         viewModelScope.launch {
-            // trackRepository.refreshTestTracks()
+            // defaultTrackRepository.refreshTestTracks()
         }
     }
 

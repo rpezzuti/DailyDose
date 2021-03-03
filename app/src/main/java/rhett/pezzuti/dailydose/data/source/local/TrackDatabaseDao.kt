@@ -1,4 +1,4 @@
-package rhett.pezzuti.dailydose.data.local
+package rhett.pezzuti.dailydose.data.source.local
 
 import androidx.lifecycle.LiveData
 import androidx.room.*

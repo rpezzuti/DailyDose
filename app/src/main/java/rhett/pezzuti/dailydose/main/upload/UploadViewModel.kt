@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import rhett.pezzuti.dailydose.data.domain.Track
 import rhett.pezzuti.dailydose.data.domain.TrackNotification
-import rhett.pezzuti.dailydose.data.getInstance
+import rhett.pezzuti.dailydose.data.source.local.getInstance
 import rhett.pezzuti.dailydose.network.FirebaseTrack
 import rhett.pezzuti.dailydose.network.RetrofitInstance
 import timber.log.Timber
