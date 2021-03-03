@@ -1,7 +1,8 @@
-package rhett.pezzuti.dailydose.data
+package rhett.pezzuti.dailydose.data.local
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import rhett.pezzuti.dailydose.data.DatabaseTrack
 
 @Dao
 interface TrackDatabaseDao {

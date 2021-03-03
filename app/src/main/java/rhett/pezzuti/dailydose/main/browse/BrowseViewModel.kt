@@ -10,7 +10,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.HttpException
 import retrofit2.Response
-import rhett.pezzuti.dailydose.data.TrackDatabaseDao
+import rhett.pezzuti.dailydose.data.local.TrackDatabaseDao
 import rhett.pezzuti.dailydose.data.domain.Track
 import rhett.pezzuti.dailydose.data.domain.asDatabaseModel
 import rhett.pezzuti.dailydose.data.getInstance

@@ -7,6 +7,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import rhett.pezzuti.dailydose.data.*
 import rhett.pezzuti.dailydose.data.TrackRepository
+import rhett.pezzuti.dailydose.data.local.TrackDatabaseDao
 import timber.log.Timber
 
 class HomeViewModel(

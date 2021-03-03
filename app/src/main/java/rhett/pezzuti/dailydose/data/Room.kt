@@ -2,6 +2,7 @@ package rhett.pezzuti.dailydose.data
 
 import android.content.Context
 import androidx.room.*
+import rhett.pezzuti.dailydose.data.local.TrackDatabaseDao
 
 
 @Database(entities = [DatabaseTrack::class], version = 9, exportSchema = false)

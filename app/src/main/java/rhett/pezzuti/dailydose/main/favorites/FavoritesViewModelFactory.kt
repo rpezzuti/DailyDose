@@ -3,7 +3,7 @@ package rhett.pezzuti.dailydose.main.favorites
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import rhett.pezzuti.dailydose.data.TrackDatabaseDao
+import rhett.pezzuti.dailydose.data.local.TrackDatabaseDao
 
 class FavoritesViewModelFactory(
     private val trackDataSource: TrackDatabaseDao,
