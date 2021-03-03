@@ -5,7 +5,7 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import rhett.pezzuti.dailydose.R
-import rhett.pezzuti.dailydose.data.domain.Track
+import rhett.pezzuti.dailydose.data.Track
 
 // The value is what determines the name in the XML code
 @BindingAdapter("trackTitle")

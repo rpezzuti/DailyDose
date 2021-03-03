@@ -11,8 +11,8 @@ import retrofit2.Callback
 import retrofit2.HttpException
 import retrofit2.Response
 import rhett.pezzuti.dailydose.data.source.local.TrackDatabaseDao
-import rhett.pezzuti.dailydose.data.domain.Track
-import rhett.pezzuti.dailydose.data.domain.asDatabaseModel
+import rhett.pezzuti.dailydose.data.Track
+import rhett.pezzuti.dailydose.data.asDatabaseModel
 import rhett.pezzuti.dailydose.network.BrowseFirebaseGson
 import rhett.pezzuti.dailydose.data.source.DefaultTrackRepository
 import rhett.pezzuti.dailydose.data.source.local.getInstance
@@ -31,6 +31,9 @@ class BrowseViewModel(
     private val database = getInstance(getApplication())
     private val trackRepository = DefaultTrackRepository(database)
 
+    /** Starts the whole shit of getting tracks from Firebase **/
+    // private val _items = trackRepository.refreshTracks()
+
 
     init {
         getAllTracks()
@@ -48,6 +51,11 @@ class BrowseViewModel(
     /** Observed playlist for the recycler View **/
     val tracks = trackRepository.tracks
 
+    private fun dummy1() {
+        viewModelScope.launch {
+
+        }
+    }
 
     private fun getAllTracks() = viewModelScope.launch {
 

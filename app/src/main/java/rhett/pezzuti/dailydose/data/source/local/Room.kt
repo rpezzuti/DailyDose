@@ -7,17 +7,17 @@ import rhett.pezzuti.dailydose.data.DatabaseTrack
 
 
 @Database(entities = [DatabaseTrack::class], version = 9, exportSchema = false)
-abstract class ClientDatabase : RoomDatabase() {
+abstract class TrackDatabase : RoomDatabase() {
     abstract val trackDatabaseDao : TrackDatabaseDao
 }
 
-private lateinit var INSTANCE: ClientDatabase
+private lateinit var INSTANCE: TrackDatabase
 
-fun getInstance(context: Context) : ClientDatabase {
-    synchronized(ClientDatabase::class.java) {
+fun getInstance(context: Context) : TrackDatabase {
+    synchronized(TrackDatabase::class.java) {
         if (!::INSTANCE.isInitialized) {
             INSTANCE = Room.databaseBuilder(context.applicationContext,
-                ClientDatabase::class.java,
+                TrackDatabase::class.java,
                 "tracks")
                 .fallbackToDestructiveMigration()
                 .build()

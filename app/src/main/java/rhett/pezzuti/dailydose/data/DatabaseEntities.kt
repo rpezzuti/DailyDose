@@ -3,7 +3,6 @@ package rhett.pezzuti.dailydose.data
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import rhett.pezzuti.dailydose.data.domain.Track
 
 
 @Entity(tableName = "track_table")

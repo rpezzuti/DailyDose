@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import rhett.pezzuti.dailydose.data.domain.Track
+import rhett.pezzuti.dailydose.data.Track
 import rhett.pezzuti.dailydose.databinding.TrackListItemBinding
 
 class TrackAdapter(val clickListener: TrackListener, val fabListener: FabListener) : ListAdapter<Track, ViewHolder>(TrackDiffCallback()) {

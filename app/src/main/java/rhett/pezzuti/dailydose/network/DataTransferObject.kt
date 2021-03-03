@@ -4,7 +4,7 @@ package rhett.pezzuti.dailydose.network
 import com.google.gson.JsonObject
 import com.squareup.moshi.JsonClass
 import rhett.pezzuti.dailydose.data.DatabaseTrack
-import rhett.pezzuti.dailydose.data.domain.Track
+import rhett.pezzuti.dailydose.data.Track
 
 @JsonClass(generateAdapter = true)
 data class NetworkTrackContainer (val tracks: List<NetworkTrack>)

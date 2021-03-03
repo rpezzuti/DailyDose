@@ -6,7 +6,7 @@
     <data>
         <variable
             name="track"
-            type="rhett.pezzuti.dailydose.data.domain.Track" />
+            type="rhett.pezzuti.dailydose.data.Track" />
 
         <variable
             name="clickListener"

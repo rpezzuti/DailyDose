@@ -19,7 +19,6 @@ class HomeViewModel(
     private val database = getInstance(getApplication())
     private val trackRepository = DefaultTrackRepository(database)
 
-
     init {
         Timber.i("homeViewModel Init block")
 

@@ -7,7 +7,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import rhett.pezzuti.dailydose.data.DatabaseTrack
-import rhett.pezzuti.dailydose.data.domain.Track
+import rhett.pezzuti.dailydose.data.Track
 import rhett.pezzuti.dailydose.data.source.local.getInstance
 import rhett.pezzuti.dailydose.utils.sendNotificationWithIntent
 import timber.log.Timber
@@ -123,7 +123,7 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
             NotificationManager::class.java
         ) as NotificationManager
 
-        notificationManager.sendNotificationWithIntent(track.title, track.artist, track.url, applicationContext)
+        notificationManager.sendNotificationWithIntent(track, applicationContext)
     }
 
 }
