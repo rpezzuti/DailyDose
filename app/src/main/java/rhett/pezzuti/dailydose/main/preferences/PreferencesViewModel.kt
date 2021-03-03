@@ -68,12 +68,12 @@ class PreferencesViewModel(
     }
 
     fun checkFutureGarage() {
-        if (sharedPref!!.getBoolean(app.getString(R.string.TOPIC_FUTURE_GARAGE), false)) {
-            unSubscribeTopic(app.getString(R.string.TOPIC_FUTURE_GARAGE))
-            sharedPref.edit().putBoolean(app.getString(R.string.TOPIC_FUTURE_GARAGE), false).apply()
+        if (sharedPref!!.getBoolean(app.getString(R.string.TOPIC_GARAGE), false)) {
+            unSubscribeTopic(app.getString(R.string.TOPIC_GARAGE))
+            sharedPref.edit().putBoolean(app.getString(R.string.TOPIC_GARAGE), false).apply()
         } else {
-            subscribeTopic(app.getString(R.string.TOPIC_FUTURE_GARAGE))
-            sharedPref.edit().putBoolean(app.getString(R.string.TOPIC_FUTURE_GARAGE), true).apply()
+            subscribeTopic(app.getString(R.string.TOPIC_GARAGE))
+            sharedPref.edit().putBoolean(app.getString(R.string.TOPIC_GARAGE), true).apply()
         }
     }
 

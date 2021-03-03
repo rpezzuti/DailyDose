@@ -75,7 +75,7 @@
     <string name="checkbox_melodic_dubstep">Melodic Dubstep</string>
     <string name="checkbox_lo_fi">Lo-Fi</string>
     <string name="checkbox_chillstep">Chillstep</string>
-    <string name="checkbox_future_garage">Future Garage</string>
+    <string name="checkbox_garage">Garage</string>
     <string name="checkbox_piano_ambient">Piano / Ambient</string>
     <string name="checkbox_experimental_bass">Experimental / Neuro Bass</string>
     <string name="checkbox_liquid_dnb">Liquid DnB</string>
@@ -136,7 +136,7 @@
     <string name="genre_melodic_dubstep">Genre: Melodic Dubstep</string>
     <string name="genre_lo_fi">Genre: Lo-Fi</string>
     <string name="genre_chillstep">Genre: Chillstep</string>
-    <string name="genre_future_garage">Genre: Future Garage</string>
+    <string name="genre_garage">Genre: Garage</string>
     <string name="genre_piano_ambient">Genre: Piano / Ambient</string>
     <string name="genre_experimental_bass">Genre: Experimental Bass</string>
     <string name="genre_liquid_dnb">Genre: Liquid DnB</string>
@@ -156,7 +156,7 @@
     <string name="TOPIC_MELODIC_DUBSTEP">melodic-dubstep</string>
     <string name="TOPIC_LO_FI">lo-fi</string>
     <string name="TOPIC_CHILLSTEP">chillstep</string>
-    <string name="TOPIC_FUTURE_GARAGE">future-garage</string>
+    <string name="TOPIC_GARAGE">garage</string>
     <string name="TOPIC_PIANO_AMBIENT">piano-ambient</string>
     <string name="TOPIC_EXPERIMENTAL_BASS">experimental-bass</string>
     <string name="TOPIC_LIQUID_DNB">liquid-dnb</string>

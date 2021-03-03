@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Stateless works from top to bottom, so the first match it finds for the state, it will use. -->
+<!-- Can put default color last, so that if none of the states are checked, it will default. -->
+<!-- alpha is 82% transparent. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="?colorPrimaryVariant" android:state_selected="true" />
+    <item android:color="?colorOnSurface" android:alpha="0.18" />
+</selector>

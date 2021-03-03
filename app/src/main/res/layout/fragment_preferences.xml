@@ -106,7 +106,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="@{() -> preferencesViewModelXML.checkFutureGarage()}"
-                android:text="@string/checkbox_future_garage" />
+                android:text="@string/checkbox_garage" />
 
             <CheckBox
                 android:id="@+id/checkbox_piano_ambient"

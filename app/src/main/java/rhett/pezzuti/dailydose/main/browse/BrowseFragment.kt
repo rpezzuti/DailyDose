@@ -12,11 +12,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.chip.Chip
 import rhett.pezzuti.dailydose.R
 import rhett.pezzuti.dailydose.adapters.FabListener
 import rhett.pezzuti.dailydose.adapters.TrackAdapter
 import rhett.pezzuti.dailydose.adapters.TrackListener
-import rhett.pezzuti.dailydose.data.getInstance
+import rhett.pezzuti.dailydose.data.source.local.getInstance
 import rhett.pezzuti.dailydose.databinding.FragmentBrowseBinding
 import timber.log.Timber
 import java.lang.Exception
@@ -92,6 +93,8 @@ class BrowseFragment : Fragment() {
         })
         binding.browseRecyclerView.adapter = viewModelAdapter
 
+        makeChips()
+
 
 
         (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.fragment_browse_title)
@@ -99,5 +102,29 @@ class BrowseFragment : Fragment() {
     }
 
 
+    private
+    fun makeChips() {
+        // Dummy List Data
+        val dummyList = listOf("Dubstep", "Melodic Dubstep", "Your Mum")
+
+        // Make a new Chip Group
+        val chipGroup = binding.browseChipGroup
+
+        // Inflate it
+        val inflater = LayoutInflater.from(chipGroup.context)
+
+        // Iterate over the list and make a new chip child for each string (genre) in the list
+        val children = dummyList.map { genre ->
+            val chip = inflater.inflate(R.layout.genre_chip, chipGroup, false) as Chip
+            chip.text = genre
+            chip.tag = genre
+            chip
+        }
+
+        chipGroup.removeAllViews()
+        for (chip in children) {
+            chipGroup.addView(chip)
+        }
+    }
 
 }

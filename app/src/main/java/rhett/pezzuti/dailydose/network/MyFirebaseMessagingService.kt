@@ -8,7 +8,7 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import rhett.pezzuti.dailydose.data.DatabaseTrack
 import rhett.pezzuti.dailydose.data.domain.Track
-import rhett.pezzuti.dailydose.data.getInstance
+import rhett.pezzuti.dailydose.data.source.local.getInstance
 import rhett.pezzuti.dailydose.utils.sendNotificationWithIntent
 import timber.log.Timber
 import java.lang.Exception

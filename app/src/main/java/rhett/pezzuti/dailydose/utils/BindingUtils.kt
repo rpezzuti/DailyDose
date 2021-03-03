@@ -1,5 +1,6 @@
 package rhett.pezzuti.dailydose.utils
 
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -18,13 +19,6 @@ fun TextView.setTrackTitle(item: Track?) {
 fun TextView.setTrackArtist(item: Track?) {
     item?.let {
         text = item.artist
-    }
-}
-
-@BindingAdapter("trackGenre")
-fun TextView.setTrackGenre(item: Track?) {
-    item?.let {
-        text = "Genre: ${item.genre}"
     }
 }
 
@@ -48,6 +42,7 @@ fun TextView.setGenre(item: Track?) {
             context.getString(R.string.TOPIC_MELODIC_DUBSTEP) -> text = context.getString(R.string.genre_melodic_dubstep)
             context.getString(R.string.TOPIC_LO_FI) -> text = context.getString(R.string.genre_lo_fi)
             context.getString(R.string.TOPIC_CHILLSTEP) -> text = context.getString(R.string.genre_chillstep)
+            context.getString(R.string.TOPIC_GARAGE) -> text = context.getString(R.string.genre_garage)
             context.getString(R.string.TOPIC_PIANO_AMBIENT) -> text = context.getString(R.string.genre_piano_ambient)
             context.getString(R.string.TOPIC_EXPERIMENTAL_BASS) -> text = context.getString(R.string.genre_experimental_bass)
             context.getString(R.string.TOPIC_LIQUID_DNB) -> text = context.getString(R.string.genre_liquid_dnb)
@@ -60,5 +55,28 @@ fun TextView.setGenre(item: Track?) {
             context.getString(R.string.TOPIC_LIVE_PERFORMANCES) -> text = context.getString(R.string.genre_live_performances)
         }
 
+    }
+}
+
+@BindingAdapter("setImage")
+fun ImageView.setImage(item: Track?) {
+    item?.let {
+        when (item.genre) {
+            context.getString(R.string.TOPIC_DUBSTEP) -> setImageResource(R.drawable.ic_eigth_note)
+            context.getString(R.string.TOPIC_MELODIC_DUBSTEP) -> setImageResource(R.drawable.ic_eigth_note)
+            context.getString(R.string.TOPIC_LO_FI) -> setImageResource(R.drawable.ic_eigth_note)
+            context.getString(R.string.TOPIC_CHILLSTEP) -> setImageResource(R.drawable.ic_eigth_note)
+            context.getString(R.string.TOPIC_GARAGE) -> setImageResource(R.drawable.ic_eigth_note)
+            context.getString(R.string.TOPIC_PIANO_AMBIENT) -> setImageResource(R.drawable.ic_eigth_note)
+            context.getString(R.string.TOPIC_EXPERIMENTAL_BASS) -> setImageResource(R.drawable.ic_eigth_note)
+            context.getString(R.string.TOPIC_LIQUID_DNB) -> setImageResource(R.drawable.ic_eigth_note)
+            context.getString(R.string.TOPIC_AMBIENT_BASS) -> setImageResource(R.drawable.ic_eigth_note)
+
+            context.getString(R.string.TOPIC_METALCORE) -> setImageResource(R.drawable.ic_eigth_note)
+            context.getString(R.string.TOPIC_ACOUSTIC_BALLADS) -> setImageResource(R.drawable.ic_eigth_note)
+            context.getString(R.string.TOPIC_INSTRUMENTAL_ROCK) -> setImageResource(R.drawable.ic_eigth_note)
+            context.getString(R.string.TOPIC_DEATH_METAL) -> setImageResource(R.drawable.ic_eigth_note)
+            context.getString(R.string.TOPIC_LIVE_PERFORMANCES) -> setImageResource(R.drawable.ic_eigth_note)
+        }
     }
 }
