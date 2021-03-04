@@ -24,7 +24,7 @@ class DefaultTrackRepository(private val database: TrackDatabase) : TrackReposit
         // Store it in the remote data source
         // Then use the remote data source to store it in the local data source
 
-        // val remoteData = tracksRemoteDataSource.getTracks()
+        val remoteData = tracksRemoteDataSource.getTracks()
     }
 
 
