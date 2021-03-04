@@ -15,8 +15,8 @@ interface TrackDatabaseDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg tracks: DatabaseTrack)
 
-    @Query("SELECT * FROM track_table WHERE track_url = :url")
-    fun getTrack(url: String): DatabaseTrack
+    @Query("SELECT * FROM track_table WHERE track_timestamp = :trackId")
+    fun getTrack(trackId: Long): DatabaseTrack
 
     @Update
     fun update(track: DatabaseTrack)

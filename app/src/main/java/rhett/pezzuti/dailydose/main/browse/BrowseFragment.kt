@@ -80,13 +80,13 @@ class BrowseFragment : Fragment() {
                 Timber.i("Exception Found: ${e.stackTrace}")
             }
 
-        }, FabListener { favorite, url ->
+        }, FabListener { favorite, timestamp ->
             if (!favorite) {
-                viewModel.addToFavorites(url)
+                viewModel.addToFavorites(timestamp)
                 Toast.makeText(this.requireContext(), "Added to Favorites", Toast.LENGTH_SHORT)
                     .show()
             } else {
-                viewModel.removeFromFavorites(url)
+                viewModel.removeFromFavorites(timestamp)
                 Toast.makeText(this.requireContext(), "Removed from Favorites", Toast.LENGTH_SHORT)
                     .show()
             }

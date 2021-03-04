@@ -20,4 +20,5 @@ interface TrackRepository {
     suspend fun getTrackByGenre(genre: String): List<Track>
 
 
+    suspend fun favoriteTrack(trackId: Long)
 }

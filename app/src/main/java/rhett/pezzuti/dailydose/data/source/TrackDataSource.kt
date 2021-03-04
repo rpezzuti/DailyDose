@@ -10,4 +10,6 @@ interface TrackDataSource {
 
     suspend fun addTrack(track: Track)
     suspend fun getTrack(trackKey: Long)
+
+    suspend fun updateTrack(trackId: Long)
 }

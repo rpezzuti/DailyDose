@@ -56,6 +56,6 @@ class TrackListener(val clickListener: (trackUrl: String) -> Unit) {
     fun onClick(track: Track) = clickListener(track.url)
 }
 
-class FabListener(val fabListener: (isFavorite: Boolean, trackUrl: String) -> Unit ) {
-    fun onFavorite(track: Track) = fabListener(track.favorite, track.url)
+class FabListener(val fabListener: (isFavorite: Boolean, trackId: Long) -> Unit ) {
+    fun onFavorite(track: Track) = fabListener(track.favorite, track.timestamp)
 }

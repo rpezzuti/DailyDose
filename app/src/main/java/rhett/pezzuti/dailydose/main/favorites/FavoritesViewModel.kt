@@ -27,29 +27,29 @@ class FavoritesViewModel(
 
 
 
-    fun addToFavorites(url: String) {
+    fun addToFavorites(timestamp: Long) {
         viewModelScope.launch {
-            favorite(url)
+            favorite(timestamp)
         }
     }
 
-    private suspend fun favorite(url: String) {
+    private suspend fun favorite(timestamp: Long) {
         withContext(Dispatchers.IO) {
-            val track = trackDatabase.getTrack(url)
+            val track = trackDatabase.getTrack(timestamp)
             track.favorite = true
             trackDatabase.update(track)
         }
     }
 
-    fun removeFromFavorites(url: String) {
+    fun removeFromFavorites(timestamp: Long) {
         viewModelScope.launch {
-            unFavorite(url)
+            unFavorite(timestamp)
         }
     }
 
-    private suspend fun unFavorite(url: String) {
-        withContext(Dispatchers.IO){
-            val track = trackDatabase.getTrack(url)
+    private suspend fun unFavorite(timestamp: Long) {
+        withContext(Dispatchers.IO) {
+            val track = trackDatabase.getTrack(timestamp)
             track.favorite = false
             trackDatabase.update(track)
         }

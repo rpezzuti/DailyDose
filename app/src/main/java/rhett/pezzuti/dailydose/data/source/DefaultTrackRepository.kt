@@ -64,6 +64,13 @@ class DefaultTrackRepository(private val database: TrackDatabase) : TrackReposit
         TODO("Not yet implemented")
     }
 
+
+    override suspend fun favoriteTrack(trackId: Long) {
+        // TODO THis tuff
+        // trackLocalDataSource.favorite(trackId)
+    }
+
+    /** The other stuff i used previously. Pre DataSource stuff  **/
     // Public access of all the tracks in the database.
     // Fetching all the DATABASE tracks and returning them as DOMAIN tracks
     val tracks: LiveData<List<Track>> =
