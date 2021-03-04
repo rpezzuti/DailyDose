@@ -5,7 +5,6 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import rhett.pezzuti.dailydose.data.*
 import rhett.pezzuti.dailydose.data.source.DefaultTrackRepository
 import rhett.pezzuti.dailydose.data.source.local.TrackDatabaseDao
 import rhett.pezzuti.dailydose.data.source.local.getInstance
@@ -15,6 +14,8 @@ class HomeViewModel(
     val trackDatabase: TrackDatabaseDao,
     app: Application
 ) : AndroidViewModel(app) {
+
+    /** AndroidViewModel provides APPLICATION CONTEXT, while regular ViewModel() DOES NOT **/
 
     private val database = getInstance(getApplication())
     private val trackRepository = DefaultTrackRepository(database)
@@ -28,12 +29,6 @@ class HomeViewModel(
     }
 
     val tracks = trackRepository.recentTracks
-
-    private suspend fun clear() {
-        withContext(Dispatchers.IO) {
-            trackDatabase.clearAll()
-        }
-    }
 
     fun addToFavorites(url: String) {
         viewModelScope.launch {

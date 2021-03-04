@@ -90,12 +90,12 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
         // Create some kind of working Null Check that doesn't crash the app
         remoteMessage.data.let {
             return Track(
+                timestamp,
                 remoteMessage.data["url"]!!,
                 remoteMessage.data["title"]!!,
                 remoteMessage.data["artist"]!!,
                 remoteMessage.data["genre"]!!,
                 remoteMessage.data["image"]!!,
-                timestamp,
                 false
             )
         }
@@ -105,12 +105,12 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
         val database = getInstance(applicationContext).trackDatabaseDao
 
         val databaseTrack = DatabaseTrack(
+            track.timestamp,
             track.url,
             track.title,
             track.artist,
             track.genre,
             track.image,
-            track.timestamp,
             track.favorite
         )
 

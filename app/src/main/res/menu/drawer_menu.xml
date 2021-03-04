@@ -12,8 +12,4 @@
         android:id="@+id/browseFragment"
         android:icon="@drawable/ic_browse"
         android:title="@string/button_browse" />
-   <!-- <item
-        android:id="@+id/uploadFragment"
-        android:icon="@drawable/ic_upload"
-        android:title="@string/button_upload" />-->
 </menu>
