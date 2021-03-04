@@ -1,7 +1,6 @@
 package rhett.pezzuti.dailydose
 
 import android.app.Application
-import android.app.Service
 import android.os.Build
 import androidx.work.*
 import kotlinx.coroutines.CoroutineScope
@@ -14,6 +13,7 @@ import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 class DailyDoseApplication : Application() {
+
 
     val trackRepository : TrackRepository
         get() = ServiceLocator.provideTrackRepository(this)
@@ -42,14 +42,14 @@ class DailyDoseApplication : Application() {
     }
 
     private fun delayedInit() = applicationScope.launch {
-        setupRecurringWork()
+        setupRecurringRefreshDataWork()
     }
 
     private fun anotherDelayedInit() = applicationScope.launch {
-        setupRecurringUploadSharedPref()
+        setupRecurringUploadSharedPrefWork()
     }
 
-    private fun setupRecurringUploadSharedPref() {
+    private fun setupRecurringUploadSharedPrefWork() {
         val constraints = Constraints.Builder()
             .setRequiresCharging(true)
             .setRequiredNetworkType(NetworkType.UNMETERED)
@@ -73,7 +73,7 @@ class DailyDoseApplication : Application() {
         )
     }
 
-    private fun setupRecurringWork() {
+    private fun setupRecurringRefreshDataWork() {
 
         // UNMETERED network means that the OS reports that the user wont be charged for the network request.
         val constraints = Constraints.Builder()

@@ -2,13 +2,19 @@ package rhett.pezzuti.dailydose.data.source
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
+import kotlinx.coroutines.CoroutineDispatcher
 import rhett.pezzuti.dailydose.data.DatabaseTrack
 import rhett.pezzuti.dailydose.data.asDomainModel
 import rhett.pezzuti.dailydose.data.Track
 import rhett.pezzuti.dailydose.data.source.local.TrackDatabase
+import rhett.pezzuti.dailydose.data.source.local.TrackDatabaseDao
+import rhett.pezzuti.dailydose.data.source.local.TrackLocalDataSource
+import rhett.pezzuti.dailydose.data.source.remote.TrackRemoteDataSource
 
 /** Concrete Implementation of loading tracks from the data sources into the offline cache. **/
 class DefaultTrackRepository(private val database: TrackDatabase) : TrackRepository {
+
+    // private val tracksLocalDataSource: TrackLocalDataSource = TrackLocalDataSource()
 
     override suspend fun refreshTracks() {
         /** One of the main methods **/
@@ -24,7 +30,27 @@ class DefaultTrackRepository(private val database: TrackDatabase) : TrackReposit
         // Store it in the remote data source
         // Then use the remote data source to store it in the local data source
 
-        val remoteData = tracksRemoteDataSource.getTracks()
+        // TODO this is done.
+        // val remoteData = trackRemoteDataSource.getTracks()
+        val remoteData = listOf<Track>()
+
+        if (remoteData.isNullOrEmpty()) {
+            // TODO maybe throw an error?
+            // do nothing
+        } else {
+            // TODO this is the next step
+            // I want to update the fetched tracks with the favorites
+            // Or find a way to only update the new ones, potentially.
+            // Once a day, do the update. But should also have a force update version
+            // Update the fetched tracks to identify data, then put them in the local
+
+                // TODO sync somehow
+            // tracksLocalDataSource.syncTracks()
+            remoteData.forEach { track ->
+                // TODO this works, but since i changed the signature, it flags
+                // tracksLocalDataSource.addTrack(track)
+            }
+        }
     }
 
 

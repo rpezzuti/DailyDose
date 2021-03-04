@@ -28,7 +28,18 @@ class TrackRemoteDataSource() : TrackDataSource {
             }
         })
 
-
         return data
+    }
+
+    override suspend fun addTracks(tracks: List<Track>) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun addTrack(track: Track) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getTrack(trackKey: Long) {
+        TODO("Not yet implemented")
     }
 }
