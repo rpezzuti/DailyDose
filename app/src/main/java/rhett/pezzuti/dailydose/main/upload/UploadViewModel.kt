@@ -11,8 +11,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import rhett.pezzuti.dailydose.data.domain.Track
-import rhett.pezzuti.dailydose.data.domain.TrackNotification
+import rhett.pezzuti.dailydose.data.Track
+import rhett.pezzuti.dailydose.data.TrackNotification
 import rhett.pezzuti.dailydose.data.source.local.getInstance
 import rhett.pezzuti.dailydose.network.FirebaseTrack
 import rhett.pezzuti.dailydose.network.RetrofitInstance

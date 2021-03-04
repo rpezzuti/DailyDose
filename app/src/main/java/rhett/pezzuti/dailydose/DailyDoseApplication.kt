@@ -1,17 +1,22 @@
 package rhett.pezzuti.dailydose
 
 import android.app.Application
+import android.app.Service
 import android.os.Build
 import androidx.work.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import rhett.pezzuti.dailydose.data.source.TrackRepository
 import rhett.pezzuti.dailydose.work.RefreshDataWorker
 import rhett.pezzuti.dailydose.work.UploadPreferencesWorker
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 class DailyDoseApplication : Application() {
+
+    val trackRepository : TrackRepository
+        get() = ServiceLocator.provideTrackRepository(this)
 
     /**
      * onCreate is called before the first screen is shown to the user.

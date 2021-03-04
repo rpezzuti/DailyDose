@@ -1,11 +1,14 @@
 package rhett.pezzuti.dailydose.utils
 
+import android.view.View
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import rhett.pezzuti.dailydose.R
-import rhett.pezzuti.dailydose.data.domain.Track
+import rhett.pezzuti.dailydose.data.Track
+import rhett.pezzuti.dailydose.main.browse.BrowseStatus
 
 // The value is what determines the name in the XML code
 @BindingAdapter("trackTitle")
@@ -77,6 +80,37 @@ fun ImageView.setImage(item: Track?) {
             context.getString(R.string.TOPIC_INSTRUMENTAL_ROCK) -> setImageResource(R.drawable.ic_eigth_note)
             context.getString(R.string.TOPIC_DEATH_METAL) -> setImageResource(R.drawable.ic_eigth_note)
             context.getString(R.string.TOPIC_LIVE_PERFORMANCES) -> setImageResource(R.drawable.ic_eigth_note)
+        }
+    }
+}
+
+@BindingAdapter("browseStatus")
+fun browseStatus(statusImageView: ImageView, status: BrowseStatus) {
+    when (status) {
+        BrowseStatus.LOADING -> {
+            statusImageView.visibility = View.GONE
+        }
+        BrowseStatus.DONE -> {
+            statusImageView.visibility = View.GONE
+        }
+        BrowseStatus.ERROR -> {
+            statusImageView.visibility = View.VISIBLE
+            statusImageView.setImageResource(R.drawable.ic_connection_error)
+        }
+    }
+}
+
+@BindingAdapter("progressBarStatus")
+fun progressBarStatus(progressBar: ProgressBar, status: BrowseStatus) {
+    when (status) {
+        BrowseStatus.LOADING -> {
+            progressBar.visibility = View.VISIBLE
+        }
+        BrowseStatus.DONE -> {
+            progressBar.visibility = View.GONE
+        }
+        BrowseStatus.ERROR -> {
+            progressBar.visibility = View.GONE
         }
     }
 }

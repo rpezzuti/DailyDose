@@ -61,55 +61,64 @@
                         android:id="@+id/checkbox_dubstep"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/checkbox_dubstep" />
+                        android:text="@string/checkbox_dubstep"
+                        android:onClick="@{() -> setupPreferencesViewModelXML.checkDubstep()}"/>
 
                     <CheckBox
                         android:id="@+id/checkbox_melodic_dubstep"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/checkbox_melodic_dubstep" />
+                        android:text="@string/checkbox_melodic_dubstep"
+                        android:onClick="@{() -> setupPreferencesViewModelXML.checkMelodicDubstep()}"/>
 
                     <CheckBox
                         android:id="@+id/checkbox_lo_fi"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/checkbox_lo_fi" />
+                        android:text="@string/checkbox_lo_fi"
+                        android:onClick="@{() -> setupPreferencesViewModelXML.checkLoFi()}"/>
 
                     <CheckBox
                         android:id="@+id/checkbox_chillstep"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/checkbox_chillstep" />
+                        android:text="@string/checkbox_chillstep"
+                        android:onClick="@{() -> setupPreferencesViewModelXML.checkChillstep()}"/>
 
                     <CheckBox
                         android:id="@+id/checkbox_future_garage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/checkbox_garage" />
+                        android:text="@string/checkbox_garage"
+                        android:onClick="@{() -> setupPreferencesViewModelXML.checkGarage()}"/>
 
                     <CheckBox
                         android:id="@+id/checkbox_piano_ambient"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/checkbox_piano_ambient" />
+                        android:text="@string/checkbox_piano_ambient"
+                        android:onClick="@{() -> setupPreferencesViewModelXML.checkPianoAmbient()}"/>
 
                     <CheckBox
                         android:id="@+id/checkbox_experimental_bass"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/checkbox_experimental_bass" />
+                        android:text="@string/checkbox_experimental_bass"
+                        android:onClick="@{() -> setupPreferencesViewModelXML.checkExperimentalBass()}"/>
 
                     <CheckBox
                         android:id="@+id/checkbox_liquid_dnb"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/checkbox_liquid_dnb" />
+                        android:text="@string/checkbox_liquid_dnb"
+                        android:onClick="@{() -> setupPreferencesViewModelXML.checkLiquidDnB()}"/>
 
                     <CheckBox
                         android:id="@+id/checkbox_ambient_bass"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/checkbox_ambient_bass" />
+                        android:text="@string/checkbox_ambient_bass"
+                        android:onClick="@{() -> setupPreferencesViewModelXML.checkAmbientBass()}"/>
                 </RadioGroup>
 
 
@@ -137,39 +146,40 @@
                         android:id="@+id/checkbox_metalcore"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/checkbox_metalcore" />
+                        android:text="@string/checkbox_metalcore"
+                        android:onClick="@{() -> setupPreferencesViewModelXML.checkMetalcore()}"/>
 
                     <CheckBox
                         android:id="@+id/checkbox_acoustic_ballads"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/checkbox_acoustic_ballads" />
+                        android:text="@string/checkbox_acoustic_ballads"
+                        android:onClick="@{() -> setupPreferencesViewModelXML.checkAcousticBallads()}"/>
 
                     <CheckBox
                         android:id="@+id/checkbox_instrumental_rock"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/checkbox_instrumental_rock" />
+                        android:text="@string/checkbox_instrumental_rock"
+                        android:onClick="@{() -> setupPreferencesViewModelXML.checkInstrumentalRock()}"/>
 
                     <CheckBox
                         android:id="@+id/checkbox_death_metal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/checkbox_death_metal" />
+                        android:text="@string/checkbox_death_metal"
+                        android:onClick="@{() -> setupPreferencesViewModelXML.checkDeathMetal()}"/>
 
                     <CheckBox
                         android:id="@+id/checkbox_live_performances"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/checkbox_live_performances" />
+                        android:text="@string/checkbox_live_performances"
+                        android:onClick="@{() -> setupPreferencesViewModelXML.checkLivePerformances()}"/>
 
                 </RadioGroup>
-
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-
         </androidx.core.widget.NestedScrollView>
-
 
         <Button
             android:id="@+id/btn_finish"

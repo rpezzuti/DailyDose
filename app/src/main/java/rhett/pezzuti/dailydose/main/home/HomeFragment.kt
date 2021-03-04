@@ -36,6 +36,7 @@ class HomeFragment : Fragment() {
             "You can only access the viewModel after onViewCreated()"
         }
 
+        // TODO implement the ServiceLocator
         val trackDataSource = getInstance(activity.applicationContext).trackDatabaseDao
 
         ViewModelProvider(this, HomeViewModelFactory(trackDataSource, activity.application)).get(

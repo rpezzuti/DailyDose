@@ -15,8 +15,8 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import rhett.pezzuti.dailydose.R
-import rhett.pezzuti.dailydose.data.domain.Track
-import rhett.pezzuti.dailydose.data.domain.TrackNotification
+import rhett.pezzuti.dailydose.data.Track
+import rhett.pezzuti.dailydose.data.TrackNotification
 import rhett.pezzuti.dailydose.databinding.FragmentUploadBinding
 
 class UploadFragment : DialogFragment(), AdapterView.OnItemSelectedListener {
