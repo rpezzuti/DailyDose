@@ -10,6 +10,18 @@ data class Track (
     var favorite: Boolean
 )
 
+fun Track.asDatabaseModel(): DatabaseTrack {
+    return DatabaseTrack(
+        url = this.url,
+        title = this.title,
+        artist = this.artist,
+        genre = this.genre,
+        image = this.image,
+        timestamp = this.timestamp,
+        favorite = this.favorite
+    )
+}
+
 fun List<Track>.asDatabaseModel(): Array<DatabaseTrack> {
     return map {
         DatabaseTrack(
