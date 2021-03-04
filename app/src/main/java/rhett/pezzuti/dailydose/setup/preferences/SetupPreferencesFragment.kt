@@ -37,7 +37,6 @@ class SetupPreferencesFragment : Fragment() {
         binding.setupPreferencesViewModelXML = viewModel
         binding.lifecycleOwner = this
 
-
         binding.textPreferencesName.text = "What do you like, $username?"
 
 
