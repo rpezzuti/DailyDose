@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.google.gson.JsonObject
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Call
@@ -16,8 +17,10 @@ import rhett.pezzuti.dailydose.data.asDatabaseModel
 import rhett.pezzuti.dailydose.network.BrowseFirebaseGson
 import rhett.pezzuti.dailydose.data.source.DefaultTrackRepository
 import rhett.pezzuti.dailydose.data.source.local.getInstance
+import rhett.pezzuti.dailydose.utils.asListOfTracks
 import timber.log.Timber
 
+enum class BrowseStatus { LOADING, ERROR, DONE}
 
 class BrowseViewModel(
     val trackDatabase: TrackDatabaseDao,
@@ -27,6 +30,10 @@ class BrowseViewModel(
     private val _playlist = MutableLiveData<List<Track>>()
     val playlist: LiveData<List<Track>>
         get() = _playlist
+
+    private val _status = MutableLiveData<BrowseStatus>()
+    val status: LiveData<BrowseStatus>
+        get() = _status
 
     private val database = getInstance(getApplication())
     private val trackRepository = DefaultTrackRepository(database)
@@ -59,14 +66,18 @@ class BrowseViewModel(
 
     private fun getAllTracks() = viewModelScope.launch {
 
+        _status.value = BrowseStatus.LOADING
+
         BrowseFirebaseGson.retrofitService.getAllTracks().enqueue(object : Callback<JsonObject> {
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                 Timber.i("GREAT SUCCESS: ${response.body().toString()}")
-                parseJsonAllTracks(response.body())
+                insertAll(response.body().asListOfTracks())
+                _status.value = BrowseStatus.DONE
             }
 
             override fun onFailure(call: Call<JsonObject>, t: Throwable) {
                 Timber.i("Failure: " + t.message)
+                _status.value = BrowseStatus.ERROR
             }
         })
     }

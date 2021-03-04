@@ -14,6 +14,7 @@ class PreferencesViewModel(
     private val binding: FragmentPreferencesBinding
 ) : AndroidViewModel(app) {
 
+    // TODO cleanup this code. I'm sure there's a way you can make it dynamic.
 
     private val sharedPref: SharedPreferences? = app.getSharedPreferences(app.getString(R.string.user_preferences_key), Context.MODE_PRIVATE)
 

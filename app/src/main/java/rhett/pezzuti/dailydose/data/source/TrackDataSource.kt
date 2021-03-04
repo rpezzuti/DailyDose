@@ -4,6 +4,6 @@ import rhett.pezzuti.dailydose.data.Track
 
 interface TrackDataSource {
 
-    fun getTracks(): List<Track>
+    suspend fun getTracks(): List<Track>
 
 }

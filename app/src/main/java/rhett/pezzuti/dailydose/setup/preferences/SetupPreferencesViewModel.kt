@@ -3,6 +3,7 @@ package rhett.pezzuti.dailydose.setup.preferences
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -33,6 +34,14 @@ class SetupPreferencesViewModel(
 
     private val sharedPref: SharedPreferences? = app.getSharedPreferences(app.getString(R.string.user_preferences_key), Context.MODE_PRIVATE)
 
+    // I think this is possible in some way???
+    // Refer to the ToDo app. there is a view being passed in the XML for a checkbox.
+    // Weird.
+/*    fun checkBox(view: View) {
+        when (view.id) {
+            R.id.checkbox_acoustic_ballads -> someSubcribe()
+        }
+    }*/
 
     fun checkDubstep() {
         if (sharedPref!!.getBoolean(app.getString(R.string.TOPIC_DUBSTEP), false)) {
