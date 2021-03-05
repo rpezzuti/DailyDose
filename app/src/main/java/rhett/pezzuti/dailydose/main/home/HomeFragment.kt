@@ -44,9 +44,9 @@ class HomeFragment : Fragment() {
             HomeViewModel::class.java)
     }
 
-    private val newViewModel by viewModels<HomeViewModel> {
+/*    private val newViewModel by viewModels<HomeViewModel> {
         HomeViewModelFactory((requireContext().applicationContext as DailyDoseApplication).trackRepository)
-    }
+    }*/
 
     private var viewModelAdapter: TrackAdapter? = null
 

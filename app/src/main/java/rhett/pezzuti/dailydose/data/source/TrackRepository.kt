@@ -27,4 +27,7 @@ interface TrackRepository {
     // This is the correct pattern. I guess
     suspend fun getFavorites(): List<Track>
     fun observeFavorites(): LiveData<List<Track>>
+
+    suspend fun getRecent(): List<Track>
+    fun observeRecent(): LiveData<List<Track>>
 }

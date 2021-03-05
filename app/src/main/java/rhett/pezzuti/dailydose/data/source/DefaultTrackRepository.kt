@@ -85,6 +85,14 @@ class DefaultTrackRepository(private val database: TrackDatabase) : TrackReposit
         // trackLocalDataSource.observeFavorites()
     }
 
+    override suspend fun getRecent(): List<Track> {
+        TODO("Not yet implemented")
+    }
+
+    override fun observeRecent(): LiveData<List<Track>> {
+        TODO("Not yet implemented")
+    }
+
     /** The other stuff i used previously. Pre DataSource stuff  **/
     // Public access of all the tracks in the database.
     // Fetching all the DATABASE tracks and returning them as DOMAIN tracks
