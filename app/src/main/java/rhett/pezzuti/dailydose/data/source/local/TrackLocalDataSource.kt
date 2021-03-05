@@ -15,9 +15,8 @@ class TrackLocalDataSource(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : TrackDataSource {
 
-
     /** Multiple Tracks **/
-    override suspend fun getTracks(): LiveData<List<Track>> {
+    override fun getTracks(): LiveData<List<Track>> {
         return trackDao.getAllTracks().map {
             it.asDomainModel()
         }
@@ -75,5 +74,29 @@ class TrackLocalDataSource(
             tempTrack.favorite = false
             trackDao.insert(tempTrack)
         }
+    }
+
+    override suspend fun deleteAllTracks() {
+        withContext(ioDispatcher) {
+            trackDao.clearAll()
+        }
+    }
+
+    override suspend fun syncTracks(remoteData: List<Track>) {
+        withContext(ioDispatcher) {
+            val saved = trackDao.getFavoritesToSave(true)
+            trackDao.clearAll()
+            remoteData.forEach { track ->
+                trackDao.insert(track.asDatabaseModel())
+            }
+            saved.forEach { track ->
+                trackDao.update(track)
+            }
+        }
+    }
+
+    /** Unused in Local **/
+    override suspend fun refreshTracks(): List<Track> {
+        TODO("Not yet implemented")
     }
 }

@@ -5,7 +5,7 @@ import rhett.pezzuti.dailydose.data.Track
 
 interface TrackDataSource {
 
-    suspend fun getTracks(): LiveData<List<Track>>
+    fun getTracks(): LiveData<List<Track>>
     suspend fun addTracks(tracks: List<Track>)
 
 
@@ -20,4 +20,9 @@ interface TrackDataSource {
     suspend fun updateTrack(track: Track)
 
     fun observeFavorites(): LiveData<List<Track>>
+
+    suspend fun refreshTracks(): List<Track>
+
+    suspend fun deleteAllTracks()
+    suspend fun syncTracks(remoteData: List<Track>)
 }

@@ -20,8 +20,6 @@ class DefaultTrackRepository(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : TrackRepository {
 
-    // private val tracksLocalDataSource: TrackLocalDataSource = TrackLocalDataSource()
-
     override suspend fun refreshTracks() {
         /** One of the main methods **/
         // This function starts the process of refreshing the data from the network,
@@ -36,9 +34,10 @@ class DefaultTrackRepository(
         // Store it in the remote data source
         // Then use the remote data source to store it in the local data source
 
-        // TODO this is done.
-        // val remoteData = trackRemoteDataSource.getTracks()
-        val remoteData = listOf<Track>()
+        // TODO this is done. ALTHOUGH I NEED TO GET THE TASKS FROM REMOTE
+        // The secret was awaiting the response, and playing with the response directly. :)
+        // prolly not ideal but it works
+        val remoteData = trackRemoteDataSource.refreshTracks()
 
         if (remoteData.isNullOrEmpty()) {
             // TODO maybe throw an error?
@@ -51,16 +50,12 @@ class DefaultTrackRepository(
             // Update the fetched tracks to identify data, then put them in the local
 
                 // TODO sync somehow
-            // tracksLocalDataSource.syncTracks()
-            remoteData.forEach { track ->
-                // TODO this works, but since i changed the signature, it flags
-                // tracksLocalDataSource.addTrack(track)
-            }
+            trackLocalDataSource.syncTracks(remoteData)
         }
     }
 
 
-    override suspend fun getAllTracks(): LiveData<List<Track>> {
+    override fun getAllTracks(): LiveData<List<Track>> {
        return trackLocalDataSource.getTracks()
     }
 

@@ -37,6 +37,7 @@ interface BrowseFirebaseApiService {
             Call<JsonObject>
 
 
+
     // Using Deferred<JsonObject> returns the same call adapter error.
     @GET ("tracks.json")
     fun getAllTracksDeferred():

@@ -20,10 +20,10 @@ class HomeViewModel(
     init {
         Timber.i("homeViewModel Init block")
 
-        // Proof that it works lol
+       /* // Proof that it works lol
         viewModelScope.launch {
             trackRepository.addTrack(Track(
-                4329328952L,
+                4329323389662L,
                 "https://www.youtube.com",
                 "Title",
                 "Artist",
@@ -31,7 +31,7 @@ class HomeViewModel(
                 "image",
                 true
             ))
-        }
+        }*/
     }
 
 
