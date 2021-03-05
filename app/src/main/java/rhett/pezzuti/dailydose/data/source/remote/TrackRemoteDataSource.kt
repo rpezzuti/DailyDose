@@ -20,7 +20,7 @@ object TrackRemoteDataSource : TrackDataSource {
     override suspend fun refreshTracks(): List<Track> {
 
         // var data = listOf<Track>()
-        val data = BrowseFirebaseGson.retrofitService.getAllTracks().awaitResponse().body().asListOfTracks()
+        return BrowseFirebaseGson.retrofitService.getAllTracks().awaitResponse().body().asListOfTracks()
 
        /* try {
             BrowseFirebaseGson.retrofitService.getAllTracks().enqueue(object : Callback<JsonObject> {
@@ -36,8 +36,6 @@ object TrackRemoteDataSource : TrackDataSource {
         } catch (e: Exception) {
             Timber.i(e)
         }*/
-
-        return data
     }
 
     override fun getTracks(): LiveData<List<Track>> {
