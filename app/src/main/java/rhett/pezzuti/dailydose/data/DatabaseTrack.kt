@@ -1,5 +1,6 @@
 package rhett.pezzuti.dailydose.data
 
+import androidx.lifecycle.Transformations.map
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -30,6 +31,17 @@ data class DatabaseTrack (
     @ColumnInfo(name = "is_favorite")
     var favorite: Boolean
 )
+
+fun DatabaseTrack.asDomainModel(): Track {
+    return Track(
+        this.timestamp,
+        this.url,
+        this.title,
+        this.artist,
+        this.genre,
+        this.image,
+        this.favorite)
+}
 
 fun List<DatabaseTrack>.asDomainModel(): List<Track> {
     return map {

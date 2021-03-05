@@ -3,28 +3,28 @@ package rhett.pezzuti.dailydose.main.favorites
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.Transformations
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import rhett.pezzuti.dailydose.data.source.local.TrackDatabaseDao
 import rhett.pezzuti.dailydose.data.asDomainModel
+import rhett.pezzuti.dailydose.data.source.TrackRepository
 
 class FavoritesViewModel(
-    val trackDatabase: TrackDatabaseDao,
-    app: Application) : AndroidViewModel(app) {
+    private val trackRepository: TrackRepository
+    ) : ViewModel() {
 
 
 
 
-
+/*
     val tracks = Transformations.map(trackDatabase.getFavorites(true)){
         it.asDomainModel()
-    }
+    }*/
 
-
-
-
+    val tracks2 = trackRepository.observeFavorites()
 
 
     fun addToFavorites(timestamp: Long) {
@@ -35,9 +35,9 @@ class FavoritesViewModel(
 
     private suspend fun favorite(timestamp: Long) {
         withContext(Dispatchers.IO) {
-            val track = trackDatabase.getTrack(timestamp)
+            val track = trackRepository.getTrack(timestamp)
             track.favorite = true
-            trackDatabase.update(track)
+            trackRepository.updateTrack(track)
         }
     }
 
@@ -49,9 +49,9 @@ class FavoritesViewModel(
 
     private suspend fun unFavorite(timestamp: Long) {
         withContext(Dispatchers.IO) {
-            val track = trackDatabase.getTrack(timestamp)
+            val track = trackRepository.getTrack(timestamp)
             track.favorite = false
-            trackDatabase.update(track)
+            trackRepository.updateTrack(track)
         }
     }
 

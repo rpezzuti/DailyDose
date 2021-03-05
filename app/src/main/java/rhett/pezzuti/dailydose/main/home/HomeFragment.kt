@@ -32,7 +32,7 @@ class HomeFragment : Fragment() {
      * lazy. This requires that viewModel not be referenced before onViewCreated(), which we
      * do in this Fragment.
      */
-    private val viewModel: HomeViewModel by lazy {
+/*    private val viewModel: HomeViewModel by lazy {
         val activity = requireNotNull(this.activity) {
             "You can only access the viewModel after onViewCreated()"
         }
@@ -42,11 +42,11 @@ class HomeFragment : Fragment() {
 
         ViewModelProvider(this, HomeViewModelFactory(trackDataSource, activity.application)).get(
             HomeViewModel::class.java)
-    }
-
-/*    private val newViewModel by viewModels<HomeViewModel> {
-        HomeViewModelFactory((requireContext().applicationContext as DailyDoseApplication).trackRepository)
     }*/
+
+    private val viewModel by viewModels<HomeViewModel> {
+        HomeViewModelFactory((requireContext().applicationContext as DailyDoseApplication).trackRepository)
+    }
 
     private var viewModelAdapter: TrackAdapter? = null
 

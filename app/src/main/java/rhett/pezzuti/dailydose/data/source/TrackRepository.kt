@@ -30,4 +30,10 @@ interface TrackRepository {
 
     suspend fun getRecent(): List<Track>
     fun observeRecent(): LiveData<List<Track>>
+
+    suspend fun getTrack(timestamp: Long): Track
+
+    suspend fun updateTrack(track: Track)
+
+    suspend fun addTrack(track: Track)
 }

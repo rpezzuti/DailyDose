@@ -35,8 +35,8 @@ class BrowseViewModel(
     val status: LiveData<BrowseStatus>
         get() = _status
 
-    private val database = getInstance(getApplication())
-    private val trackRepository = DefaultTrackRepository(database)
+ /*   private val database = getInstance(getApplication())
+    private val trackRepository = DefaultTrackRepository(database)*/
 
     /** Starts the whole shit of getting tracks from Firebase **/
     // private val _items = trackRepository.refreshTracks()
@@ -56,7 +56,7 @@ class BrowseViewModel(
     }
 
     /** Observed playlist for the recycler View **/
-    val tracks = trackRepository.tracks
+   // val tracks = trackRepository.tracks
 
     private fun dummy1() {
         viewModelScope.launch {

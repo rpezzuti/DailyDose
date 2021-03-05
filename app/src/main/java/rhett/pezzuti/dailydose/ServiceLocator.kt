@@ -1,36 +1,49 @@
 package rhett.pezzuti.dailydose
 
 import android.content.Context
+import androidx.room.Room
+import rhett.pezzuti.dailydose.data.Track
 import rhett.pezzuti.dailydose.data.source.DefaultTrackRepository
-import rhett.pezzuti.dailydose.data.source.local.getInstance
+import rhett.pezzuti.dailydose.data.source.TrackRepository
+import rhett.pezzuti.dailydose.data.source.local.TrackDatabase
+import rhett.pezzuti.dailydose.data.source.local.TrackLocalDataSource
+import rhett.pezzuti.dailydose.data.source.remote.TrackRemoteDataSource
 
-// Necessary to share repository between test and androidTest packages?
 object ServiceLocator {
 
+    private var database: TrackDatabase? = null
     @Volatile
-    var defaultTrackRepository: DefaultTrackRepository? = null
+    var trackRepository: TrackRepository? = null
 
-    fun provideTrackRepository(context: Context): DefaultTrackRepository {
+    fun provideTrackRepository(context: Context): TrackRepository {
         synchronized(this) {
-            return defaultTrackRepository ?: createTrackRepository(context)
+            return trackRepository ?: createTrackRepository(context)
         }
     }
 
     private
-    fun createTrackRepository(context: Context): DefaultTrackRepository {
-
-        // val newRepo = DefaultTrackRepository()
-        return DefaultTrackRepository(getInstance(context))
+    fun createTrackRepository(context: Context): TrackRepository {
+        val newRepo = DefaultTrackRepository(createLocalDataSource(context), TrackRemoteDataSource)
+        trackRepository = newRepo
+        return newRepo
     }
 
     private
-    fun createTrackDataSource(context: Context) {
-        // Implement
+    fun createLocalDataSource(context: Context): TrackLocalDataSource {
+        val database = database ?: createDatabase(context)
+        return TrackLocalDataSource(database.trackDatabaseDao)
     }
 
     private
-    fun createDatabase() {
-        // Implement
+    fun createDatabase(context: Context) : TrackDatabase {
+        val result = Room.databaseBuilder(
+            context,
+            TrackDatabase::class.java,
+            "Track.db"
+        ).build()
+        database = result
+        return result
     }
 
 }
+

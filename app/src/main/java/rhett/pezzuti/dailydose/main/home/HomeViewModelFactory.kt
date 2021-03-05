@@ -1,17 +1,15 @@
 package rhett.pezzuti.dailydose.main.home
 
-import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import rhett.pezzuti.dailydose.data.source.local.TrackDatabaseDao
+import rhett.pezzuti.dailydose.data.source.TrackRepository
 
 class HomeViewModelFactory(
-    private val trackDataSource: TrackDatabaseDao,
-    private val app: Application): ViewModelProvider.Factory {
+    private val trackRepository: TrackRepository): ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if(modelClass.isAssignableFrom(HomeViewModel::class.java)) {
-            return HomeViewModel(trackDataSource, app) as T
+            return HomeViewModel(trackRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

@@ -3,6 +3,8 @@ package rhett.pezzuti.dailydose.data.source
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import rhett.pezzuti.dailydose.data.DatabaseTrack
 import rhett.pezzuti.dailydose.data.asDomainModel
 import rhett.pezzuti.dailydose.data.Track
@@ -12,7 +14,11 @@ import rhett.pezzuti.dailydose.data.source.local.TrackLocalDataSource
 import rhett.pezzuti.dailydose.data.source.remote.TrackRemoteDataSource
 
 /** Concrete Implementation of loading tracks from the data sources into the offline cache. **/
-class DefaultTrackRepository(private val database: TrackDatabase) : TrackRepository {
+class DefaultTrackRepository(
+    private val trackLocalDataSource: TrackDataSource,
+    private val trackRemoteDataSource: TrackDataSource,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+) : TrackRepository {
 
     // private val tracksLocalDataSource: TrackLocalDataSource = TrackLocalDataSource()
 
@@ -55,9 +61,7 @@ class DefaultTrackRepository(private val database: TrackDatabase) : TrackReposit
 
 
     override suspend fun getAllTracks(): LiveData<List<Track>> {
-        return Transformations.map(database.trackDatabaseDao.getAllTracks()){
-            it.asDomainModel()
-        }
+       return trackLocalDataSource.getTracks()
     }
 
     override suspend fun getTrackByGenre(genre: String): List<Track> {
@@ -81,22 +85,36 @@ class DefaultTrackRepository(private val database: TrackDatabase) : TrackReposit
     }
 
     override fun observeFavorites(): LiveData<List<Track>> {
-        TODO("stuff")
-        // trackLocalDataSource.observeFavorites()
+        return trackLocalDataSource.observeFavorites()
     }
 
+    /** Recent Tracks **/
     override suspend fun getRecent(): List<Track> {
         TODO("Not yet implemented")
     }
-
     override fun observeRecent(): LiveData<List<Track>> {
-        TODO("Not yet implemented")
+        return trackLocalDataSource.observeRecent()
+    }
+
+    /** Single Tracks **/
+    override suspend fun addTrack(track: Track) {
+        track.apply {
+            trackLocalDataSource.addTrack(this)
+        }
+    }
+
+    override suspend fun getTrack(timestamp: Long): Track {
+        return trackLocalDataSource.getTrack(timestamp)
+    }
+
+    override suspend fun updateTrack(track: Track) {
+        trackLocalDataSource.updateTrack(track)
     }
 
     /** The other stuff i used previously. Pre DataSource stuff  **/
     // Public access of all the tracks in the database.
     // Fetching all the DATABASE tracks and returning them as DOMAIN tracks
-    val tracks: LiveData<List<Track>> =
+/*    val tracks: LiveData<List<Track>> =
         Transformations.map(database.trackDatabaseDao.getAllTracks())
         {
             it.asDomainModel()
@@ -106,7 +124,7 @@ class DefaultTrackRepository(private val database: TrackDatabase) : TrackReposit
         Transformations.map(database.trackDatabaseDao.getRecentTracks())
         {
             it.asDomainModel()
-        }
+        }*/
 
     var favorites = listOf<DatabaseTrack>()
 }

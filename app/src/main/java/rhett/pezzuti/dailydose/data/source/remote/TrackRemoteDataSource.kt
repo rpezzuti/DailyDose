@@ -1,5 +1,6 @@
 package rhett.pezzuti.dailydose.data.source.remote
 
+import androidx.lifecycle.LiveData
 import com.google.gson.JsonObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -11,10 +12,12 @@ import rhett.pezzuti.dailydose.network.BrowseFirebaseGson
 import rhett.pezzuti.dailydose.utils.asListOfTracks
 import timber.log.Timber
 
-class TrackRemoteDataSource() : TrackDataSource {
+object TrackRemoteDataSource : TrackDataSource {
 
-    override suspend fun getTracks(): List<Track> {
+    override suspend fun getTracks(): LiveData<List<Track>> {
 
+        TODO("Not yet implemented")
+/*
         var data = listOf<Track>()
 
         BrowseFirebaseGson.retrofitService.getAllTracks().enqueue(object : Callback<JsonObject> {
@@ -28,7 +31,7 @@ class TrackRemoteDataSource() : TrackDataSource {
             }
         })
 
-        return data
+        return data*/
     }
 
     override suspend fun addTracks(tracks: List<Track>) {
@@ -39,7 +42,7 @@ class TrackRemoteDataSource() : TrackDataSource {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getTrack(trackKey: Long) {
+    override suspend fun getTrack(trackKey: Long): Track {
         TODO("Not yet implemented")
     }
 
@@ -48,6 +51,18 @@ class TrackRemoteDataSource() : TrackDataSource {
     }
 
     override suspend fun unFavorite(trackId: Long) {
+        TODO("Not yet implemented")
+    }
+
+    override fun observeRecent(): LiveData<List<Track>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateTrack(track: Track) {
+        TODO("Not yet implemented")
+    }
+
+    override fun observeFavorites(): LiveData<List<Track>> {
         TODO("Not yet implemented")
     }
 }
