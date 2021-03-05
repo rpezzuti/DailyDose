@@ -11,8 +11,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.chip.Chip
+import rhett.pezzuti.dailydose.DailyDoseApplication
 import rhett.pezzuti.dailydose.R
 import rhett.pezzuti.dailydose.adapters.FabListener
 import rhett.pezzuti.dailydose.adapters.TrackAdapter
@@ -26,7 +28,9 @@ import java.lang.Exception
 class BrowseFragment : Fragment() {
 
     private lateinit var binding: FragmentBrowseBinding
-    private val viewModel: BrowseViewModel by lazy {
+
+/*
+    private val viewModel2: BrowseViewModel by lazy {
         val activity = requireNotNull(this.activity) {
             "You can only access the viewModel after onViewCreated()"
         }
@@ -34,6 +38,11 @@ class BrowseFragment : Fragment() {
         val trackDataSource = getInstance(activity.applicationContext).trackDatabaseDao
         ViewModelProvider(this, BrowseViewModelFactory(trackDataSource, activity.application)).get(
             BrowseViewModel::class.java)
+    }
+*/
+
+    private val viewModel by viewModels<BrowseViewModel> {
+        BrowseViewModelFactory((requireContext().applicationContext as DailyDoseApplication).trackRepository)
     }
 
     private var viewModelAdapter: TrackAdapter? = null

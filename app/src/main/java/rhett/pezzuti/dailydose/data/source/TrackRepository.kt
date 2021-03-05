@@ -8,7 +8,7 @@ import rhett.pezzuti.dailydose.data.Track
 // The database is the single source of truth!
 interface TrackRepository {
 
-    suspend fun getAllTracks(): LiveData<List<Track>>
+    fun getAllTracks(): LiveData<List<Track>>
 
     // When implemented concretely, calls updateTracksFromRemoteDataSource()
     suspend fun refreshTracks()
@@ -21,6 +21,7 @@ interface TrackRepository {
 
 
     suspend fun favoriteTrack(timestamp: Long)
+
     // Can also have a favoriteTracK(track: Track) if needed. same with unFavorite.
     suspend fun unFavoriteTrack(timestamp: Long)
 
@@ -30,4 +31,11 @@ interface TrackRepository {
 
     suspend fun getRecent(): List<Track>
     fun observeRecent(): LiveData<List<Track>>
+
+    suspend fun getTrack(timestamp: Long): Track
+
+    suspend fun updateTrack(track: Track)
+
+    suspend fun addTrack(track: Track)
+
 }

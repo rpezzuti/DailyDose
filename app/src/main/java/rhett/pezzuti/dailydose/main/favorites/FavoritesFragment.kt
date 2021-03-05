@@ -11,8 +11,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
+import rhett.pezzuti.dailydose.DailyDoseApplication
 import rhett.pezzuti.dailydose.R
 import rhett.pezzuti.dailydose.adapters.FabListener
 import rhett.pezzuti.dailydose.adapters.TrackListener
@@ -22,12 +24,14 @@ import rhett.pezzuti.dailydose.databinding.FragmentFavoritesBinding
 
 class FavoritesFragment : Fragment() {
 
-    private lateinit var viewModel: FavoritesViewModel
-    private lateinit var viewModelFactory: FavoritesViewModelFactory
     private lateinit var binding: FragmentFavoritesBinding
 
 
     private var viewModelAdapter: TrackAdapter? = null
+
+    private val viewModel by viewModels<FavoritesViewModel> {
+        FavoritesViewModelFactory((requireContext().applicationContext as DailyDoseApplication).trackRepository)
+    }
 
     // Putting the data into the adapter at the appropriate time.
     /**
@@ -38,7 +42,7 @@ class FavoritesFragment : Fragment() {
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.tracks.observe(viewLifecycleOwner, { tracks ->
+        viewModel.tracks2.observe(viewLifecycleOwner, { tracks ->
             tracks?.apply {
                 viewModelAdapter?.submitList(tracks)
             }
@@ -57,11 +61,6 @@ class FavoritesFragment : Fragment() {
             false
         )
 
-        val app = requireNotNull(this.activity).application
-        val trackDataSource = getInstance(app.applicationContext).trackDatabaseDao
-
-        viewModelFactory = FavoritesViewModelFactory(trackDataSource, app)
-        viewModel = ViewModelProvider(this, viewModelFactory).get(FavoritesViewModel::class.java)
         binding.favoritesViewModelXML = viewModel
         binding.lifecycleOwner = this
 

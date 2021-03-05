@@ -1,18 +1,16 @@
 package rhett.pezzuti.dailydose.main.browse
 
-import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import rhett.pezzuti.dailydose.data.source.local.TrackDatabaseDao
+import rhett.pezzuti.dailydose.data.source.TrackRepository
 
 class BrowseViewModelFactory(
-    private val trackDataSource: TrackDatabaseDao,
-    private val app: Application
+    private val trackRepository: TrackRepository
 ): ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if(modelClass.isAssignableFrom(BrowseViewModel::class.java)) {
-            return BrowseViewModel(trackDataSource, app) as T
+            return BrowseViewModel(trackRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

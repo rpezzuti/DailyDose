@@ -1,34 +1,41 @@
 package rhett.pezzuti.dailydose.main.home
 
-import android.app.Application
 import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import rhett.pezzuti.dailydose.data.source.DefaultTrackRepository
-import rhett.pezzuti.dailydose.data.source.local.TrackDatabaseDao
-import rhett.pezzuti.dailydose.data.source.local.getInstance
+import rhett.pezzuti.dailydose.data.Track
+import rhett.pezzuti.dailydose.data.source.TrackRepository
 import timber.log.Timber
+import kotlin.random.Random
 
 class HomeViewModel(
-    val trackDatabase: TrackDatabaseDao,
-    app: Application
-) : AndroidViewModel(app) {
+    private val trackRepository: TrackRepository
+) : ViewModel() {
 
     /** AndroidViewModel provides APPLICATION CONTEXT, while regular ViewModel() DOES NOT **/
+    // If we dont need the context, we can just use a regular viewModel
 
-    private val database = getInstance(getApplication())
-    private val trackRepository = DefaultTrackRepository(database)
 
     init {
         Timber.i("homeViewModel Init block")
 
+       /* // Proof that it works lol
         viewModelScope.launch {
-            // defaultTrackRepository.refreshTestTracks()
-        }
+            trackRepository.addTrack(Track(
+                4329323389662L,
+                "https://www.youtube.com",
+                "Title",
+                "Artist",
+                "dubstep",
+                "image",
+                true
+            ))
+        }*/
     }
 
-    val tracks = trackRepository.recentTracks
+
+    val tracks = trackRepository.observeRecent()
 
     fun addToFavorites(timestamp: Long) {
         viewModelScope.launch {
@@ -38,9 +45,9 @@ class HomeViewModel(
 
     private suspend fun favorite(timestamp: Long) {
         withContext(Dispatchers.IO) {
-            val track = trackDatabase.getTrack(timestamp)
+            val track = trackRepository.getTrack(timestamp)
             track.favorite = true
-            trackDatabase.update(track)
+            trackRepository.updateTrack(track)
         }
     }
 
@@ -52,9 +59,9 @@ class HomeViewModel(
 
     private suspend fun unFavorite(timestamp: Long) {
         withContext(Dispatchers.IO) {
-            val track = trackDatabase.getTrack(timestamp)
+            val track = trackRepository.getTrack(timestamp)
             track.favorite = false
-            trackDatabase.update(track)
+            trackRepository.updateTrack(track)
         }
     }
 
