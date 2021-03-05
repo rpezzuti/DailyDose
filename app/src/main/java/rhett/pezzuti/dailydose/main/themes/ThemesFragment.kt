@@ -58,6 +58,16 @@ class ThemesFragment : Fragment() {
             activity?.recreate()
         }
 
+        binding.theme3.setOnClickListener {
+
+            activity?.setTheme(R.style.Theme_DailyDose_Third)
+
+            val sharedPref = activity?.getPreferences(Context.MODE_PRIVATE)
+            sharedPref?.edit()?.putInt(getString(R.string.main_activity_theme_key), 2)?.apply()
+
+            activity?.recreate()
+        }
+
 
         (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.fragment_themes_title)
         return binding.root

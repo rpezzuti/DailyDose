@@ -46,4 +46,8 @@ class TrackRemoteDataSource() : TrackDataSource {
     override suspend fun favorite(trackId: Long) {
         TODO("Not yet implemented")
     }
+
+    override suspend fun unFavorite(trackId: Long) {
+        TODO("Not yet implemented")
+    }
 }
