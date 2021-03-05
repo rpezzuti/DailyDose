@@ -125,12 +125,12 @@ class BrowseViewModel(
 
                 for (i in 0 until jsonObjects.size) {
                     val temp = Track(
+                        jsonObjects[i]?.get("timestamp")!!.asLong,
                         jsonObjects[i]?.get("url").toString().removeSurrounding("\""),
                         jsonObjects[i]?.get("title").toString().removeSurrounding("\""),
                         jsonObjects[i]?.get("artist").toString().removeSurrounding("\""),
                         jsonObjects[i]?.get("genre").toString().removeSurrounding("\""),
                         jsonObjects[i]?.get("image").toString().removeSurrounding("\""),
-                        jsonObjects[i]?.get("timestamp")!!.asLong,
                         jsonObjects[i]?.get("favorite")!!.asBoolean
                     )
                     trackList.add(temp)
@@ -163,29 +163,29 @@ class BrowseViewModel(
 
 
     /** Database Functions **/
-    fun addToFavorites(url: String) {
+    fun addToFavorites(timestamp: Long) {
         viewModelScope.launch {
-            favorite(url)
+            favorite(timestamp)
         }
     }
 
-    private suspend fun favorite(url: String) {
+    private suspend fun favorite(timestamp: Long) {
         withContext(Dispatchers.IO) {
-            val track = trackDatabase.getTrack(url)
+            val track = trackDatabase.getTrack(timestamp)
             track.favorite = true
             trackDatabase.update(track)
         }
     }
 
-    fun removeFromFavorites(url: String) {
+    fun removeFromFavorites(timestamp: Long) {
         viewModelScope.launch {
-            unFavorite(url)
+            unFavorite(timestamp)
         }
     }
 
-    private suspend fun unFavorite(url: String) {
+    private suspend fun unFavorite(timestamp: Long) {
         withContext(Dispatchers.IO) {
-            val track = trackDatabase.getTrack(url)
+            val track = trackDatabase.getTrack(timestamp)
             track.favorite = false
             trackDatabase.update(track)
         }

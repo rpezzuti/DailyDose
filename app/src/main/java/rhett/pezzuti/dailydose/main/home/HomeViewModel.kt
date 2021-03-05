@@ -5,7 +5,6 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import rhett.pezzuti.dailydose.data.*
 import rhett.pezzuti.dailydose.data.source.DefaultTrackRepository
 import rhett.pezzuti.dailydose.data.source.local.TrackDatabaseDao
 import rhett.pezzuti.dailydose.data.source.local.getInstance
@@ -15,6 +14,8 @@ class HomeViewModel(
     val trackDatabase: TrackDatabaseDao,
     app: Application
 ) : AndroidViewModel(app) {
+
+    /** AndroidViewModel provides APPLICATION CONTEXT, while regular ViewModel() DOES NOT **/
 
     private val database = getInstance(getApplication())
     private val trackRepository = DefaultTrackRepository(database)
@@ -29,35 +30,29 @@ class HomeViewModel(
 
     val tracks = trackRepository.recentTracks
 
-    private suspend fun clear() {
-        withContext(Dispatchers.IO) {
-            trackDatabase.clearAll()
-        }
-    }
-
-    fun addToFavorites(url: String) {
+    fun addToFavorites(timestamp: Long) {
         viewModelScope.launch {
-            favorite(url)
+            favorite(timestamp)
         }
     }
 
-    private suspend fun favorite(url: String) {
+    private suspend fun favorite(timestamp: Long) {
         withContext(Dispatchers.IO) {
-            val track = trackDatabase.getTrack(url)
+            val track = trackDatabase.getTrack(timestamp)
             track.favorite = true
             trackDatabase.update(track)
         }
     }
 
-    fun removeFromFavorites(url: String) {
+    fun removeFromFavorites(timestamp: Long) {
         viewModelScope.launch {
-            unFavorite(url)
+            unFavorite(timestamp)
         }
     }
 
-    private suspend fun unFavorite(url: String) {
+    private suspend fun unFavorite(timestamp: Long) {
         withContext(Dispatchers.IO) {
-            val track = trackDatabase.getTrack(url)
+            val track = trackDatabase.getTrack(timestamp)
             track.favorite = false
             trackDatabase.update(track)
         }

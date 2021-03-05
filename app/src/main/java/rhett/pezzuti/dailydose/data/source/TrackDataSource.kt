@@ -10,4 +10,7 @@ interface TrackDataSource {
 
     suspend fun addTrack(track: Track)
     suspend fun getTrack(trackKey: Long)
+
+    suspend fun favorite(trackId: Long)
+    suspend fun unFavorite(trackId: Long)
 }

@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         when (sharedPref.getInt(getString(R.string.main_activity_theme_key), 0)) {
             0 -> setTheme(R.style.Theme_DailyDose)
             1 -> setTheme(R.style.Theme_DailyDose_Variant)
+            2 -> setTheme(R.style.Theme_DailyDose_Third)
             else -> setTheme(R.style.Theme_DailyDose)
         }
     }

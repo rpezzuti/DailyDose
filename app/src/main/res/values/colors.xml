@@ -29,6 +29,16 @@
     <color name="altSecondaryDarkColor">#c6a700</color>
     <color name="altPrimaryTextColor">#000000</color>
     <color name="altSecondaryTextColor">#000000</color>
+    
+    <!-- Third Brand Color. -->
+    <color name="thirdPrimaryColor">#66bb6a</color>
+    <color name="thirdPrimaryLightColor">#98ee99</color>
+    <color name="thirdPrimaryDarkColor">#338a3e</color>
+    <color name="thirdSecondaryColor">#4fc3f7</color>
+    <color name="thirdSecondaryLightColor">#8bf6ff</color>
+    <color name="thirdSecondaryDarkColor">#0093c4</color>
+    <color name="thirdPrimaryTextColor">#000000</color>
+    <color name="thirdSecondaryTextColor">#000000</color>
 
     <!--My Colors-->
     <color name="background">#5E8CE6</color>

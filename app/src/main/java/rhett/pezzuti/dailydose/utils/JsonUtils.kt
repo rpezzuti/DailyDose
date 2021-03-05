@@ -46,12 +46,12 @@ fun JsonObject.asDatabaseModel(): Array<DatabaseTrack> {
 
             for (i in 0 until jsonObjects.size) {
                 val temp = DatabaseTrack(
+                    jsonObjects[i]?.get("timestamp")!!.asLong,
                     jsonObjects[i]?.get("url").toString(),
                     jsonObjects[i]?.get("title").toString(),
                     jsonObjects[i]?.get("artist").toString(),
                     jsonObjects[i]?.get("genre").toString(),
                     jsonObjects[i]?.get("image").toString(),
-                    jsonObjects[i]?.get("timestamp")!!.asLong,
                     jsonObjects[i]?.get("favorite")!!.asBoolean
                 )
                 trackList.add(temp)
@@ -108,12 +108,12 @@ fun JsonObject?.asListOfTracks(): List<Track> {
 
             for (i in 0 until jsonObjects.size) {
                 val temp = Track(
+                    jsonObjects[i]?.get("timestamp")!!.asLong,
                     jsonObjects[i]?.get("url").toString().removeSurrounding("\""),
                     jsonObjects[i]?.get("title").toString().removeSurrounding("\""),
                     jsonObjects[i]?.get("artist").toString().removeSurrounding("\""),
                     jsonObjects[i]?.get("genre").toString().removeSurrounding("\""),
                     jsonObjects[i]?.get("image").toString().removeSurrounding("\""),
-                    jsonObjects[i]?.get("timestamp")!!.asLong,
                     jsonObjects[i]?.get("favorite")!!.asBoolean
                 )
                 trackList.add(temp)

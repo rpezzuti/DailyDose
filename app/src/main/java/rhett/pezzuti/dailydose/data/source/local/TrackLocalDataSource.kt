@@ -34,4 +34,21 @@ class TrackLocalDataSource(
             trackDao.insert(track.asDatabaseModel())
         }
     }
+
+    /** Track Manipulation **/
+    override suspend fun favorite(trackId: Long) {
+        withContext(ioDispatcher) {
+            val tempTrack = trackDao.getTrack(trackId)
+            tempTrack.favorite = true
+            trackDao.insert(tempTrack)
+        }
+    }
+
+    override suspend fun unFavorite(trackId: Long) {
+        withContext(ioDispatcher) {
+            val tempTrack = trackDao.getTrack(trackId)
+            tempTrack.favorite = false
+            trackDao.insert(tempTrack)
+        }
+    }
 }

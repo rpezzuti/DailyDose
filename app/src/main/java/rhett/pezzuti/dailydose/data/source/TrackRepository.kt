@@ -20,4 +20,14 @@ interface TrackRepository {
     suspend fun getTrackByGenre(genre: String): List<Track>
 
 
+    suspend fun favoriteTrack(timestamp: Long)
+    // Can also have a favoriteTracK(track: Track) if needed. same with unFavorite.
+    suspend fun unFavoriteTrack(timestamp: Long)
+
+    // This is the correct pattern. I guess
+    suspend fun getFavorites(): List<Track>
+    fun observeFavorites(): LiveData<List<Track>>
+
+    suspend fun getRecent(): List<Track>
+    fun observeRecent(): LiveData<List<Track>>
 }
