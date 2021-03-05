@@ -12,9 +12,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
-import kotlinx.android.synthetic.main.fragment_home.*
+import rhett.pezzuti.dailydose.DailyDoseApplication
 import rhett.pezzuti.dailydose.R
 import rhett.pezzuti.dailydose.adapters.FabListener
 import rhett.pezzuti.dailydose.adapters.TrackListener
@@ -41,6 +42,10 @@ class HomeFragment : Fragment() {
 
         ViewModelProvider(this, HomeViewModelFactory(trackDataSource, activity.application)).get(
             HomeViewModel::class.java)
+    }
+
+    private val newViewModel by viewModels<HomeViewModel> {
+        HomeViewModelFactory((requireContext().applicationContext as DailyDoseApplication).trackRepository)
     }
 
     private var viewModelAdapter: TrackAdapter? = null

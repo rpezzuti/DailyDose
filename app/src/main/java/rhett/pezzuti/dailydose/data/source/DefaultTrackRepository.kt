@@ -65,9 +65,24 @@ class DefaultTrackRepository(private val database: TrackDatabase) : TrackReposit
     }
 
 
-    override suspend fun favoriteTrack(trackId: Long) {
+    override suspend fun favoriteTrack(timestamp: Long) {
         // TODO THis tuff
-        // trackLocalDataSource.favorite(trackId)
+        // trackLocalDataSource.favorite(timestamp)
+    }
+
+    override suspend fun unFavoriteTrack(timestamp: Long) {
+        // TODO this should work
+        //trackLocalDataSource.unFavorite(timestamp)
+    }
+
+    override suspend fun getFavorites(): List<Track> {
+        // trackLocalDataSource.getFavorites()
+        return emptyList()
+    }
+
+    override fun observeFavorites(): LiveData<List<Track>> {
+        TODO("stuff")
+        // trackLocalDataSource.observeFavorites()
     }
 
     /** The other stuff i used previously. Pre DataSource stuff  **/
