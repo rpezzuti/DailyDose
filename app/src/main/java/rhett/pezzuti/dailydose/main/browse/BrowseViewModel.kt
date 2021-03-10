@@ -32,7 +32,7 @@ class BrowseViewModel(
                 _status.value = BrowseStatus.DONE
             }
         }
-        trackRepository.getAllTracks()
+        trackRepository.observeAllTracks()
     }
 
     val tracks : LiveData<List<Track>> = _tracks

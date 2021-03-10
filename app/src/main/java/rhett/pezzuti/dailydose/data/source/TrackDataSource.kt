@@ -5,24 +5,42 @@ import rhett.pezzuti.dailydose.data.Track
 
 interface TrackDataSource {
 
-    fun getTracks(): LiveData<List<Track>>
-    suspend fun addTracks(tracks: List<Track>)
+    /** Starts data request from Firebase. RemoteDataSource Only **/
+    suspend fun refreshTracks(): List<Track>
+
+    /** Get All / Add All **/
+    fun observeAllTracks(): LiveData<List<Track>>
+    suspend fun getAllTracks(): List<Track>
 
 
-    suspend fun addTrack(track: Track)
+
+    /** Recent Tracks **/
+    fun observeRecent(): LiveData<List<Track>>
+    suspend fun getRecent(): List<Track>
+
+
+
+    /** Favorite / Manipulation **/
+    fun observeFavorites(): LiveData<List<Track>>
+    suspend fun getFavorites(): List<Track>
+
+
+
+    /** Single Track Manipulation / Add All **/
+    fun observeTrack(trackKey: Long): LiveData<Track>
     suspend fun getTrack(trackKey: Long): Track
 
     suspend fun favorite(trackId: Long)
     suspend fun unFavorite(trackId: Long)
 
-    fun observeRecent(): LiveData<List<Track>>
-
     suspend fun updateTrack(track: Track)
 
-    fun observeFavorites(): LiveData<List<Track>>
+    suspend fun addTrack(track: Track)
+    suspend fun addAllTracks(tracks: List<Track>)
 
-    suspend fun refreshTracks(): List<Track>
 
+
+    /** Delete / Sync **/
     suspend fun deleteAllTracks()
     suspend fun syncTracks(remoteData: List<Track>)
 }

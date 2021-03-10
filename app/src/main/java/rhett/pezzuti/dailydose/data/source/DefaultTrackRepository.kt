@@ -1,17 +1,10 @@
 package rhett.pezzuti.dailydose.data.source
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import rhett.pezzuti.dailydose.data.DatabaseTrack
-import rhett.pezzuti.dailydose.data.asDomainModel
 import rhett.pezzuti.dailydose.data.Track
-import rhett.pezzuti.dailydose.data.source.local.TrackDatabase
-import rhett.pezzuti.dailydose.data.source.local.TrackDatabaseDao
-import rhett.pezzuti.dailydose.data.source.local.TrackLocalDataSource
-import rhett.pezzuti.dailydose.data.source.remote.TrackRemoteDataSource
 
 /** Concrete Implementation of loading tracks from the data sources into the offline cache. **/
 class DefaultTrackRepository(
@@ -19,6 +12,14 @@ class DefaultTrackRepository(
     private val trackRemoteDataSource: TrackDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : TrackRepository {
+
+    override suspend fun getAllTracks(): List<Track> {
+        val update = true
+        if (update) {
+            updateTracksFromRemoteDataSource()
+        }
+        return trackLocalDataSource.getAllTracks()
+    }
 
     override suspend fun refreshTracks() {
         /** One of the main methods **/
@@ -55,8 +56,8 @@ class DefaultTrackRepository(
     }
 
 
-    override fun getAllTracks(): LiveData<List<Track>> {
-       return trackLocalDataSource.getTracks()
+    override fun observeAllTracks(): LiveData<List<Track>> {
+       return trackLocalDataSource.observeAllTracks()
     }
 
     override suspend fun getTrackByGenre(genre: String): List<Track> {

@@ -123,6 +123,8 @@ dependencies {
     testImplementation "androidx.test.ext:junit-ktx:1.1.2"
     // Used for Rule
     testImplementation "androidx.arch.core:core-testing:2.1.0"
+    // Allows use of runBlockingTest
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.2.1"
 
     // Implementation Tests
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

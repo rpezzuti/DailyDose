@@ -8,7 +8,8 @@ import rhett.pezzuti.dailydose.data.Track
 // The database is the single source of truth!
 interface TrackRepository {
 
-    fun getAllTracks(): LiveData<List<Track>>
+    suspend fun getAllTracks(): List<Track>
+    fun observeAllTracks(): LiveData<List<Track>>
 
     /**
      *  When implemented concretely, calls updateTracksFromRemoteDataSource()

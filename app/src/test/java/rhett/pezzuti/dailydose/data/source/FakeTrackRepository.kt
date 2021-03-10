@@ -1,11 +1,16 @@
-package rhett.pezzuti.dailydose.main.data.source
+package rhett.pezzuti.dailydose.data.source
 
 import androidx.lifecycle.LiveData
 import rhett.pezzuti.dailydose.data.Track
 import rhett.pezzuti.dailydose.data.source.TrackRepository
 
 class FakeTrackRepository : TrackRepository {
-    override fun getAllTracks(): LiveData<List<Track>> {
+
+    override suspend fun getAllTracks(): List<Track> {
+        TODO("Not yet implemented")
+    }
+
+    override fun observeAllTracks(): LiveData<List<Track>> {
         TODO("Not yet implemented")
     }
 
