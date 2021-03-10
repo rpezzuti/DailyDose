@@ -64,7 +64,7 @@ class TrackLocalDataSource(
         withContext(ioDispatcher) {
             val tempTrack = trackDao.getTrack(trackId)
             tempTrack.favorite = true
-            trackDao.insert(tempTrack)
+            trackDao.update(tempTrack)
         }
     }
 
@@ -72,7 +72,7 @@ class TrackLocalDataSource(
         withContext(ioDispatcher) {
             val tempTrack = trackDao.getTrack(trackId)
             tempTrack.favorite = false
-            trackDao.insert(tempTrack)
+            trackDao.update(tempTrack)
         }
     }
 

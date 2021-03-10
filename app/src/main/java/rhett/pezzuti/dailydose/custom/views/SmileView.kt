@@ -74,6 +74,7 @@ class SmileView @JvmOverloads constructor(
     }
 
     // Width and height of the view defined by XML
+    // Called before onDraw()
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         radius = (min(width, height) / 2.0 * 0.8).toFloat()
         eyeRadius = (min(width, height) / 15.0f)

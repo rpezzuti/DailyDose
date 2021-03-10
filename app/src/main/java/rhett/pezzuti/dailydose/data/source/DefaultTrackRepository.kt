@@ -65,13 +65,11 @@ class DefaultTrackRepository(
 
 
     override suspend fun favoriteTrack(timestamp: Long) {
-        // TODO THis tuff
-        // trackLocalDataSource.favorite(timestamp)
+        trackLocalDataSource.favorite(timestamp)
     }
 
     override suspend fun unFavoriteTrack(timestamp: Long) {
-        // TODO this should work
-        //trackLocalDataSource.unFavorite(timestamp)
+        trackLocalDataSource.unFavorite(timestamp)
     }
 
     override suspend fun getFavorites(): List<Track> {

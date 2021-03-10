@@ -14,13 +14,25 @@ import rhett.pezzuti.dailydose.network.BrowseFirebaseMoshi
 import rhett.pezzuti.dailydose.utils.asListOfTracks
 import timber.log.Timber
 import java.util.*
+import kotlin.collections.LinkedHashMap
 
 object TrackRemoteDataSource : TrackDataSource {
+
+    // TODO want to have an actual piece of data here in the source.
+
+    val REMOTE_DATA = LinkedHashMap<Long, Track>()
 
     override suspend fun refreshTracks(): List<Track> {
 
         // var data = listOf<Track>()
-        return BrowseFirebaseGson.retrofitService.getAllTracks().awaitResponse().body().asListOfTracks()
+//        return BrowseFirebaseGson.retrofitService.getAllTracks().awaitResponse().body().asListOfTracks()
+
+        val data = BrowseFirebaseGson.retrofitService.getAllTracks().awaitResponse().body().asListOfTracks()
+
+        data.forEach { track ->
+            REMOTE_DATA[track.timestamp] = track
+        }
+        return data
 
        /* try {
             BrowseFirebaseGson.retrofitService.getAllTracks().enqueue(object : Callback<JsonObject> {
@@ -75,7 +87,7 @@ object TrackRemoteDataSource : TrackDataSource {
     }
 
     override suspend fun deleteAllTracks() {
-        TODO("Not yet implemented")
+        REMOTE_DATA.clear()
     }
 
     override suspend fun syncTracks(remoteData: List<Track>) {

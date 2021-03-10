@@ -10,7 +10,10 @@ interface TrackRepository {
 
     fun getAllTracks(): LiveData<List<Track>>
 
-    // When implemented concretely, calls updateTracksFromRemoteDataSource()
+    /**
+     *  When implemented concretely, calls updateTracksFromRemoteDataSource()
+     *  Main access point for fetching data from network.
+     */
     suspend fun refreshTracks()
 
     // This would be next, to actually give the data to the view model? i believe
@@ -20,22 +23,37 @@ interface TrackRepository {
     suspend fun getTrackByGenre(genre: String): List<Track>
 
 
+    /**
+     * Favorite Track Manipulation
+     */
     suspend fun favoriteTrack(timestamp: Long)
-
-    // Can also have a favoriteTracK(track: Track) if needed. same with unFavorite.
     suspend fun unFavoriteTrack(timestamp: Long)
 
-    // This is the correct pattern. I guess
+
+
+    /**
+     *  Paired methods for getting favorites and recent
+     *  Only LD version in use so far
+     */
     suspend fun getFavorites(): List<Track>
     fun observeFavorites(): LiveData<List<Track>>
 
     suspend fun getRecent(): List<Track>
     fun observeRecent(): LiveData<List<Track>>
 
-    suspend fun getTrack(timestamp: Long): Track
 
+
+
+    /**
+     *  Only ones I really used. Get -> Update pattern for favorite
+     */
+    suspend fun getTrack(timestamp: Long): Track
     suspend fun updateTrack(track: Track)
 
+
+
+
+    /** Generic Add **/
     suspend fun addTrack(track: Track)
 
 }
