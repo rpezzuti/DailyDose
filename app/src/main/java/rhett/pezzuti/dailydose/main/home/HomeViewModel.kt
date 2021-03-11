@@ -19,19 +19,6 @@ class HomeViewModel(
 
     init {
         Timber.i("homeViewModel Init block")
-
-       /* // Proof that it works lol
-        viewModelScope.launch {
-            trackRepository.addTrack(Track(
-                4329323389662L,
-                "https://www.youtube.com",
-                "Title",
-                "Artist",
-                "dubstep",
-                "image",
-                true
-            ))
-        }*/
     }
 
 
@@ -45,9 +32,7 @@ class HomeViewModel(
 
     private suspend fun favorite(timestamp: Long) {
         withContext(Dispatchers.IO) {
-            val track = trackRepository.getTrack(timestamp)
-            track.favorite = true
-            trackRepository.updateTrack(track)
+            trackRepository.favoriteTrack(timestamp)
         }
     }
 
@@ -59,9 +44,7 @@ class HomeViewModel(
 
     private suspend fun unFavorite(timestamp: Long) {
         withContext(Dispatchers.IO) {
-            val track = trackRepository.getTrack(timestamp)
-            track.favorite = false
-            trackRepository.updateTrack(track)
+            trackRepository.unFavoriteTrack(timestamp)
         }
     }
 

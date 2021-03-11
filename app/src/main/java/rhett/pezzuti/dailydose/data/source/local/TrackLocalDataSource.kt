@@ -15,36 +15,76 @@ class TrackLocalDataSource(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : TrackDataSource {
 
-    /** Multiple Tracks **/
-    override fun getTracks(): LiveData<List<Track>> {
-        return trackDao.getAllTracks().map {
+    /** Unused in Local **/
+    override suspend fun refreshTracks(): List<Track> {
+        TODO("Not yet implemented")
+    }
+
+
+
+    /** Query All **/
+    override fun observeAllTracks(): LiveData<List<Track>> {
+        return trackDao.observeAllTracks().map {
             it.asDomainModel()
         }
     }
-
-    override suspend fun addTracks(tracks: List<Track>) {
-        withContext(ioDispatcher) {
-            trackDao.insertAll(*tracks.asDatabaseModel())
-        }
+    override suspend fun getAllTracks(): List<Track> {
+        return trackDao.getAllTracks().asDomainModel()
     }
 
-    /** Recent Tracks **/
+
+
+
+    /** Query Recent **/
     override fun observeRecent(): LiveData<List<Track>>  {
-        return trackDao.getRecentTracks().map {
+        return trackDao.observeRecent().map {
             it.asDomainModel()
         }
     }
 
-    /** Favorites **/
+    override suspend fun getRecent(): List<Track> {
+        return trackDao.getRecent().asDomainModel()
+    }
+
+
+
+
+
+    /** Query Favorites **/
     override fun observeFavorites(): LiveData<List<Track>> {
-        return trackDao.getFavorites(true).map {
+        return trackDao.observeFavorites(true).map {
             it.asDomainModel()
         }
     }
+
+    override suspend fun getFavorites(): List<Track> {
+        return trackDao.getFavorites(true).asDomainModel()
+    }
+
+
+    /** Query Genre **/
+    override fun observeGenre(genre: String): LiveData<List<Track>> {
+        return trackDao.observeGenre(genre).map {
+            it.asDomainModel()
+        }
+    }
+
+    override suspend fun getGenre(genre: String): List<Track> {
+        return trackDao.getGenre(genre).asDomainModel()
+    }
+
+
+
 
     /** Single Tracks **/
     override suspend fun getTrack(trackKey: Long): Track {
         return trackDao.getTrack(trackKey).asDomainModel()
+    }
+
+    override fun observeTrack(trackKey: Long): LiveData<Track> {
+        return trackDao.observeTrack(trackKey).map {
+            it.asDomainModel()
+        }
     }
 
     override suspend fun updateTrack(track: Track) {
@@ -64,7 +104,7 @@ class TrackLocalDataSource(
         withContext(ioDispatcher) {
             val tempTrack = trackDao.getTrack(trackId)
             tempTrack.favorite = true
-            trackDao.insert(tempTrack)
+            trackDao.update(tempTrack)
         }
     }
 
@@ -72,9 +112,20 @@ class TrackLocalDataSource(
         withContext(ioDispatcher) {
             val tempTrack = trackDao.getTrack(trackId)
             tempTrack.favorite = false
-            trackDao.insert(tempTrack)
+            trackDao.update(tempTrack)
         }
     }
+
+
+
+
+    override suspend fun addAllTracks(tracks: List<Track>) {
+        withContext(ioDispatcher) {
+            trackDao.insertAll(*tracks.asDatabaseModel())
+        }
+    }
+
+
 
     override suspend fun deleteAllTracks() {
         withContext(ioDispatcher) {
@@ -93,10 +144,5 @@ class TrackLocalDataSource(
                 trackDao.update(track)
             }
         }
-    }
-
-    /** Unused in Local **/
-    override suspend fun refreshTracks(): List<Track> {
-        TODO("Not yet implemented")
     }
 }

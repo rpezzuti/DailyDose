@@ -1,7 +1,9 @@
 package rhett.pezzuti.dailydose
 
 import android.content.Context
+import androidx.annotation.VisibleForTesting
 import androidx.room.Room
+import kotlinx.coroutines.runBlocking
 import rhett.pezzuti.dailydose.data.Track
 import rhett.pezzuti.dailydose.data.source.DefaultTrackRepository
 import rhett.pezzuti.dailydose.data.source.TrackRepository
@@ -11,12 +13,20 @@ import rhett.pezzuti.dailydose.data.source.remote.TrackRemoteDataSource
 
 object ServiceLocator {
 
+    private val lock = Any()
+
     private var database: TrackDatabase? = null
-    @Volatile
+    @Volatile           // Since it could be used on multiple threads.
     var trackRepository: TrackRepository? = null
+        @VisibleForTesting set                      // In normal code, we dont need repo's setter, but for testing we do.
+
 
     fun provideTrackRepository(context: Context): TrackRepository {
-        synchronized(this) {
+
+        // Return repository, or create one if null.
+        // ?: is a null check
+
+        synchronized(lock) {
             return trackRepository ?: createTrackRepository(context)
         }
     }
@@ -45,5 +55,20 @@ object ServiceLocator {
         return result
     }
 
+
+    @VisibleForTesting
+    fun resetDatabase() {
+        synchronized(lock) {
+            runBlocking {
+                TrackRemoteDataSource.deleteAllTracks()
+            }
+            database?.apply {
+                clearAllTables()
+                close()
+            }
+            database = null
+            trackRepository = null
+        }
+    }
 }
 

@@ -1,26 +1,27 @@
 package rhett.pezzuti.dailydose.data.source.remote
 
 import androidx.lifecycle.LiveData
-import com.google.gson.JsonObject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import retrofit2.awaitResponse
 import rhett.pezzuti.dailydose.data.Track
 import rhett.pezzuti.dailydose.data.source.TrackDataSource
-import rhett.pezzuti.dailydose.data.source.local.TrackLocalDataSource
 import rhett.pezzuti.dailydose.network.BrowseFirebaseGson
-import rhett.pezzuti.dailydose.network.BrowseFirebaseMoshi
 import rhett.pezzuti.dailydose.utils.asListOfTracks
-import timber.log.Timber
-import java.util.*
+import kotlin.collections.LinkedHashMap
 
 object TrackRemoteDataSource : TrackDataSource {
 
+    // TODO want to have an actual piece of data here in the source.
+
+    private var TRACK_REMOTE_DATA = LinkedHashMap<Long, Track>()
+
     override suspend fun refreshTracks(): List<Track> {
 
-        // var data = listOf<Track>()
         val data = BrowseFirebaseGson.retrofitService.getAllTracks().awaitResponse().body().asListOfTracks()
+
+        data.forEach { track ->
+            TRACK_REMOTE_DATA[track.timestamp] = track
+        }
+        return data
 
        /* try {
             BrowseFirebaseGson.retrofitService.getAllTracks().enqueue(object : Callback<JsonObject> {
@@ -36,15 +37,21 @@ object TrackRemoteDataSource : TrackDataSource {
         } catch (e: Exception) {
             Timber.i(e)
         }*/
-
-        return data
     }
 
-    override fun getTracks(): LiveData<List<Track>> {
+    override fun observeAllTracks(): LiveData<List<Track>> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun addTracks(tracks: List<Track>) {
+    override suspend fun addAllTracks(tracks: List<Track>) {
+        TODO("Not yet implemented")
+    }
+
+    override fun observeGenre(genre: String): LiveData<List<Track>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getGenre(genre: String): List<Track> {
         TODO("Not yet implemented")
     }
 
@@ -77,10 +84,26 @@ object TrackRemoteDataSource : TrackDataSource {
     }
 
     override suspend fun deleteAllTracks() {
-        TODO("Not yet implemented")
+        TRACK_REMOTE_DATA.clear()
     }
 
     override suspend fun syncTracks(remoteData: List<Track>) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getAllTracks(): List<Track> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getRecent(): List<Track> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getFavorites(): List<Track> {
+        TODO("Not yet implemented")
+    }
+
+    override fun observeTrack(trackKey: Long): LiveData<Track> {
         TODO("Not yet implemented")
     }
 }
