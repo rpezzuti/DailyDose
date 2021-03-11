@@ -25,6 +25,10 @@ interface TrackDataSource {
     suspend fun getFavorites(): List<Track>
 
 
+    /** Genre **/
+    fun observeGenre(genre: String): LiveData<List<Track>>
+    suspend fun getGenre(genre: String): List<Track>
+
 
     /** Single Track Manipulation / Add All **/
     fun observeTrack(trackKey: Long): LiveData<Track>

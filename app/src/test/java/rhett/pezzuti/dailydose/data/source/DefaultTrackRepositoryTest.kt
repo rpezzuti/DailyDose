@@ -1,7 +1,8 @@
 package rhett.pezzuti.dailydose.data.source
 
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runBlockingTest
 import org.hamcrest.core.IsEqual
 import org.junit.Assert.*
 import org.junit.Before
@@ -42,6 +43,7 @@ class DefaultTrackRepositoryTest {
     private val localTracks = listOf(track1, track2).sortedBy { it.timestamp }
     private val remoteTracks = listOf(track2, track3).sortedBy { it.timestamp }
 
+    /** FakeDataSource is used for both dataSources, since the repository is the focus **/
     private lateinit var tracksLocalDataSource: FakeDataSource
     private lateinit var tracksRemoteDataSource: FakeDataSource
 
@@ -59,13 +61,42 @@ class DefaultTrackRepositoryTest {
         )
     }
 
+    @ExperimentalCoroutinesApi
     @Test
-    fun getTracks_requestAllTracksFromLocalDataSource() = runBlocking {
+    fun getTracks_requestAllTracksFromLocalDataSource() = runBlockingTest {
         // repo.getAllTracks() just returns from the local data source.
         val data = trackRepository.getAllTracks()
 
         assertThat(data, IsEqual(localTracks))
 
+    }
+
+    @ExperimentalCoroutinesApi
+    @Test
+    fun getTracks_requestOneTrackFromLocalDataSource() = runBlockingTest {
+        val data1 = trackRepository.getTrack(123456L)
+        assertThat(data1, IsEqual(track1))
+
+        val data2 = trackRepository.getTrack(1234567L)
+        assertThat(data2, IsEqual(track2))
+
+        val data3 = trackRepository.getTrack(12345678L)
+        assertThat(data3, IsEqual(track3))
+    }
+
+    @ExperimentalCoroutinesApi
+    @Test
+    fun getTracks_requestFavoritesFromLocalDataSource() = runBlockingTest {
+        // getFavorites returns from localDataSource
+        val favorites = trackRepository.getFavorites()
+        assertThat(favorites, IsEqual(emptyList()))
+    }
+
+    @ExperimentalCoroutinesApi
+    @Test
+    fun getTracks_requestFavoritesFromRemoteDataSource() = runBlockingTest {
+        val favorites = trackRepository.getFavorites()
+        assertThat(favorites, IsEqual(track3))
     }
 
 }

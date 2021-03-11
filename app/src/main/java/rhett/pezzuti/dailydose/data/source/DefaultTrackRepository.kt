@@ -13,14 +13,6 @@ class DefaultTrackRepository(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : TrackRepository {
 
-    override suspend fun getAllTracks(): List<Track> {
-        val update = true
-        if (update) {
-            updateTracksFromRemoteDataSource()
-        }
-        return trackLocalDataSource.getAllTracks()
-    }
-
     override suspend fun refreshTracks() {
         /** One of the main methods **/
         // This function starts the process of refreshing the data from the network,
@@ -56,15 +48,31 @@ class DefaultTrackRepository(
     }
 
 
+    override suspend fun getAllTracks(): List<Track> {
+        val update = true
+        if (update) {
+            updateTracksFromRemoteDataSource()
+        }
+        return trackLocalDataSource.getAllTracks()
+    }
+
+
     override fun observeAllTracks(): LiveData<List<Track>> {
        return trackLocalDataSource.observeAllTracks()
     }
 
-    override suspend fun getTrackByGenre(genre: String): List<Track> {
-        TODO("Not yet implemented")
+
+    /** Tracks by Genre **/
+    override fun observeGenre(genre: String): LiveData<List<Track>> {
+        return trackLocalDataSource.observeGenre(genre)
+    }
+
+    override suspend fun getGenre(genre: String): List<Track> {
+        return trackLocalDataSource.getGenre(genre)
     }
 
 
+    /** Favorites **/
     override suspend fun favoriteTrack(timestamp: Long) {
         trackLocalDataSource.favorite(timestamp)
     }
@@ -74,8 +82,7 @@ class DefaultTrackRepository(
     }
 
     override suspend fun getFavorites(): List<Track> {
-        // trackLocalDataSource.getFavorites()
-        return emptyList()
+        return trackLocalDataSource.getFavorites()
     }
 
     override fun observeFavorites(): LiveData<List<Track>> {

@@ -12,14 +12,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.chip.Chip
 import rhett.pezzuti.dailydose.DailyDoseApplication
 import rhett.pezzuti.dailydose.R
 import rhett.pezzuti.dailydose.adapters.FabListener
 import rhett.pezzuti.dailydose.adapters.TrackAdapter
 import rhett.pezzuti.dailydose.adapters.TrackListener
-import rhett.pezzuti.dailydose.data.source.local.getInstance
 import rhett.pezzuti.dailydose.databinding.FragmentBrowseBinding
 import timber.log.Timber
 import java.lang.Exception
@@ -28,18 +26,6 @@ import java.lang.Exception
 class BrowseFragment : Fragment() {
 
     private lateinit var binding: FragmentBrowseBinding
-
-/*
-    private val viewModel2: BrowseViewModel by lazy {
-        val activity = requireNotNull(this.activity) {
-            "You can only access the viewModel after onViewCreated()"
-        }
-
-        val trackDataSource = getInstance(activity.applicationContext).trackDatabaseDao
-        ViewModelProvider(this, BrowseViewModelFactory(trackDataSource, activity.application)).get(
-            BrowseViewModel::class.java)
-    }
-*/
 
     private val viewModel by viewModels<BrowseViewModel> {
         BrowseViewModelFactory((requireContext().applicationContext as DailyDoseApplication).trackRepository)
@@ -102,7 +88,8 @@ class BrowseFragment : Fragment() {
         })
         binding.browseRecyclerView.adapter = viewModelAdapter
 
-        makeChips()
+        /** Chip filtering doesn't work yet sadge **/
+        // setupChips()
 
 
 
@@ -112,9 +99,27 @@ class BrowseFragment : Fragment() {
 
 
     private
-    fun makeChips() {
+    fun setupChips() {
         // Dummy List Data
-        val dummyList = listOf("Dubstep", "Melodic Dubstep", "Your Mum")
+        val genreList = listOf(
+            getString(R.string.chip_dubstep),
+            getString(R.string.chip_melodic_dubstep),
+            getString(R.string.chip_lo_fi),
+            getString(R.string.chip_chillstep),
+            getString(R.string.chip_garage),
+            getString(R.string.chip_piano_ambient),
+            getString(R.string.chip_experimental_bass),
+            getString(R.string.chip_liquid_dnb),
+            getString(R.string.chip_ambient_bass),
+
+            getString(R.string.chip_metalcore),
+            getString(R.string.chip_acoustic_ballads),
+            getString(R.string.chip_instrumental_rock),
+            getString(R.string.chip_death_metal),
+            getString(R.string.chip_live_performances)
+        )
+
+
 
         // Make a new Chip Group
         val chipGroup = binding.browseChipGroup
@@ -123,10 +128,13 @@ class BrowseFragment : Fragment() {
         val inflater = LayoutInflater.from(chipGroup.context)
 
         // Iterate over the list and make a new chip child for each string (genre) in the list
-        val children = dummyList.map { genre ->
+        val children = genreList.map { genre ->
             val chip = inflater.inflate(R.layout.genre_chip, chipGroup, false) as Chip
             chip.text = genre
             chip.tag = genre
+            chip.setOnCheckedChangeListener { button, isChecked ->
+                viewModel.getGenre(button.tag as String)
+            }
             chip
         }
 

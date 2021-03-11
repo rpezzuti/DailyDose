@@ -47,6 +47,14 @@ object TrackRemoteDataSource : TrackDataSource {
         TODO("Not yet implemented")
     }
 
+    override fun observeGenre(genre: String): LiveData<List<Track>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getGenre(genre: String): List<Track> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun addTrack(track: Track) {
         TODO("Not yet implemented")
     }

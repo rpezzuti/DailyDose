@@ -41,6 +41,7 @@ class TrackLocalDataSource(
             it.asDomainModel()
         }
     }
+
     override suspend fun getRecent(): List<Track> {
         return trackDao.getRecent().asDomainModel()
     }
@@ -61,7 +62,16 @@ class TrackLocalDataSource(
     }
 
 
+    /** Query Genre **/
+    override fun observeGenre(genre: String): LiveData<List<Track>> {
+        return trackDao.observeGenre(genre).map {
+            it.asDomainModel()
+        }
+    }
 
+    override suspend fun getGenre(genre: String): List<Track> {
+        return trackDao.getGenre(genre).asDomainModel()
+    }
 
 
 

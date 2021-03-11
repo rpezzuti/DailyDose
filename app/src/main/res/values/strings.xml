@@ -148,6 +148,23 @@
     <string name="genre_death_metal">Genre: Death Metal</string>
     <string name="genre_live_performances">Genre: Live Performance</string>
 
+    <!-- Chips -->
+    <string name="chip_dubstep">Dubstep</string>
+    <string name="chip_melodic_dubstep">Melodic Dubstep</string>
+    <string name="chip_lo_fi">Lo-Fi</string>
+    <string name="chip_chillstep">Chillstep</string>
+    <string name="chip_garage">Garage</string>
+    <string name="chip_piano_ambient">Piano / Ambient</string>
+    <string name="chip_experimental_bass">Experimental Bass</string>
+    <string name="chip_liquid_dnb">Liquid DnB</string>
+    <string name="chip_ambient_bass">mbient Bass</string>
+
+    <string name="chip_metalcore">Metalcore</string>
+    <string name="chip_acoustic_ballads">Acoustic / Ballads</string>
+    <string name="chip_instrumental_rock">Instrumental Rock</string>
+    <string name="chip_death_metal">Death Metal</string>
+    <string name="chip_live_performances">Live Performances</string>
+
 
     <!-- TOPICS *** TOPICS *** TOPICS DON'T TOUCH -->
     <string name="TOPIC_TEST">Test</string>

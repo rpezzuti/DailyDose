@@ -2,8 +2,9 @@ package rhett.pezzuti.dailydose.data.source
 
 import androidx.lifecycle.LiveData
 import rhett.pezzuti.dailydose.data.Track
-
 class FakeDataSource(var tracks: MutableList<Track> = mutableListOf()) : TrackDataSource {
+
+    private val linkedTracks = LinkedHashMap<Long, Track>()
 
     override suspend fun getAllTracks(): List<Track> {
         return tracks.toList()
@@ -66,7 +67,15 @@ class FakeDataSource(var tracks: MutableList<Track> = mutableListOf()) : TrackDa
     }
 
     override suspend fun getFavorites(): List<Track> {
-        TODO("Not yet implemented")
+        val favorites = mutableListOf<Track>()
+
+        tracks.forEach { track ->
+            if (track.favorite) {
+                favorites.add(track)
+            }
+        }
+
+        return favorites
     }
 
     override fun observeTrack(trackKey: Long): LiveData<Track> {

@@ -35,6 +35,19 @@ interface TrackDatabaseDao {
     fun getFavorites(favorite: Boolean): List<DatabaseTrack>
 
 
+
+
+    /** Tracks by Genre **/
+    @Query ("SELECT * FROM track_table WHERE track_genre = :genre")
+    fun observeGenre(genre: String): LiveData<List<DatabaseTrack>>
+
+    @Query ("SELECT * FROM track_table WHERE track_genre = :genre")
+    fun getGenre(genre: String): List<DatabaseTrack>
+
+
+
+
+
     /** Single Tracks **/
     @Query("SELECT * FROM track_table WHERE track_timestamp = :trackId")
     fun observeTrack(trackId: Long): LiveData<DatabaseTrack>
