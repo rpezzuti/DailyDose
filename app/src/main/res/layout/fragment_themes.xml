@@ -25,6 +25,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <!-- Primary Style -->
         <RelativeLayout
             android:id="@+id/theme_1"
             android:layout_width="wrap_content"
@@ -67,6 +68,7 @@
                 android:background="@color/secondaryLightColor" />
         </RelativeLayout>
 
+        <!-- Secondary Style -->
         <RelativeLayout
             android:id="@+id/theme_2"
             android:layout_width="wrap_content"
@@ -108,6 +110,7 @@
                 android:background="@color/altSecondaryLightColor" />
         </RelativeLayout>
 
+        <!-- Alternate Style -->
         <RelativeLayout
             android:id="@+id/theme_3"
             android:layout_width="wrap_content"
@@ -148,6 +151,15 @@
                 android:layout_below="@id/img_primary_dark_3"
                 android:background="@color/thirdSecondaryLightColor" />
         </RelativeLayout>
+
+        <rhett.pezzuti.dailydose.custom.views.ThemeView
+            android:id="@+id/theme_view_1"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="@dimen/margin_small"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

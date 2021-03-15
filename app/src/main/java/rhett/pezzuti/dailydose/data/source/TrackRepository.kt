@@ -1,6 +1,8 @@
 package rhett.pezzuti.dailydose.data.source
 
 import androidx.lifecycle.LiveData
+import androidx.paging.PagingData
+import kotlinx.coroutines.flow.Flow
 import rhett.pezzuti.dailydose.data.DatabaseTrack
 import rhett.pezzuti.dailydose.data.Track
 
@@ -58,4 +60,5 @@ interface TrackRepository {
     /** Generic Add **/
     suspend fun addTrack(track: Track)
 
+    fun getPagingResults(): Flow<PagingData<Track>>
 }

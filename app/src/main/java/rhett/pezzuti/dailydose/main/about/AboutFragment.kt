@@ -1,4 +1,4 @@
-package rhett.pezzuti.dailydose.main
+package rhett.pezzuti.dailydose.main.about
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,7 +11,6 @@ import androidx.databinding.DataBindingUtil
 import rhett.pezzuti.dailydose.R
 import rhett.pezzuti.dailydose.databinding.FragmentAboutBinding
 import rhett.pezzuti.dailydose.minigame.MinigameActivity
-import rhett.pezzuti.dailydose.splash.SplashActivity
 
 
 class AboutFragment : Fragment() {

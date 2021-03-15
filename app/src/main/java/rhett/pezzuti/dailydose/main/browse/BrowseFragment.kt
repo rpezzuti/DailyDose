@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.chip.Chip
 import rhett.pezzuti.dailydose.DailyDoseApplication
 import rhett.pezzuti.dailydose.R
@@ -56,8 +57,23 @@ class BrowseFragment : Fragment() {
         binding.browseViewModelXML = viewModel
         binding.lifecycleOwner = this
 
+        setupAdapter()
+        val decoration = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
+        binding.browseRecyclerView.addItemDecoration(decoration)
+        binding.browseRecyclerView.adapter = viewModelAdapter
 
-        /** Recycler View OnClick function **/
+        /** Chip filtering doesn't work yet sadge **/
+        // setupChips()
+
+
+
+        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.fragment_browse_title)
+        return binding.root
+    }
+
+    private
+    fun setupAdapter() {
+        /** Recycler View OnClick functionality **/
         viewModelAdapter = TrackAdapter( TrackListener { url ->
             val contentIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             val contentPendingIntent = PendingIntent.getActivity(
@@ -86,15 +102,6 @@ class BrowseFragment : Fragment() {
                     .show()
             }
         })
-        binding.browseRecyclerView.adapter = viewModelAdapter
-
-        /** Chip filtering doesn't work yet sadge **/
-        // setupChips()
-
-
-
-        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.fragment_browse_title)
-        return binding.root
     }
 
 

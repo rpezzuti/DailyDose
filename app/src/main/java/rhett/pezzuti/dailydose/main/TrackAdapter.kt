@@ -1,45 +1,25 @@
 package rhett.pezzuti.dailydose.adapters
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import rhett.pezzuti.dailydose.data.Track
-import rhett.pezzuti.dailydose.databinding.TrackListItemBinding
+import rhett.pezzuti.dailydose.main.TrackViewHolder
 
-class TrackAdapter(val clickListener: TrackListener, val fabListener: FabListener) : ListAdapter<Track, ViewHolder>(TrackDiffCallback()) {
+class TrackAdapter(val clickListener: TrackListener, val fabListener: FabListener) : ListAdapter<Track, TrackViewHolder>(TrackDiffCallback()) {
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
         val item = getItem(position)
         holder.bind(item, clickListener, fabListener)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder.from(parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
+        return TrackViewHolder.from(parent)
     }
 
 }
 
-class ViewHolder private constructor(val binding: TrackListItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(item: Track, clickListener: TrackListener, fabListener: FabListener) {
-
-        binding.track = item
-        binding.clickListener = clickListener
-        binding.fabListener = fabListener
-        binding.executePendingBindings()
-    }
-
-    companion object {
-        fun from(parent: ViewGroup): ViewHolder {
-            /** we're inflating a new view and returning it inside of a holder **/
-            val layoutInflater = LayoutInflater.from(parent.context)
-            val binding = TrackListItemBinding.inflate(layoutInflater, parent, false)
-            return ViewHolder(binding)
-        }
-    }
-}
 
 class TrackDiffCallback : DiffUtil.ItemCallback<Track>() {
 

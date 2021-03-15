@@ -1,4 +1,4 @@
-package rhett.pezzuti.dailydose.main
+package rhett.pezzuti.dailydose.main.info
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

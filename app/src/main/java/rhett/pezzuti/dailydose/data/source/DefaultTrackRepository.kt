@@ -62,11 +62,17 @@ class DefaultTrackRepository(
     }
 
 
-    /** Tracks by Genre **/
+    /**
+     * Returns LiveData<List<Track>> from LocalDataSource
+     */
     override fun observeGenre(genre: String): LiveData<List<Track>> {
         return trackLocalDataSource.observeGenre(genre)
     }
 
+
+    /**
+     * Returns List<Track> from LocalDataSource
+     */
     override suspend fun getGenre(genre: String): List<Track> {
         return trackLocalDataSource.getGenre(genre)
     }

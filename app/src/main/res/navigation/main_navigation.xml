@@ -66,7 +66,7 @@
     </fragment>
     <fragment
         android:id="@+id/infoFragment"
-        android:name="rhett.pezzuti.dailydose.main.InfoFragment"
+        android:name="rhett.pezzuti.dailydose.main.info.InfoFragment"
         android:label="InfoFragment"
         tools:layout="@layout/fragment_info">
         <action
@@ -75,7 +75,7 @@
     </fragment>
     <fragment
         android:id="@+id/aboutFragment"
-        android:name="rhett.pezzuti.dailydose.main.AboutFragment"
+        android:name="rhett.pezzuti.dailydose.main.about.AboutFragment"
         android:label="AboutFragment"
         tools:layout="@layout/fragment_about">
         <action

@@ -2,21 +2,20 @@
     <string name="app_name">Daily Dose</string>
 
     <!--    Menu Paragraphs    -->
-    <string name="about_intro_paragraph">Hello Peons. Welcome to my music sharing app. The purpose
-        of this app is to allow me to send music directly to your phone, in the form of a push notification.
+    <string name="about_intro_paragraph">Hello! Welcome to my music sharing app. The purpose
+        of this app is to allow me to send music directly to your phone as a notification.
         I’ve had many people over the years ask me to send them music, and this app will not only
-        give you access to part of my library, but let me send you stuff as I find them.
+        give you access to part of my library, but let me send you songs as I find them.
     </string>
 
-    <string name="about_text_description">The way this works, is you go into this app’s settings,
-        or preferences, and you tell me what genres of music you want to receive. Then, when I
-        upload a song of that nature, you’ll receive a notification. Just tap on it, and it
-        will take you to a streaming service where you can listen to it.
+    <string name="about_text_description">All you need to do is go to preferences and
+        tell me what genres you want to receive. You’ll get a notification when I upload a new song,
+        and tapping on it will take you to a streaming service where you can listen to it.
     </string>
 
-    <string name="about_text_description_2">You can favorite the songs I send you by pressing the
-        heart (duh). The first app screen is your favorites, and the other screen lets you browse
-        the database. Go nuts!
+    <string name="about_text_description_2">I’ve added playlist functionality within the app,
+        so you can save stuff I send you. Feel free to browse all the songs I’ve uploaded too
+        in the browse page. Happy listening!
     </string>
 
 

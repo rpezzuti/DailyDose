@@ -28,10 +28,10 @@ interface TrackDatabaseDao {
 
 
     /** Favorite Tracks **/
-    @Query ("SELECT * FROM track_table WHERE is_favorite = :favorite")
+    @Query ("SELECT * FROM track_table WHERE is_favorite = :favorite ORDER BY track_timestamp DESC")
     fun observeFavorites(favorite: Boolean): LiveData<List<DatabaseTrack>>
 
-    @Query ("SELECT * FROM track_table WHERE is_favorite = :favorite")
+    @Query ("SELECT * FROM track_table WHERE is_favorite = :favorite ORDER BY track_timestamp DESC")
     fun getFavorites(favorite: Boolean): List<DatabaseTrack>
 
 

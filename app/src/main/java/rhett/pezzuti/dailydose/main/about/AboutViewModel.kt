@@ -1,4 +1,4 @@
-package rhett.pezzuti.dailydose.main
+package rhett.pezzuti.dailydose.main.about
 
 import androidx.lifecycle.ViewModel
 

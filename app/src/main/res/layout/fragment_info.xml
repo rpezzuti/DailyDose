@@ -5,13 +5,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".main.home.HomeFragment">
+    tools:context=".main.home.HomeFragment"
+    android:background="?attr/colorSecondaryVariant">
 
     <TextView
         android:id="@+id/about_intro_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_small"
+        android:textSize="16dp"
+        android:textColor="@color/black"
         android:text="@string/about_intro_paragraph"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,8 +23,9 @@
         android:id="@+id/about_text_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_small"
-        android:layout_marginTop="148dp"
+        android:textSize="16dp"
+        android:textColor="@color/black"
+        android:layout_marginTop="@dimen/margin_large"
         android:text="@string/about_text_description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -33,7 +36,9 @@
         android:id="@+id/about_text_description_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_small"
+        android:textSize="16dp"
+        android:textColor="@color/black"
+        android:layout_marginTop="@dimen/margin_large"
         android:text="@string/about_text_description_2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/about_text_description" />

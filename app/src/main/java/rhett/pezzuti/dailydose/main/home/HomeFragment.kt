@@ -15,6 +15,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
+import androidx.recyclerview.widget.DividerItemDecoration
 import rhett.pezzuti.dailydose.DailyDoseApplication
 import rhett.pezzuti.dailydose.R
 import rhett.pezzuti.dailydose.adapters.FabListener
@@ -78,13 +79,28 @@ class HomeFragment : Fragment() {
             container,
             false
         )
-        val sharedPref = this.activity?.getSharedPreferences(getString(R.string.user_preferences_key), Context.MODE_PRIVATE)
-        binding.tvHomeWelcome.text = "~ Welcome, ${sharedPref?.getString("username", "bob")}! ~"
+        binding.tvHomeWelcome.text = "~ Welcome, ${this.activity?.getSharedPreferences(getString(R.string.user_preferences_key), Context.MODE_PRIVATE)?.getString("username", "bob")}! ~"
 
         binding.homeViewModelXML = viewModel
         binding.lifecycleOwner = this
 
+        setupAdapter()
 
+        // SO NICE. Adds divider between the RV items.
+        val decoration = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
+        binding.homeRecyclerView.addItemDecoration(decoration)
+        binding.homeRecyclerView.adapter = viewModelAdapter
+
+
+
+        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.fragment_home_title)
+        setHasOptionsMenu(true)
+        return binding.root
+    }
+
+
+    private
+    fun setupAdapter() {
         /** Recycler View OnClick function **/
         viewModelAdapter = TrackAdapter( TrackListener { url ->
             val contentIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
@@ -115,15 +131,7 @@ class HomeFragment : Fragment() {
                     .show()
             }
         })
-        binding.homeRecyclerView.adapter = viewModelAdapter
-
-
-
-        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.fragment_home_title)
-        setHasOptionsMenu(true)
-        return binding.root
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.main_overflow_menu, menu)

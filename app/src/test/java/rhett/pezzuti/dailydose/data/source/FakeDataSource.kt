@@ -14,6 +14,14 @@ class FakeDataSource(var tracks: MutableList<Track> = mutableListOf()) : TrackDa
         tracks.add(track)
     }
 
+    override fun observeGenre(genre: String): LiveData<List<Track>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getGenre(genre: String): List<Track> {
+        TODO("Not yet implemented")
+    }
+
     override fun observeAllTracks(): LiveData<List<Track>> {
         TODO("Not yet implemented")
     }
