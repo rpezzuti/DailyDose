@@ -1,10 +1,16 @@
 package rhett.pezzuti.dailydose.data.source
 
 import androidx.lifecycle.LiveData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
 import rhett.pezzuti.dailydose.data.DatabaseTrack
 import rhett.pezzuti.dailydose.data.Track
+import rhett.pezzuti.dailydose.data.source.remote.TrackRemoteDataSource
 
 /** Concrete Implementation of loading tracks from the data sources into the offline cache. **/
 class DefaultTrackRepository(
@@ -12,6 +18,19 @@ class DefaultTrackRepository(
     private val trackRemoteDataSource: TrackDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : TrackRepository {
+
+
+     /**
+     * Access point for loading paging data from firebase.
+     */
+    override fun getPagingResults(): Flow<PagingData<Track>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 44,
+                enablePlaceholders = false
+            ), pagingSourceFactory = {TrackRemoteDataSource}
+        ).flow
+    }
 
     override suspend fun refreshTracks() {
         /** One of the main methods **/

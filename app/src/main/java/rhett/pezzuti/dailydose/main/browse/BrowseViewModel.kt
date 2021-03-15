@@ -1,11 +1,14 @@
 package rhett.pezzuti.dailydose.main.browse
 
 import androidx.lifecycle.*
+import androidx.paging.PagingData
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import rhett.pezzuti.dailydose.data.Track
 import rhett.pezzuti.dailydose.data.source.TrackRepository
+import timber.log.Timber
 
 enum class BrowseStatus { LOADING, ERROR, DONE}
 
@@ -22,6 +25,8 @@ class BrowseViewModel(
         get() = _filter
 
     private val _forceRefresh = MutableLiveData(true)
+
+    private var firebaseResultCache : Flow<PagingData<Track>>? = null
 
     private var _tracks = _forceRefresh.switchMap { forceRefresh ->
         if (forceRefresh) {
@@ -56,11 +61,19 @@ class BrowseViewModel(
         }*/
         _filter.value = "dubstep"
         _status.value = BrowseStatus.LOADING
+
+        loadCache()
     }
 
 
     fun getGenre(genre: String) {
 //        tracks.value =
+    }
+
+    fun loadCache() : Flow<PagingData<Track>>? {
+        firebaseResultCache = trackRepository.getPagingResults()
+        Timber.i("Did this work?")
+        return firebaseResultCache
     }
 
     private suspend fun filterTracks(genre: String) {

@@ -32,6 +32,9 @@ interface BrowseFirebaseApiService {
 
     // Gson, get all the babies.
     // The dream has been realized.
+    /**
+     * The dream has been realized. Gets a JSON object that has all of the tracks with genres as keys
+     */
     @GET ("tracks.json")
     fun getAllTracks():
             Call<JsonObject>
@@ -39,6 +42,9 @@ interface BrowseFirebaseApiService {
 
 
     // Using Deferred<JsonObject> returns the same call adapter error.
+    /**
+     * Doesn't work. Attempt at using a DTO and deferred
+     */
     @GET ("tracks.json")
     fun getAllTracksDeferred():
         Deferred<NetworkTrackContainerJson>

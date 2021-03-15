@@ -2,8 +2,10 @@ package rhett.pezzuti.dailydose.data.source.local
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
+import androidx.paging.PagingData
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import rhett.pezzuti.dailydose.data.Track
 import rhett.pezzuti.dailydose.data.asDatabaseModel
@@ -20,7 +22,9 @@ class TrackLocalDataSource(
         TODO("Not yet implemented")
     }
 
-
+    override fun getPagingResults(): Flow<PagingData<Track>> {
+        TODO("Not yet implemented")
+    }
 
     /** Query All **/
     override fun observeAllTracks(): LiveData<List<Track>> {

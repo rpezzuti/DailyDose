@@ -1,14 +1,20 @@
 package rhett.pezzuti.dailydose.data.source.remote
 
 import androidx.lifecycle.LiveData
+import androidx.paging.PagingData
+import androidx.paging.PagingSource
+import kotlinx.coroutines.flow.Flow
 import retrofit2.awaitResponse
 import rhett.pezzuti.dailydose.data.Track
 import rhett.pezzuti.dailydose.data.source.TrackDataSource
+import rhett.pezzuti.dailydose.network.BrowseFirebaseApiService
 import rhett.pezzuti.dailydose.network.BrowseFirebaseGson
 import rhett.pezzuti.dailydose.utils.asListOfTracks
+import timber.log.Timber
+import java.lang.Exception
 import kotlin.collections.LinkedHashMap
 
-object TrackRemoteDataSource : TrackDataSource {
+object TrackRemoteDataSource : TrackDataSource, PagingSource<Long, Track>() {
 
     // TODO want to have an actual piece of data here in the source.
 
@@ -37,6 +43,26 @@ object TrackRemoteDataSource : TrackDataSource {
         } catch (e: Exception) {
             Timber.i(e)
         }*/
+    }
+
+    override suspend fun load(params: LoadParams<Long>): LoadResult<Long, Track> {
+        return try {
+            val trackData = BrowseFirebaseGson.retrofitService.getAllTracks().awaitResponse().body()
+                .asListOfTracks()
+
+            LoadResult.Page(
+                data = trackData,
+                null,
+                null
+            )
+        } catch (e: Exception) {
+            Timber.i("LOAD DATA ERROR $e")
+            return LoadResult.Error(e)
+        }
+    }
+
+    override fun getPagingResults(): Flow<PagingData<Track>> {
+        TODO("Not yet implemented")
     }
 
     override fun observeAllTracks(): LiveData<List<Track>> {

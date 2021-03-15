@@ -1,12 +1,18 @@
 package rhett.pezzuti.dailydose.data.source
 
 import androidx.lifecycle.LiveData
+import androidx.paging.PagingData
+import kotlinx.coroutines.flow.Flow
 import rhett.pezzuti.dailydose.data.Track
 
 interface TrackDataSource {
 
+    // Remote Only
     /** Starts data request from Firebase. RemoteDataSource Only **/
     suspend fun refreshTracks(): List<Track>
+
+    fun getPagingResults(): Flow<PagingData<Track>>
+
 
     /** Get All / Add All **/
     fun observeAllTracks(): LiveData<List<Track>>
