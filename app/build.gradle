@@ -63,6 +63,9 @@ dependencies {
     // Support Libraries
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 
+    // Preference Fragment
+    implementation 'androidx.preference:preference:1.1.1'
+
     // Fading Text Views
     implementation 'com.tomer:fadingtextview:2.5'
 
