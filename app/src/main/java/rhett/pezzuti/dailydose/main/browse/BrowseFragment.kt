@@ -32,27 +32,22 @@ class BrowseFragment : Fragment() {
     private lateinit var binding: FragmentBrowseBinding
 
     private val viewModel by viewModels<BrowseViewModel> {
+        /** Create ViewModel through Service Locator pattern **/
         BrowseViewModelFactory((requireContext().applicationContext as DailyDoseApplication).trackRepository)
     }
 
     private var viewModelAdapter: TrackAdapter? = null
-    private var viewModelPagingAdapter: PagingAdapter? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        /** Give the track playlist to the adapter **/
         viewModel.tracks.observe(viewLifecycleOwner, { playlist ->
             playlist?.apply {
                 viewModelAdapter?.submitList(playlist)
             }
         })
 
-        // It works!
-        lifecycleScope.launch {
-            viewModel.loadCache()?.collectLatest {
-                viewModelPagingAdapter?.submitData(it)
-            }
-        }
     }
 
     override fun onCreateView(
@@ -70,53 +65,18 @@ class BrowseFragment : Fragment() {
         binding.lifecycleOwner = this
 
         setupAdapter()
-        setupPagingAdapter()
-        val decoration = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
-        binding.browseRecyclerView.addItemDecoration(decoration)
-        binding.browseRecyclerView.adapter = viewModelPagingAdapter
-
-        /** Chip filtering doesn't work yet sadge **/
-        // setupChips()
-
+        setupDecoration()
+        binding.browseRecyclerView.adapter = viewModelAdapter
 
 
         (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.fragment_browse_title)
         return binding.root
     }
 
-    private
-    fun setupPagingAdapter() {
-        /** Recycler View OnClick functionality **/
-        viewModelPagingAdapter = PagingAdapter( TrackListener { url ->
-            val contentIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-            val contentPendingIntent = PendingIntent.getActivity(
-                requireContext(),
-                0,
-                contentIntent,
-                PendingIntent.FLAG_ONE_SHOT
-            )
-            try {
-                contentPendingIntent.send()
-            } catch (e: Exception) {
-                Timber.i("Exception Found: ${e}")
-                Timber.i("Exception Found: ${e.message}")
-                Timber.i("Exception Found: ${e.message.toString()}")
-                Timber.i("Exception Found: ${e.stackTrace}")
-            }
 
-        }, FabListener { favorite, timestamp ->
-            if (!favorite) {
-                viewModel.addToFavorites(timestamp)
-                Toast.makeText(this.requireContext(), "Added to Favorites", Toast.LENGTH_SHORT)
-                    .show()
-            } else {
-                viewModel.removeFromFavorites(timestamp)
-                Toast.makeText(this.requireContext(), "Removed from Favorites", Toast.LENGTH_SHORT)
-                    .show()
-            }
-        })
-    }
-
+    /**
+     * Initializes the TrackAdapter and it's clickListeners for this layout's Recycler View.
+     */
     private
     fun setupAdapter() {
         /** Recycler View OnClick functionality **/
@@ -151,50 +111,13 @@ class BrowseFragment : Fragment() {
     }
 
 
+    /**
+     * Creates vertical divider decoration and gives it to the Recycler View.
+     */
     private
-    fun setupChips() {
-        // Dummy List Data
-        val genreList = listOf(
-            getString(R.string.chip_dubstep),
-            getString(R.string.chip_melodic_dubstep),
-            getString(R.string.chip_lo_fi),
-            getString(R.string.chip_chillstep),
-            getString(R.string.chip_garage),
-            getString(R.string.chip_piano_ambient),
-            getString(R.string.chip_experimental_bass),
-            getString(R.string.chip_liquid_dnb),
-            getString(R.string.chip_ambient_bass),
-
-            getString(R.string.chip_metalcore),
-            getString(R.string.chip_acoustic_ballads),
-            getString(R.string.chip_instrumental_rock),
-            getString(R.string.chip_death_metal),
-            getString(R.string.chip_live_performances)
-        )
-
-
-
-        // Make a new Chip Group
-        val chipGroup = binding.browseChipGroup
-
-        // Inflate it
-        val inflater = LayoutInflater.from(chipGroup.context)
-
-        // Iterate over the list and make a new chip child for each string (genre) in the list
-        val children = genreList.map { genre ->
-            val chip = inflater.inflate(R.layout.genre_chip, chipGroup, false) as Chip
-            chip.text = genre
-            chip.tag = genre
-            chip.setOnCheckedChangeListener { button, isChecked ->
-                viewModel.getGenre(button.tag as String)
-            }
-            chip
-        }
-
-        chipGroup.removeAllViews()
-        for (chip in children) {
-            chipGroup.addView(chip)
-        }
+    fun setupDecoration() {
+        val decoration = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
+        binding.browseRecyclerView.addItemDecoration(decoration)
     }
 
 }

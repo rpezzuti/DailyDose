@@ -14,6 +14,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
+import androidx.recyclerview.widget.DividerItemDecoration
 import rhett.pezzuti.dailydose.DailyDoseApplication
 import rhett.pezzuti.dailydose.R
 import rhett.pezzuti.dailydose.adapters.FabListener
@@ -64,7 +65,19 @@ class FavoritesFragment : Fragment() {
         binding.favoritesViewModelXML = viewModel
         binding.lifecycleOwner = this
 
+        setupAdapter()
+        setupDecoration()
+        binding.favoritesRecyclerView.adapter = viewModelAdapter
 
+
+
+        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.fragment_favorites_title)
+        setHasOptionsMenu(true)
+        return binding.root
+    }
+
+    private
+    fun setupAdapter() {
         viewModelAdapter = TrackAdapter( TrackListener { url ->
             val contentIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             val contentPendingIntent = PendingIntent.getActivity(
@@ -85,13 +98,12 @@ class FavoritesFragment : Fragment() {
                     .show()
             }
         })
-        binding.favoritesRecyclerView.adapter = viewModelAdapter
+    }
 
-
-
-        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.fragment_favorites_title)
-        setHasOptionsMenu(true)
-        return binding.root
+    private
+    fun setupDecoration() {
+        val decoration = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
+        binding.favoritesRecyclerView.addItemDecoration(decoration)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

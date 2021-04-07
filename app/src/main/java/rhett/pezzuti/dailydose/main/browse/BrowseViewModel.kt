@@ -39,6 +39,7 @@ class BrowseViewModel(
         trackRepository.observeAllTracks()
     }
 
+    /** Exposed track playlist for fragment **/
     val tracks : LiveData<List<Track>> = _tracks
 
     /** Attempt at chip filtering **/

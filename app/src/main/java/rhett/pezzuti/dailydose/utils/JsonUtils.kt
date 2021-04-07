@@ -13,7 +13,12 @@ fun JsonObject.asDatabaseModel(): Array<DatabaseTrack> {
     if (keySet() == null) {
         // Do nothing
     } else {
-        val genres = keySet().toList()
+        val genres = keySet().toMutableList()
+
+        if (genres.contains("Test")) {
+            genres.remove("Test")
+        }
+
         val jsonList = mutableListOf<JsonObject>()
         Timber.i("RHETT: List of data keys $genres")
 
@@ -73,7 +78,12 @@ fun JsonObject?.asListOfTracks(): List<Track> {
     if (this == null) {
         return emptyList()
     } else {
-        val keySet = this.keySet().toList()
+        val keySet = this.keySet().toMutableList()
+
+        if (keySet.contains("Test")) {
+            keySet.remove("Test")
+        }
+
         val jsonList = mutableListOf<JsonObject>()
         val trackList = mutableListOf<Track>()
         Timber.i("RHETT: List of data keys $keySet")
