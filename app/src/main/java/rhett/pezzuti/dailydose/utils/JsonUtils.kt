@@ -73,7 +73,13 @@ fun JsonObject?.asListOfTracks(): List<Track> {
     if (this == null) {
         return emptyList()
     } else {
-        val keySet = this.keySet().toList()
+        val keySet = this.keySet().toMutableList()
+
+        /** If there are items in the Test genre in Firebase, omit them **/
+        if (keySet.contains("Test")) {
+            keySet.remove("Test")
+        }
+
         val jsonList = mutableListOf<JsonObject>()
         val trackList = mutableListOf<Track>()
         Timber.i("RHETT: List of data keys $keySet")
