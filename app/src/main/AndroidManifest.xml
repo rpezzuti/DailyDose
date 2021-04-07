@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DailyDose"
         android:usesCleartextTraffic="true">
-        <activity android:name=".minigame.MinigameActivity"></activity>
+        <activity android:name=".settings.SettingsActivity"></activity>
+        <activity android:name=".minigame.MinigameActivity" />
         <activity android:name=".setup.SetupActivity" />
         <activity
             android:name=".splash.SplashActivity"

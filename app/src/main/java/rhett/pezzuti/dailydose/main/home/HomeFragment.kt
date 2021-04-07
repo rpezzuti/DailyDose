@@ -1,12 +1,14 @@
 package rhett.pezzuti.dailydose.main.home
 
 import android.app.PendingIntent
+import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.view.*
+import android.widget.TimePicker
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
@@ -23,6 +25,7 @@ import rhett.pezzuti.dailydose.adapters.TrackListener
 import rhett.pezzuti.dailydose.adapters.TrackAdapter
 import rhett.pezzuti.dailydose.data.source.local.getInstance
 import rhett.pezzuti.dailydose.databinding.FragmentHomeBinding
+import rhett.pezzuti.dailydose.settings.SettingsActivity
 import timber.log.Timber
 import java.lang.Exception
 
@@ -84,6 +87,7 @@ class HomeFragment : Fragment() {
         binding.homeViewModelXML = viewModel
         binding.lifecycleOwner = this
 
+        viewModel.refreshTracks()
         setupAdapter()
 
         // SO NICE. Adds divider between the RV items.
@@ -141,10 +145,18 @@ class HomeFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // This return statement works when the id of the menu item matches the id of the fragment in the nav graph.
 
+        // For the filter menu
         return if (item.itemId == R.id.menu_filter) {
             showFilteringPopUpMenu()
+
+
             true
+        } else if (item.itemId == R.id.settingsActivity){
+            val intent = Intent(this.activity, SettingsActivity::class.java)
+            startActivity(intent)
+            return true
         } else {
+                // For the overflow menu
             (NavigationUI.onNavDestinationSelected(item!!, requireView().findNavController())
                     || super.onOptionsItemSelected(item))
         }

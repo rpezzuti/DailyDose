@@ -12,8 +12,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.chip.Chip
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import rhett.pezzuti.dailydose.DailyDoseApplication
 import rhett.pezzuti.dailydose.R
 import rhett.pezzuti.dailydose.adapters.FabListener
@@ -33,14 +36,23 @@ class BrowseFragment : Fragment() {
     }
 
     private var viewModelAdapter: TrackAdapter? = null
+    private var viewModelPagingAdapter: PagingAdapter? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         viewModel.tracks.observe(viewLifecycleOwner, { playlist ->
             playlist?.apply {
                 viewModelAdapter?.submitList(playlist)
             }
         })
+
+        // It works!
+        lifecycleScope.launch {
+            viewModel.loadCache()?.collectLatest {
+                viewModelPagingAdapter?.submitData(it)
+            }
+        }
     }
 
     override fun onCreateView(
@@ -58,9 +70,10 @@ class BrowseFragment : Fragment() {
         binding.lifecycleOwner = this
 
         setupAdapter()
+        setupPagingAdapter()
         val decoration = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
         binding.browseRecyclerView.addItemDecoration(decoration)
-        binding.browseRecyclerView.adapter = viewModelAdapter
+        binding.browseRecyclerView.adapter = viewModelPagingAdapter
 
         /** Chip filtering doesn't work yet sadge **/
         // setupChips()
@@ -69,6 +82,39 @@ class BrowseFragment : Fragment() {
 
         (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.fragment_browse_title)
         return binding.root
+    }
+
+    private
+    fun setupPagingAdapter() {
+        /** Recycler View OnClick functionality **/
+        viewModelPagingAdapter = PagingAdapter( TrackListener { url ->
+            val contentIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            val contentPendingIntent = PendingIntent.getActivity(
+                requireContext(),
+                0,
+                contentIntent,
+                PendingIntent.FLAG_ONE_SHOT
+            )
+            try {
+                contentPendingIntent.send()
+            } catch (e: Exception) {
+                Timber.i("Exception Found: ${e}")
+                Timber.i("Exception Found: ${e.message}")
+                Timber.i("Exception Found: ${e.message.toString()}")
+                Timber.i("Exception Found: ${e.stackTrace}")
+            }
+
+        }, FabListener { favorite, timestamp ->
+            if (!favorite) {
+                viewModel.addToFavorites(timestamp)
+                Toast.makeText(this.requireContext(), "Added to Favorites", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                viewModel.removeFromFavorites(timestamp)
+                Toast.makeText(this.requireContext(), "Removed from Favorites", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        })
     }
 
     private

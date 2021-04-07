@@ -23,7 +23,11 @@ class HomeViewModel(
     }
 
 
-    val tracks = trackRepository.observeRecent()
+    var tracks = trackRepository.observeRecent()
+
+    fun refreshTracks() {
+        tracks = trackRepository.observeRecent()
+    }
 
     fun addToFavorites(timestamp: Long) {
         viewModelScope.launch {
