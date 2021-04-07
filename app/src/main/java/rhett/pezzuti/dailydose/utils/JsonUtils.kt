@@ -80,6 +80,7 @@ fun JsonObject?.asListOfTracks(): List<Track> {
     } else {
         val keySet = this.keySet().toMutableList()
 
+        /** If there are items in the Test genre in Firebase, omit them **/
         if (keySet.contains("Test")) {
             keySet.remove("Test")
         }
