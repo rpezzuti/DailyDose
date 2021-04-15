@@ -79,7 +79,6 @@ class BrowseFragment : Fragment() {
         // setupChips()
 
 
-
         (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.fragment_browse_title)
         return binding.root
     }
@@ -151,7 +150,7 @@ class BrowseFragment : Fragment() {
     }
 
 
-    private
+   /* private
     fun setupChips() {
         // Dummy List Data
         val genreList = listOf(
@@ -175,7 +174,7 @@ class BrowseFragment : Fragment() {
 
 
         // Make a new Chip Group
-        val chipGroup = binding.browseChipGroup
+        // val chipGroup = binding.browseChipGroup
 
         // Inflate it
         val inflater = LayoutInflater.from(chipGroup.context)
@@ -195,6 +194,6 @@ class BrowseFragment : Fragment() {
         for (chip in children) {
             chipGroup.addView(chip)
         }
-    }
+    }*/
 
 }

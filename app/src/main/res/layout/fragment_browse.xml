@@ -27,7 +27,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <HorizontalScrollView
+        <!-- Chip filtering attempt -->
+       <!-- <HorizontalScrollView
             android:id="@+id/chips"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,8 +37,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0">
 
-        <!-- Single Selection = One filter active at a time -->
-        <!-- Single Line = Chips on one line -->
+        &lt;!&ndash; Single Selection = One filter active at a time &ndash;&gt;
+        &lt;!&ndash; Single Line = Chips on one line &ndash;&gt;
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/browse_chip_group"
             android:layout_width="wrap_content"
@@ -45,7 +46,17 @@
             android:padding="@dimen/margin_medium"
             app:singleLine="true"
             app:singleSelection="true" />
-        </HorizontalScrollView>
+        </HorizontalScrollView>-->
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/content_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/browse_text"
+            app:iconifiedByDefault="false"
+            app:queryBackground="@null"/>
 
         <!-- Shows Connection Error onFailure -->
         <ImageView
