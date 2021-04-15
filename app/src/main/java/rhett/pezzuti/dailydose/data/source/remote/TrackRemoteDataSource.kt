@@ -14,7 +14,7 @@ import timber.log.Timber
 import java.lang.Exception
 import kotlin.collections.LinkedHashMap
 
-object TrackRemoteDataSource : TrackDataSource, PagingSource<Long, Track>() {
+object TrackRemoteDataSource : TrackDataSource {
 
     // TODO want to have an actual piece of data here in the source.
 
@@ -29,36 +29,6 @@ object TrackRemoteDataSource : TrackDataSource, PagingSource<Long, Track>() {
         }
         return data
 
-       /* try {
-            BrowseFirebaseGson.retrofitService.getAllTracks().enqueue(object : Callback<JsonObject> {
-                override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
-                    Timber.i("GREAT SUCCESS: ${response.body().toString()}")
-                    data = response.body().asListOfTracks()
-                }
-
-                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-                    Timber.i("Failure: " + t.message)
-                }
-            })
-        } catch (e: Exception) {
-            Timber.i(e)
-        }*/
-    }
-
-    override suspend fun load(params: LoadParams<Long>): LoadResult<Long, Track> {
-        return try {
-            val trackData = BrowseFirebaseGson.retrofitService.getAllTracks().awaitResponse().body()
-                .asListOfTracks()
-
-            LoadResult.Page(
-                data = trackData,
-                null,
-                null
-            )
-        } catch (e: Exception) {
-            Timber.i("LOAD DATA ERROR $e")
-            return LoadResult.Error(e)
-        }
     }
 
     override fun getPagingResults(): Flow<PagingData<Track>> {

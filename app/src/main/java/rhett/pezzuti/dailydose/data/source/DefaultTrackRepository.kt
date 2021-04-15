@@ -20,18 +20,6 @@ class DefaultTrackRepository(
 ) : TrackRepository {
 
 
-     /**
-     * Access point for loading paging data from firebase.
-     */
-    override fun getPagingResults(): Flow<PagingData<Track>> {
-        return Pager(
-            config = PagingConfig(
-                pageSize = 44,
-                enablePlaceholders = false
-            ), pagingSourceFactory = {TrackRemoteDataSource}
-        ).flow
-    }
-
     override suspend fun refreshTracks() {
         /** One of the main methods **/
         // This function starts the process of refreshing the data from the network,
@@ -129,6 +117,7 @@ class DefaultTrackRepository(
         }
     }
 
+
     override suspend fun getTrack(timestamp: Long): Track {
         return trackLocalDataSource.getTrack(timestamp)
     }
@@ -137,20 +126,6 @@ class DefaultTrackRepository(
         trackLocalDataSource.updateTrack(track)
     }
 
-    /** The other stuff i used previously. Pre DataSource stuff  **/
-    // Public access of all the tracks in the database.
-    // Fetching all the DATABASE tracks and returning them as DOMAIN tracks
-/*    val tracks: LiveData<List<Track>> =
-        Transformations.map(database.trackDatabaseDao.getAllTracks())
-        {
-            it.asDomainModel()
-        }
-
-    val recentTracks: LiveData<List<Track>> =
-        Transformations.map(database.trackDatabaseDao.getRecentTracks())
-        {
-            it.asDomainModel()
-        }*/
 
     var favorites = listOf<DatabaseTrack>()
 }

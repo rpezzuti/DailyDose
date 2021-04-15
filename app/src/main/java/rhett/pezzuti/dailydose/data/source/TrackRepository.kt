@@ -59,6 +59,4 @@ interface TrackRepository {
 
     /** Generic Add **/
     suspend fun addTrack(track: Track)
-
-    fun getPagingResults(): Flow<PagingData<Track>>
 }

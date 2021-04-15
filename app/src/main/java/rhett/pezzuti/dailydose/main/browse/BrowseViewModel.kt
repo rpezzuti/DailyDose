@@ -54,28 +54,12 @@ class BrowseViewModel(
     // If i put it on the background thread, then it tells me I can't set the value.
 
     init {
-        /** Chip filtering attempts **/
-        /*viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                _playlist.value = trackRepository.getFavorites()
-            }
-        }*/
+
         _filter.value = "dubstep"
         _status.value = BrowseStatus.LOADING
 
-        loadCache()
     }
 
-
-    fun getGenre(genre: String) {
-//        tracks.value =
-    }
-
-    fun loadCache() : Flow<PagingData<Track>>? {
-        firebaseResultCache = trackRepository.getPagingResults()
-        Timber.i("Did this work?")
-        return firebaseResultCache
-    }
 
     private suspend fun filterTracks(genre: String) {
         withContext(Dispatchers.IO) {
