@@ -1,31 +1,15 @@
 package rhett.pezzuti.dailydose.main.favorites
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import rhett.pezzuti.dailydose.data.source.local.TrackDatabaseDao
-import rhett.pezzuti.dailydose.data.asDomainModel
 import rhett.pezzuti.dailydose.data.source.TrackRepository
 
-class FavoritesViewModel(
-    private val trackRepository: TrackRepository
-    ) : ViewModel() {
+class FavoritesViewModel(private val trackRepository: TrackRepository) : ViewModel() {
 
-
-
-
-/*
-    val tracks = Transformations.map(trackDatabase.getFavorites(true)){
-        it.asDomainModel()
-    }*/
-
-    val tracks2 = trackRepository.observeFavorites()
-
+    val tracks = trackRepository.observeFavorites()
 
     fun addToFavorites(timestamp: Long) {
         viewModelScope.launch {

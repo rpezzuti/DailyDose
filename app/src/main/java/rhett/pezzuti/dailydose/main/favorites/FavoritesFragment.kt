@@ -3,12 +3,10 @@ package rhett.pezzuti.dailydose.main.favorites
 import android.app.PendingIntent
 import android.content.Intent
 import android.net.Uri
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
@@ -20,14 +18,10 @@ import rhett.pezzuti.dailydose.R
 import rhett.pezzuti.dailydose.adapters.FabListener
 import rhett.pezzuti.dailydose.adapters.TrackListener
 import rhett.pezzuti.dailydose.adapters.TrackAdapter
-import rhett.pezzuti.dailydose.data.source.local.getInstance
 import rhett.pezzuti.dailydose.databinding.FragmentFavoritesBinding
 
 class FavoritesFragment : Fragment() {
-
     private lateinit var binding: FragmentFavoritesBinding
-
-
     private var viewModelAdapter: TrackAdapter? = null
 
     private val viewModel by viewModels<FavoritesViewModel> {
@@ -43,7 +37,7 @@ class FavoritesFragment : Fragment() {
      */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.tracks2.observe(viewLifecycleOwner, { tracks ->
+        viewModel.tracks.observe(viewLifecycleOwner, { tracks ->
             tracks?.apply {
                 viewModelAdapter?.submitList(tracks)
             }
