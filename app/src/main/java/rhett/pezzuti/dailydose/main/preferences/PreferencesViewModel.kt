@@ -18,16 +18,6 @@ class PreferencesViewModel(
 
     private val sharedPref: SharedPreferences? = app.getSharedPreferences(app.getString(R.string.user_preferences_key), Context.MODE_PRIVATE)
 
-
-
-    fun subTest() {
-        subscribeTopic(app.getString(R.string.TOPIC_TEST))
-    }
-
-    fun unsubTest() {
-        unSubscribeTopic(app.getString(R.string.TOPIC_TEST))
-    }
-
     fun checkDubstep() {
         if (sharedPref!!.getBoolean(app.getString(R.string.TOPIC_DUBSTEP), false)) {
             unSubscribeTopic(app.getString(R.string.TOPIC_DUBSTEP))
