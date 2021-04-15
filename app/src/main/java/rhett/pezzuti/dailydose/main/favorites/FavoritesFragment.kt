@@ -71,14 +71,15 @@ class FavoritesFragment : Fragment() {
 
 
 
-        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.fragment_favorites_title)
+        (activity as AppCompatActivity).supportActionBar?.title =
+            getString(R.string.fragment_favorites_title)
         setHasOptionsMenu(true)
         return binding.root
     }
 
     private
     fun setupAdapter() {
-        viewModelAdapter = TrackAdapter( TrackListener { url ->
+        viewModelAdapter = TrackAdapter(TrackListener { url ->
             val contentIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             val contentPendingIntent = PendingIntent.getActivity(
                 requireContext(),
@@ -108,39 +109,14 @@ class FavoritesFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.main_overflow_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // This return statement works when the id of the menu item matches the id of the fragment in the nav graph.
 
+         return (NavigationUI.onNavDestinationSelected(item!!, requireView().findNavController())
+                || super.onOptionsItemSelected(item))
 
-        return if (item.itemId == R.id.menu_filter) {
-            showFilteringPopUpMenu()
-            true
-        } else {
-            (NavigationUI.onNavDestinationSelected(item!!, requireView().findNavController())
-                    || super.onOptionsItemSelected(item))
-        }
     }
 
-    private fun showFilteringPopUpMenu() {
-        val view = activity?.findViewById<View>(R.id.menu_filter) ?: return
-        PopupMenu(requireContext(), view).run {
-            menuInflater.inflate(R.menu.filter_tracks, menu)
-
-            /**
-            setOnMenuItemClickListener {
-            viewModel.setFiltering(
-            when (it.itemId) {
-            R.id.active -> TasksFilterType.ACTIVE_TASKS
-            R.id.completed -> TasksFilterType.COMPLETED_TASKS
-            else -> TasksFilterType.ALL_TASKS
-            }
-            )
-            true
-            }**/
-            show()
-        }
-    }
 }
