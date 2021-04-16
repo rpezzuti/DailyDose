@@ -40,6 +40,10 @@ class BrowseFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.tracks.observe(viewLifecycleOwner, { tracks ->
+            viewModelAdapter?.submitList(tracks)
+        })
     }
 
     override fun onCreateView(

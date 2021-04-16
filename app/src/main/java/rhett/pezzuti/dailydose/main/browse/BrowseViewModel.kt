@@ -25,9 +25,25 @@ class BrowseViewModel(
     val playlist : LiveData<List<Track>>
         get() = _playlist
 
+    private val _forceRefresh = MutableLiveData<Boolean>(true)
+
+    private var _tracks = _forceRefresh.switchMap { forceRefresh ->
+        if (forceRefresh) {
+            _status.value = BrowseStatus.LOADING
+            viewModelScope.launch {
+                trackRepository.refreshTracks()
+                _status.value = BrowseStatus.DONE
+            }
+        }
+        trackRepository.observeAllTracks()
+    }
+
+    val tracks : LiveData<List<Track>> = _tracks
+
 
     init {
-        getTracksFromFirebase()
+        _status.value = BrowseStatus.LOADING
+        // getTracksFromFirebase()
     }
 
     private
