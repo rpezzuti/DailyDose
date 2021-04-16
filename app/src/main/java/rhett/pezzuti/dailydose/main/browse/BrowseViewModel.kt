@@ -4,12 +4,8 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import retrofit2.awaitResponse
 import rhett.pezzuti.dailydose.data.Track
 import rhett.pezzuti.dailydose.data.source.TrackRepository
-import rhett.pezzuti.dailydose.data.source.remote.TrackRemoteDataSource
-import rhett.pezzuti.dailydose.network.BrowseFirebaseGson
-import rhett.pezzuti.dailydose.utils.asListOfTracks
 
 /**
  * Enum status for progress bar and connection error visibility.
