@@ -127,7 +127,7 @@ class DefaultTrackRepository(
     /**
      *
      */
-    override fun observeTrack(): LiveData<Track> {
+    override fun observeTrack(timestamp: Long): LiveData<Track> {
         TODO("Not yet implemented")
     }
 

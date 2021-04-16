@@ -72,7 +72,7 @@ object TrackRemoteDataSource : TrackDataSource {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getTrack(trackKey: Long): Track {
+    override suspend fun getTrack(timestamp: Long): Track {
         TODO("Not yet implemented")
     }
 
@@ -111,7 +111,7 @@ object TrackRemoteDataSource : TrackDataSource {
     /**
      *
      */
-    override fun observeTrack(trackKey: Long): LiveData<Track> {
+    override fun observeTrack(timestamp: Long): LiveData<Track> {
         TODO("Not yet implemented")
     }
 

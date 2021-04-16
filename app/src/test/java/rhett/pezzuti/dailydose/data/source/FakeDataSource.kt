@@ -34,7 +34,7 @@ class FakeDataSource(var tracks: MutableList<Track> = mutableListOf()) : TrackDa
         TODO("Not yet implemented")
     }
 
-    override suspend fun getTrack(trackKey: Long): Track {
+    override suspend fun getTrack(timestamp: Long): Track {
         TODO("Not yet implemented")
     }
 
@@ -51,6 +51,18 @@ class FakeDataSource(var tracks: MutableList<Track> = mutableListOf()) : TrackDa
     }
 
     override suspend fun updateTrack(track: Track) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateAllTracks(tracks: List<Track>) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteTrack(track: Track) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteAllSelected(tracks: List<Track>) {
         TODO("Not yet implemented")
     }
 
@@ -86,7 +98,7 @@ class FakeDataSource(var tracks: MutableList<Track> = mutableListOf()) : TrackDa
         return favorites
     }
 
-    override fun observeTrack(trackKey: Long): LiveData<Track> {
+    override fun observeTrack(timestamp: Long): LiveData<Track> {
         TODO("Not yet implemented")
     }
 }

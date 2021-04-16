@@ -66,14 +66,14 @@ interface TrackDataSource {
     /**
      *
      */
-    suspend fun getTrack(trackKey: Long): Track
+    suspend fun getTrack(timestamp: Long): Track
     suspend fun getAllTracks(): List<Track>
 
 
     /**
      *
      */
-    fun observeTrack(trackKey: Long): LiveData<Track>
+    fun observeTrack(timestamp: Long): LiveData<Track>
     fun observeAllTracks(): LiveData<List<Track>>
 
 

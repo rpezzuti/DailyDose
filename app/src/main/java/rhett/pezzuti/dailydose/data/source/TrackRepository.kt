@@ -64,7 +64,7 @@ interface TrackRepository {
     /**
      *
      */
-    fun observeTrack(): LiveData<Track>
+    fun observeTrack(timestamp: Long): LiveData<Track>
     fun observeAllTracks(): LiveData<List<Track>>
 
     /**

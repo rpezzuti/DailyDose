@@ -27,13 +27,13 @@ class TrackLocalDataSource(
      */
     override suspend fun syncTracks(remoteData: List<Track>) {
         withContext(ioDispatcher) {
-            val saved = trackDao.getFavoritesToSave(true)
-            trackDao.clearAll()
+            val saved = trackDao.getFavorites(true)
+            trackDao.deleteAllTotal()
             remoteData.forEach { track ->
-                trackDao.insert(track.asDatabaseModel())
+                trackDao.addTrack(track.asDatabaseModel())
             }
             saved.forEach { track ->
-                trackDao.update(track)
+                trackDao.updateTrack(track)
             }
         }
     }
@@ -50,7 +50,7 @@ class TrackLocalDataSource(
         withContext(ioDispatcher) {
             val tempTrack = trackDao.getTrack(timestamp)
             tempTrack.favorite = true
-            trackDao.update(tempTrack)
+            trackDao.updateTrack(tempTrack)
         }
     }
 
@@ -58,7 +58,7 @@ class TrackLocalDataSource(
         withContext(ioDispatcher) {
             val tempTrack = trackDao.getTrack(timestamp)
             tempTrack.favorite = false
-            trackDao.update(tempTrack)
+            trackDao.updateTrack(tempTrack)
         }
     }
 
@@ -133,7 +133,7 @@ class TrackLocalDataSource(
      */
     override suspend fun addTrack(track: Track) {
         withContext(ioDispatcher) {
-            trackDao.insert(track.asDatabaseModel())
+            trackDao.addTrack(track.asDatabaseModel())
         }
     }
 
@@ -142,7 +142,7 @@ class TrackLocalDataSource(
 
     override suspend fun addAllTracks(tracks: List<Track>) {
         withContext(ioDispatcher) {
-            trackDao.insertAll(*tracks.asDatabaseModel())
+            trackDao.addAllTracks(*tracks.asDatabaseModel())
         }
     }
 
@@ -153,8 +153,8 @@ class TrackLocalDataSource(
     /**
      *
      */
-    override suspend fun getTrack(trackKey: Long): Track {
-        return trackDao.getTrack(trackKey).asDomainModel()
+    override suspend fun getTrack(timestamp: Long): Track {
+        return trackDao.getTrack(timestamp).asDomainModel()
     }
 
     override suspend fun getAllTracks(): List<Track> {
@@ -170,8 +170,8 @@ class TrackLocalDataSource(
     /**
      *
      */
-    override fun observeTrack(trackKey: Long): LiveData<Track> {
-        return trackDao.observeTrack(trackKey).map {
+    override fun observeTrack(timestamp: Long): LiveData<Track> {
+        return trackDao.observeTrack(timestamp).map {
             it.asDomainModel()
         }
     }
@@ -195,7 +195,7 @@ class TrackLocalDataSource(
      */
     override suspend fun updateTrack(track: Track) {
         withContext(ioDispatcher) {
-            trackDao.update(track.asDatabaseModel())
+            trackDao.updateTrack(track.asDatabaseModel())
         }
     }
 
@@ -221,7 +221,7 @@ class TrackLocalDataSource(
 
     override suspend fun deleteAllTotal() {
         withContext(ioDispatcher) {
-            trackDao.clearAll()
+            trackDao.deleteAllTotal()
         }
     }
 

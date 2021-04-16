@@ -114,7 +114,7 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
             track.favorite
         )
 
-        database.insert(databaseTrack)
+        database.addTrack(databaseTrack)
     }
 
     private fun sendNotificationWithIntent(track: Track) {
