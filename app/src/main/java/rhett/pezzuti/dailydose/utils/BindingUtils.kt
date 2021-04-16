@@ -85,17 +85,16 @@ fun ImageView.setImage(item: Track?) {
 }
 
 @BindingAdapter("browseStatus")
-fun browseStatus(statusImageView: ImageView, status: BrowseStatus) {
+fun ImageView.browseStatus(status: BrowseStatus) {
     when (status) {
         BrowseStatus.LOADING -> {
-            statusImageView.visibility = View.GONE
+            visibility = View.GONE
         }
         BrowseStatus.DONE -> {
-            statusImageView.visibility = View.GONE
+            visibility = View.GONE
         }
         BrowseStatus.ERROR -> {
-            statusImageView.visibility = View.VISIBLE
-            statusImageView.setImageResource(R.drawable.ic_connection_error)
+            visibility = View.VISIBLE
         }
     }
 }

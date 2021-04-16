@@ -1,14 +1,15 @@
 package rhett.pezzuti.dailydose.main.browse
 
 import androidx.lifecycle.*
-import androidx.paging.PagingData
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import retrofit2.awaitResponse
 import rhett.pezzuti.dailydose.data.Track
 import rhett.pezzuti.dailydose.data.source.TrackRepository
-import timber.log.Timber
+import rhett.pezzuti.dailydose.data.source.remote.TrackRemoteDataSource
+import rhett.pezzuti.dailydose.network.BrowseFirebaseGson
+import rhett.pezzuti.dailydose.utils.asListOfTracks
 
 enum class BrowseStatus { LOADING, ERROR, DONE}
 
@@ -20,56 +21,38 @@ class BrowseViewModel(
     val status: LiveData<BrowseStatus>
         get() = _status
 
-    private val _filter = MutableLiveData<String>()
-    val filter : LiveData<String>
-        get() = _filter
-
-    private val _forceRefresh = MutableLiveData(true)
-
-    private var firebaseResultCache : Flow<PagingData<Track>>? = null
-
-    private var _tracks = _forceRefresh.switchMap { forceRefresh ->
-        if (forceRefresh) {
-            _status.value = BrowseStatus.LOADING
-            viewModelScope.launch {
-                trackRepository.refreshTracks()
-                _status.value = BrowseStatus.DONE
-            }
-        }
-        trackRepository.observeAllTracks()
-    }
-
-    /** Exposed track playlist for fragment **/
-    val tracks : LiveData<List<Track>> = _tracks
-
-    /** Attempt at chip filtering **/
     private val _playlist = MutableLiveData<List<Track>>()
-    // val playlist = trackRepository.observeAllTracks()
     val playlist : LiveData<List<Track>>
         get() = _playlist
 
-    // I need to change the value for the observer to be triggered
-    // If i try and set the value for _playlist, I need to use a coroutine.
-    // If i use a coroutine, then it tells me that I cant access the database on the main thread
-    // If i put it on the background thread, then it tells me I can't set the value.
 
     init {
-
-        _filter.value = "dubstep"
-        _status.value = BrowseStatus.LOADING
-
+        getTracksFromFirebase()
     }
 
+    private
+    fun getTracksFromFirebase() {
+        viewModelScope.launch {
+            try {
+                _status.value = BrowseStatus.LOADING
+                val firebaseTracks = TrackRemoteDataSource.refreshTracks()
 
-    private suspend fun filterTracks(genre: String) {
-        withContext(Dispatchers.IO) {
-            _tracks = trackRepository.observeGenre(genre)
+                if (firebaseTracks.isNotEmpty()) {
+                    trackRepository.syncTracks(firebaseTracks)
+                    _playlist.value = trackRepository.getAllTracks()
+                }
+                _status.value = BrowseStatus.DONE
+            } catch (e: Exception) {
+                // Want to use cached in this case I guess?
+                _playlist.value = listOf()
+                _status.value = BrowseStatus.ERROR
+            }
+
         }
     }
 
-
-
-
+    /** Exposed track playlist for fragment **/
+    // val tracks : LiveData<List<Track>> = _tracks
 
     /** Database Functions **/
     fun addToFavorites(timestamp: Long) {

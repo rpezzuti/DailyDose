@@ -42,7 +42,7 @@ class BrowseFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         /** Give the track playlist to the adapter **/
-        viewModel.tracks.observe(viewLifecycleOwner, { playlist ->
+        viewModel.playlist.observe(viewLifecycleOwner, { playlist ->
             playlist?.apply {
                 viewModelAdapter?.submitList(playlist)
             }

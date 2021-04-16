@@ -59,4 +59,7 @@ interface TrackRepository {
 
     /** Generic Add **/
     suspend fun addTrack(track: Track)
+    suspend fun addAllTracks(tracks: List<Track>)
+
+    suspend fun syncTracks(tracks: List<Track>)
 }

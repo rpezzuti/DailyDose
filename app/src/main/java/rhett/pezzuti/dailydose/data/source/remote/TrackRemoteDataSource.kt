@@ -22,12 +22,16 @@ object TrackRemoteDataSource : TrackDataSource {
 
     override suspend fun refreshTracks(): List<Track> {
 
-        val data = BrowseFirebaseGson.retrofitService.getAllTracks().awaitResponse().body().asListOfTracks()
+        try {
+            val data = BrowseFirebaseGson.retrofitService.getAllTracks().awaitResponse().body().asListOfTracks()
 
-        data.forEach { track ->
-            TRACK_REMOTE_DATA[track.timestamp] = track
+            data.forEach { track ->
+                TRACK_REMOTE_DATA[track.timestamp] = track
+            }
+            return data
+        } catch (e: Exception) {
+            return listOf()
         }
-        return data
 
     }
 

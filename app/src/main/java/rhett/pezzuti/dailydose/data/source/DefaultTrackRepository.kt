@@ -117,7 +117,6 @@ class DefaultTrackRepository(
         }
     }
 
-
     override suspend fun getTrack(timestamp: Long): Track {
         return trackLocalDataSource.getTrack(timestamp)
     }
@@ -126,6 +125,11 @@ class DefaultTrackRepository(
         trackLocalDataSource.updateTrack(track)
     }
 
+    override suspend fun addAllTracks(tracks: List<Track>) {
+        trackLocalDataSource.addAllTracks(tracks)
+    }
 
-    var favorites = listOf<DatabaseTrack>()
+    override suspend fun syncTracks(tracks: List<Track>) {
+        trackLocalDataSource.syncTracks(tracks)
+    }
 }
