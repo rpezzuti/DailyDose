@@ -11,22 +11,30 @@ import rhett.pezzuti.dailydose.data.source.remote.TrackRemoteDataSource
 import rhett.pezzuti.dailydose.network.BrowseFirebaseGson
 import rhett.pezzuti.dailydose.utils.asListOfTracks
 
+/**
+ * Enum status for progress bar and connection error visibility.
+ */
 enum class BrowseStatus { LOADING, ERROR, DONE}
 
 class BrowseViewModel(
     private val trackRepository: TrackRepository
 ) : ViewModel() {
 
+
+    /**
+     * Encapsulated data for visibility of view elements related to loading status.
+     */
     private val _status = MutableLiveData<BrowseStatus>()
     val status: LiveData<BrowseStatus>
         get() = _status
 
-    private val _playlist = MutableLiveData<List<Track>>()
-    val playlist : LiveData<List<Track>>
-        get() = _playlist
+    private val _forceRefresh = MutableLiveData(true)
 
-    private val _forceRefresh = MutableLiveData<Boolean>(true)
-
+    /**
+     * Forces a refresh through the network. Syncs remote data if found into database. Queries tracks from database after refresh & sync.
+     *
+     * Must be done this way to allow parameter to be initialized with data from the database without running into threading issue.
+     */
     private var _tracks = _forceRefresh.switchMap { forceRefresh ->
         if (forceRefresh) {
             _status.value = BrowseStatus.LOADING
@@ -38,18 +46,17 @@ class BrowseViewModel(
         trackRepository.observeAllTracks()
     }
 
+    /**
+     * Exposed LiveData to browseFragment to be put into the adapter.
+     */
     val tracks : LiveData<List<Track>> = _tracks
 
-
     init {
+        // Must be done because this status variable is NOT nullable.
         _status.value = BrowseStatus.LOADING
-        // getTracksFromFirebase()
     }
 
-    /** Exposed track playlist for fragment **/
-    // val tracks : LiveData<List<Track>> = _tracks
-
-    /** Database Functions **/
+    /** Database Methods **/
     fun addToFavorites(timestamp: Long) {
         viewModelScope.launch {
             favorite(timestamp)

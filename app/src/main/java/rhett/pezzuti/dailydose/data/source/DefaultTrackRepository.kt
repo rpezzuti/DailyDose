@@ -20,36 +20,23 @@ class DefaultTrackRepository(
 ) : TrackRepository {
 
 
+    /**
+     * Main access method to start request from Firebase Database. Calls updateTracksFromRemoteDataSource()
+     */
     override suspend fun refreshTracks() {
-        /** One of the main methods **/
-        // This function starts the process of refreshing the data from the network,
-        // storing it in the remote data source,
-        // then putting it in the local data source.
         updateTracksFromRemoteDataSource()
     }
 
+    /**
+     * Forces refresh from remote data source. If refresh is successful and contains data, syncs data into database.
+     */
     private suspend fun updateTracksFromRemoteDataSource() {
-        /** Another main method **/
-        // This is where we get the data from the network
-        // Store it in the remote data source
-        // Then use the remote data source to store it in the local data source
 
-        // TODO this is done. ALTHOUGH I NEED TO GET THE TASKS FROM REMOTE
-        // The secret was awaiting the response, and playing with the response directly. :)
-        // prolly not ideal but it works
         val remoteData = trackRemoteDataSource.refreshTracks()
 
         if (remoteData.isNullOrEmpty()) {
-            // TODO maybe throw an error?
-            // do nothing
+            // Break & throw error
         } else {
-            // TODO this is the next step
-            // I want to update the fetched tracks with the favorites
-            // Or find a way to only update the new ones, potentially.
-            // Once a day, do the update. But should also have a force update version
-            // Update the fetched tracks to identify data, then put them in the local
-
-                // TODO sync somehow
             trackLocalDataSource.syncTracks(remoteData)
         }
     }
