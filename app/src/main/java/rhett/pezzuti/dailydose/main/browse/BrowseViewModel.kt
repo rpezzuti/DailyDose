@@ -46,43 +46,6 @@ class BrowseViewModel(
         // getTracksFromFirebase()
     }
 
-    private
-    fun getTracksFromFirebase() {
-        viewModelScope.launch {
-            try {
-                _status.value = BrowseStatus.LOADING
-                val firebaseTracks = TrackRemoteDataSource.refreshTracks()
-
-                if (firebaseTracks.isNotEmpty()) {
-                    syncFirebase(firebaseTracks)
-                    getPlaylist()
-                }
-                _status.value = BrowseStatus.DONE
-            } catch (e: Exception) {
-                // Want to use cached in this case I guess?
-                _playlist.value = listOf()
-                _status.value = BrowseStatus.ERROR
-            }
-
-        }
-    }
-
-    private
-    suspend fun syncFirebase(tracks: List<Track>){
-        withContext(Dispatchers.IO) {
-            trackRepository.syncTracks(tracks)
-        }
-    }
-
-    private
-    suspend fun getPlaylist() {
-        withContext(Dispatchers.IO) {
-            // Can't invoke setValue on background thread,
-            // but can't call the repository on the main thread.
-            _playlist.value = trackRepository.getAllTracks()
-        }
-    }
-
     /** Exposed track playlist for fragment **/
     // val tracks : LiveData<List<Track>> = _tracks
 
