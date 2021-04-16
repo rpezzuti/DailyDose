@@ -38,11 +38,11 @@ class FakeDataSource(var tracks: MutableList<Track> = mutableListOf()) : TrackDa
         TODO("Not yet implemented")
     }
 
-    override suspend fun favorite(trackId: Long) {
+    override suspend fun favoriteTrack(timestamp: Long) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun unFavorite(trackId: Long) {
+    override suspend fun unFavoriteTrack(timestamp: Long) {
         TODO("Not yet implemented")
     }
 
@@ -62,7 +62,7 @@ class FakeDataSource(var tracks: MutableList<Track> = mutableListOf()) : TrackDa
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteAllTracks() {
+    override suspend fun deleteAllTotal() {
         tracks.clear()
     }
 

@@ -1,16 +1,11 @@
 package rhett.pezzuti.dailydose.data.source.remote
 
 import androidx.lifecycle.LiveData
-import androidx.paging.PagingData
-import androidx.paging.PagingSource
-import kotlinx.coroutines.flow.Flow
 import retrofit2.awaitResponse
 import rhett.pezzuti.dailydose.data.Track
 import rhett.pezzuti.dailydose.data.source.TrackDataSource
-import rhett.pezzuti.dailydose.network.BrowseFirebaseApiService
 import rhett.pezzuti.dailydose.network.BrowseFirebaseGson
 import rhett.pezzuti.dailydose.utils.asListOfTracks
-import timber.log.Timber
 import java.lang.Exception
 import kotlin.collections.LinkedHashMap
 
@@ -25,23 +20,41 @@ object TrackRemoteDataSource : TrackDataSource {
         try {
             val data = BrowseFirebaseGson.retrofitService.getAllTracks().awaitResponse().body().asListOfTracks()
 
+            // Cache the remote data.
             data.forEach { track ->
                 TRACK_REMOTE_DATA[track.timestamp] = track
             }
+
+            // Returns the remote data, not the cache
             return data
         } catch (e: Exception) {
+
+            // Return empty list upon error.
+                // Could return the cache instead?
             return listOf()
         }
 
     }
 
-    override fun getPagingResults(): Flow<PagingData<Track>> {
+
+
+
+
+    override suspend fun syncTracks(remoteData: List<Track>) {
         TODO("Not yet implemented")
     }
 
-    override fun observeAllTracks(): LiveData<List<Track>> {
-        TODO("Not yet implemented")
-    }
+
+
+
+
+
+
+
+
+
+
+
 
     override suspend fun addAllTracks(tracks: List<Track>) {
         TODO("Not yet implemented")
@@ -63,11 +76,11 @@ object TrackRemoteDataSource : TrackDataSource {
         TODO("Not yet implemented")
     }
 
-    override suspend fun favorite(trackId: Long) {
+    override suspend fun favoriteTrack(timestamp: Long) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun unFavorite(trackId: Long) {
+    override suspend fun unFavoriteTrack(timestamp: Long) {
         TODO("Not yet implemented")
     }
 
@@ -75,19 +88,8 @@ object TrackRemoteDataSource : TrackDataSource {
         TODO("Not yet implemented")
     }
 
-    override suspend fun updateTrack(track: Track) {
-        TODO("Not yet implemented")
-    }
 
     override fun observeFavorites(): LiveData<List<Track>> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun deleteAllTracks() {
-        TRACK_REMOTE_DATA.clear()
-    }
-
-    override suspend fun syncTracks(remoteData: List<Track>) {
         TODO("Not yet implemented")
     }
 
@@ -103,7 +105,46 @@ object TrackRemoteDataSource : TrackDataSource {
         TODO("Not yet implemented")
     }
 
+
+
+
+    /**
+     *
+     */
     override fun observeTrack(trackKey: Long): LiveData<Track> {
         TODO("Not yet implemented")
+    }
+
+    override fun observeAllTracks(): LiveData<List<Track>> {
+        TODO("Not yet implemented")
+    }
+
+
+    /**
+     *
+     */
+    override suspend fun updateTrack(track: Track) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateAllTracks(tracks: List<Track>) {
+        TODO("Not yet implemented")
+    }
+
+
+
+    /**
+     *
+     */
+    override suspend fun deleteTrack(track: Track) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteAllSelected(tracks: List<Track>) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteAllTotal() {
+        TRACK_REMOTE_DATA.clear()
     }
 }

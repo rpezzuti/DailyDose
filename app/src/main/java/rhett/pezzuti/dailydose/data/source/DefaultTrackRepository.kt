@@ -18,7 +18,8 @@ class DefaultTrackRepository(
 
 
     /**
-     * Forces refresh from remote data source. If refresh is successful and contains data, syncs data into database.
+     * Forces refresh from remote data source. Then syncs the remote data into the local data.
+     * If refresh is unsuccessful, returns empty list.
      */
     private suspend fun updateTracksFromRemoteDataSource() {
 
@@ -26,6 +27,8 @@ class DefaultTrackRepository(
 
         if (remoteData.isNullOrEmpty()) {
             // Break & throw error
+            // Or. If the cache is being returned, this would only be called as an endpoint case.
+            // I.E if the user is browsing for the first time, and has nothing in the cache.
         } else {
             trackLocalDataSource.syncTracks(remoteData)
         }
@@ -44,11 +47,11 @@ class DefaultTrackRepository(
      *
      */
     override suspend fun favoriteTrack(timestamp: Long) {
-        trackLocalDataSource.favorite(timestamp)
+        trackLocalDataSource.favoriteTrack(timestamp)
     }
 
     override suspend fun unFavoriteTrack(timestamp: Long) {
-        trackLocalDataSource.unFavorite(timestamp)
+        trackLocalDataSource.unFavoriteTrack(timestamp)
     }
 
 
@@ -156,7 +159,7 @@ class DefaultTrackRepository(
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteAllComplete() {
+    override suspend fun deleteAllTotal() {
         TODO("Not yet implemented")
     }
 

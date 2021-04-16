@@ -41,6 +41,14 @@ interface TrackRepository {
     fun observeGenre(genre: String): LiveData<List<Track>>
     suspend fun getGenre(genre: String): List<Track>
 
+
+
+
+
+
+
+
+
     /**
      * Adds a single track to local data source, which adds the track to database.
      */
@@ -70,5 +78,5 @@ interface TrackRepository {
      */
     suspend fun deleteTrack(track: Track)
     suspend fun deleteAllSelected(tracks: List<Track>)
-    suspend fun deleteAllComplete()
+    suspend fun deleteAllTotal()
 }

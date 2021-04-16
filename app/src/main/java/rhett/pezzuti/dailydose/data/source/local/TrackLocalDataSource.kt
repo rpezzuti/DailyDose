@@ -2,10 +2,8 @@ package rhett.pezzuti.dailydose.data.source.local
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
-import androidx.paging.PagingData
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import rhett.pezzuti.dailydose.data.Track
 import rhett.pezzuti.dailydose.data.asDatabaseModel
@@ -22,24 +20,73 @@ class TrackLocalDataSource(
         TODO("Not yet implemented")
     }
 
-    override fun getPagingResults(): Flow<PagingData<Track>> {
-        TODO("Not yet implemented")
+
+    /**
+     * Takes remote data and inserts it into the database.
+     * Then updates the remote data to identify favorites based on the local data.
+     */
+    override suspend fun syncTracks(remoteData: List<Track>) {
+        withContext(ioDispatcher) {
+            val saved = trackDao.getFavoritesToSave(true)
+            trackDao.clearAll()
+            remoteData.forEach { track ->
+                trackDao.insert(track.asDatabaseModel())
+            }
+            saved.forEach { track ->
+                trackDao.update(track)
+            }
+        }
     }
 
-    /** Query All **/
-    override fun observeAllTracks(): LiveData<List<Track>> {
-        return trackDao.observeAllTracks().map {
+
+
+
+
+
+    /**
+     *
+     */
+    override suspend fun favoriteTrack(timestamp: Long) {
+        withContext(ioDispatcher) {
+            val tempTrack = trackDao.getTrack(timestamp)
+            tempTrack.favorite = true
+            trackDao.update(tempTrack)
+        }
+    }
+
+    override suspend fun unFavoriteTrack(timestamp: Long) {
+        withContext(ioDispatcher) {
+            val tempTrack = trackDao.getTrack(timestamp)
+            tempTrack.favorite = false
+            trackDao.update(tempTrack)
+        }
+    }
+
+
+
+
+
+
+    /**
+     *
+     */
+    override fun observeFavorites(): LiveData<List<Track>> {
+        return trackDao.observeFavorites(true).map {
             it.asDomainModel()
         }
     }
-    override suspend fun getAllTracks(): List<Track> {
-        return trackDao.getAllTracks().asDomainModel()
+
+    override suspend fun getFavorites(): List<Track> {
+        return trackDao.getFavorites(true).asDomainModel()
     }
 
 
 
 
-    /** Query Recent **/
+
+    /**
+     *
+     */
     override fun observeRecent(): LiveData<List<Track>>  {
         return trackDao.observeRecent().map {
             it.asDomainModel()
@@ -54,19 +101,12 @@ class TrackLocalDataSource(
 
 
 
-    /** Query Favorites **/
-    override fun observeFavorites(): LiveData<List<Track>> {
-        return trackDao.observeFavorites(true).map {
-            it.asDomainModel()
-        }
-    }
-
-    override suspend fun getFavorites(): List<Track> {
-        return trackDao.getFavorites(true).asDomainModel()
-    }
 
 
-    /** Query Genre **/
+
+    /**
+     *
+     */
     override fun observeGenre(genre: String): LiveData<List<Track>> {
         return trackDao.observeGenre(genre).map {
             it.asDomainModel()
@@ -80,43 +120,20 @@ class TrackLocalDataSource(
 
 
 
-    /** Single Tracks **/
-    override suspend fun getTrack(trackKey: Long): Track {
-        return trackDao.getTrack(trackKey).asDomainModel()
-    }
 
-    override fun observeTrack(trackKey: Long): LiveData<Track> {
-        return trackDao.observeTrack(trackKey).map {
-            it.asDomainModel()
-        }
-    }
 
-    override suspend fun updateTrack(track: Track) {
-        withContext(ioDispatcher) {
-            trackDao.update(track.asDatabaseModel())
-        }
-    }
 
+
+
+
+
+
+    /**
+     *
+     */
     override suspend fun addTrack(track: Track) {
         withContext(ioDispatcher) {
             trackDao.insert(track.asDatabaseModel())
-        }
-    }
-
-    /** Track Manipulation **/
-    override suspend fun favorite(trackId: Long) {
-        withContext(ioDispatcher) {
-            val tempTrack = trackDao.getTrack(trackId)
-            tempTrack.favorite = true
-            trackDao.update(tempTrack)
-        }
-    }
-
-    override suspend fun unFavorite(trackId: Long) {
-        withContext(ioDispatcher) {
-            val tempTrack = trackDao.getTrack(trackId)
-            tempTrack.favorite = false
-            trackDao.update(tempTrack)
         }
     }
 
@@ -131,22 +148,81 @@ class TrackLocalDataSource(
 
 
 
-    override suspend fun deleteAllTracks() {
+
+
+    /**
+     *
+     */
+    override suspend fun getTrack(trackKey: Long): Track {
+        return trackDao.getTrack(trackKey).asDomainModel()
+    }
+
+    override suspend fun getAllTracks(): List<Track> {
+        return trackDao.getAllTracks().asDomainModel()
+    }
+
+
+
+
+
+
+
+    /**
+     *
+     */
+    override fun observeTrack(trackKey: Long): LiveData<Track> {
+        return trackDao.observeTrack(trackKey).map {
+            it.asDomainModel()
+        }
+    }
+
+    override fun observeAllTracks(): LiveData<List<Track>> {
+        return trackDao.observeAllTracks().map {
+            it.asDomainModel()
+        }
+    }
+
+
+
+
+
+
+
+
+
+    /**
+     *
+     */
+    override suspend fun updateTrack(track: Track) {
+        withContext(ioDispatcher) {
+            trackDao.update(track.asDatabaseModel())
+        }
+    }
+
+    override suspend fun updateAllTracks(tracks: List<Track>) {
+        TODO("Not yet implemented")
+    }
+
+
+
+
+
+
+    /**
+     *
+     */
+    override suspend fun deleteTrack(track: Track) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteAllSelected(tracks: List<Track>) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteAllTotal() {
         withContext(ioDispatcher) {
             trackDao.clearAll()
         }
     }
 
-    override suspend fun syncTracks(remoteData: List<Track>) {
-        withContext(ioDispatcher) {
-            val saved = trackDao.getFavoritesToSave(true)
-            trackDao.clearAll()
-            remoteData.forEach { track ->
-                trackDao.insert(track.asDatabaseModel())
-            }
-            saved.forEach { track ->
-                trackDao.update(track)
-            }
-        }
-    }
 }
