@@ -38,8 +38,8 @@ class BrowseViewModel(
                 val firebaseTracks = TrackRemoteDataSource.refreshTracks()
 
                 if (firebaseTracks.isNotEmpty()) {
-                    trackRepository.syncTracks(firebaseTracks)
-                    _playlist.value = trackRepository.getAllTracks()
+                    syncFirebase(firebaseTracks)
+                    getPlaylist()
                 }
                 _status.value = BrowseStatus.DONE
             } catch (e: Exception) {
@@ -48,6 +48,22 @@ class BrowseViewModel(
                 _status.value = BrowseStatus.ERROR
             }
 
+        }
+    }
+
+    private
+    suspend fun syncFirebase(tracks: List<Track>){
+        withContext(Dispatchers.IO) {
+            trackRepository.syncTracks(tracks)
+        }
+    }
+
+    private
+    suspend fun getPlaylist() {
+        withContext(Dispatchers.IO) {
+            // Can't invoke setValue on background thread,
+            // but can't call the repository on the main thread.
+            _playlist.value = trackRepository.getAllTracks()
         }
     }
 

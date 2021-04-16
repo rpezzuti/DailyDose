@@ -40,14 +40,6 @@ class BrowseFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        /** Give the track playlist to the adapter **/
-        viewModel.playlist.observe(viewLifecycleOwner, { playlist ->
-            playlist?.apply {
-                viewModelAdapter?.submitList(playlist)
-            }
-        })
-
     }
 
     override fun onCreateView(
