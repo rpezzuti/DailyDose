@@ -1,14 +1,10 @@
 package rhett.pezzuti.dailydose.main.home
 
 import androidx.lifecycle.*
-import androidx.work.WorkManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import rhett.pezzuti.dailydose.data.Track
 import rhett.pezzuti.dailydose.data.source.TrackRepository
-import timber.log.Timber
-import kotlin.random.Random
 
 class HomeViewModel(
     private val trackRepository: TrackRepository
@@ -19,7 +15,7 @@ class HomeViewModel(
 
 
     init {
-        Timber.i("homeViewModel Init block")
+
     }
 
 

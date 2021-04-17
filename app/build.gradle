@@ -16,7 +16,7 @@ android {
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -117,9 +117,6 @@ dependencies {
     // WorkManager
     implementation 'android.arch.work:work-runtime:1.0.1'
     implementation "android.arch.work:work-runtime-ktx:1.0.1"
-
-    // Timber - Make sure to add name of application class to manifest
-    implementation 'com.jakewharton.timber:timber:4.7.1'
 
     // Local Unit Tests
     testImplementation 'junit:junit:4.13.2'

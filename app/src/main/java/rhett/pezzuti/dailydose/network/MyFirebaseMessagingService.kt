@@ -11,7 +11,6 @@ import rhett.pezzuti.dailydose.data.DatabaseTrack
 import rhett.pezzuti.dailydose.data.Track
 import rhett.pezzuti.dailydose.data.source.local.getInstance
 import rhett.pezzuti.dailydose.utils.sendNotificationWithIntent
-import timber.log.Timber
 import java.lang.Exception
 
 class MyFirebaseMessagingService: FirebaseMessagingService() {
@@ -31,8 +30,6 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
 
         // Notification.Body = text
         // Data is stored as key value pairs
-
-        Timber.i("Has the message been received: $remoteMessage")
 
         // If said child does not exist, it is created.
 
@@ -64,7 +61,6 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
     }
 
     override fun onNewToken(token: String) {
-        Timber.i("Here is your token: $token")
 
         sendRegistrationToServer(token)
     }
@@ -72,12 +68,10 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
     override fun onMessageSent(messageId: String) {
         super.onMessageSent(messageId)
 
-        Timber.i("Send Message $messageId")
     }
     override fun onSendError(messageId: String, e: Exception) {
         super.onSendError(messageId, e)
 
-        Timber.i("Error: ${e.message}")
     }
 
     /**

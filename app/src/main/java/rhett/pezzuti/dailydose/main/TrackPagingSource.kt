@@ -1,14 +1,11 @@
 package rhett.pezzuti.dailydose.main
 
 import androidx.paging.PagingSource
-import retrofit2.await
 import retrofit2.awaitResponse
 import rhett.pezzuti.dailydose.data.Track
-import rhett.pezzuti.dailydose.data.source.TrackRepository
 import rhett.pezzuti.dailydose.network.BrowseFirebaseApiService
 import rhett.pezzuti.dailydose.network.BrowseFirebaseGson
 import rhett.pezzuti.dailydose.utils.asListOfTracks
-import timber.log.Timber
 import java.lang.Exception
 
 // NEED
@@ -32,7 +29,6 @@ class TrackPagingSource(private val firebaseService: BrowseFirebaseApiService) :
                 null
             )
         } catch (e: Exception) {
-            Timber.i("LOAD DATA ERROR $e")
             return LoadResult.Error(e)
         }
     }

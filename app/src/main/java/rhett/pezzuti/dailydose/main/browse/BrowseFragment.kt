@@ -19,7 +19,6 @@ import rhett.pezzuti.dailydose.adapters.FabListener
 import rhett.pezzuti.dailydose.adapters.TrackAdapter
 import rhett.pezzuti.dailydose.adapters.TrackListener
 import rhett.pezzuti.dailydose.databinding.FragmentBrowseBinding
-import timber.log.Timber
 import java.lang.Exception
 
 
@@ -83,10 +82,7 @@ class BrowseFragment : Fragment() {
             try {
                 contentPendingIntent.send()
             } catch (e: Exception) {
-                Timber.i("Exception Found: ${e}")
-                Timber.i("Exception Found: ${e.message}")
-                Timber.i("Exception Found: ${e.message.toString()}")
-                Timber.i("Exception Found: ${e.stackTrace}")
+
             }
 
         }, FabListener { favorite, timestamp ->

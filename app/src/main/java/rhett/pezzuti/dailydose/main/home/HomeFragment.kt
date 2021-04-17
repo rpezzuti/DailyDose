@@ -1,17 +1,13 @@
 package rhett.pezzuti.dailydose.main.home
 
 import android.app.PendingIntent
-import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.view.*
-import android.widget.TimePicker
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
@@ -23,10 +19,8 @@ import rhett.pezzuti.dailydose.R
 import rhett.pezzuti.dailydose.adapters.FabListener
 import rhett.pezzuti.dailydose.adapters.TrackListener
 import rhett.pezzuti.dailydose.adapters.TrackAdapter
-import rhett.pezzuti.dailydose.data.source.local.getInstance
 import rhett.pezzuti.dailydose.databinding.FragmentHomeBinding
 import rhett.pezzuti.dailydose.settings.SettingsActivity
-import timber.log.Timber
 import java.lang.Exception
 
 class HomeFragment : Fragment() {
@@ -100,10 +94,6 @@ class HomeFragment : Fragment() {
                 contentPendingIntent.send()
             } catch (exception: Exception) {
                 Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_SHORT).show()
-                Timber.i("Exception Found: $exception")
-                Timber.i("Exception Found: ${exception.message}")
-                Timber.i("Exception Found: ${exception.message.toString()}")
-                Timber.i("Exception Found: ${exception.stackTraceToString()}")
             }
 
         }, FabListener { favorite, timestamp ->
