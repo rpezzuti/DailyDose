@@ -2,11 +2,6 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <SwitchPreferenceCompat
-        android:defaultValue="true"
-        android:key="example_switch"
-        android:title="Switch preference example"
-        android:summary="The key is used and saved in sharedPref"/>
 
     <SwitchPreferenceCompat
         android:defaultValue="true"
@@ -15,8 +10,4 @@
         android:summary="Turn on or off notifications"
         app:key="notifications_switch"/>
 
-    <Preference
-        android:key="preference"
-        android:title="Send Feedback"
-        android:summary="Send me some feedback" />
 </PreferenceScreen>
