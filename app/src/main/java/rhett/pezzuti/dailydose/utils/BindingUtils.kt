@@ -5,8 +5,10 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import rhett.pezzuti.dailydose.R
+import rhett.pezzuti.dailydose.adapters.TrackAdapter
 import rhett.pezzuti.dailydose.data.Track
 import rhett.pezzuti.dailydose.main.browse.BrowseStatus
 
@@ -85,17 +87,16 @@ fun ImageView.setImage(item: Track?) {
 }
 
 @BindingAdapter("browseStatus")
-fun browseStatus(statusImageView: ImageView, status: BrowseStatus) {
+fun ImageView.browseStatus(status: BrowseStatus) {
     when (status) {
         BrowseStatus.LOADING -> {
-            statusImageView.visibility = View.GONE
+            visibility = View.GONE
         }
         BrowseStatus.DONE -> {
-            statusImageView.visibility = View.GONE
+            visibility = View.GONE
         }
         BrowseStatus.ERROR -> {
-            statusImageView.visibility = View.VISIBLE
-            statusImageView.setImageResource(R.drawable.ic_connection_error)
+            visibility = View.VISIBLE
         }
     }
 }
@@ -113,4 +114,10 @@ fun progressBarStatus(progressBar: ProgressBar, status: BrowseStatus) {
             progressBar.visibility = View.GONE
         }
     }
+}
+
+@BindingAdapter("listData")
+fun bindRecyclerView(recyclerView: RecyclerView, data: List<Track>?) {
+    val adapter = recyclerView.adapter as TrackAdapter
+    adapter.submitList(data)
 }

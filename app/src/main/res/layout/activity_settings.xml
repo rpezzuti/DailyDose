@@ -7,16 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".settings.SettingsActivity">
 
-    <!--<fragment
-        android:id="@+id/settingsNavController"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        app:defualtNavHost="true"
-        app:navGraph="@navigation/settings_navigation"
-        />-->
-
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/settings_container"
         android:layout_width="match_parent"

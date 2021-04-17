@@ -1,33 +1,36 @@
 package rhett.pezzuti.dailydose.main.browse
 
 import androidx.lifecycle.*
-import androidx.paging.PagingData
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import rhett.pezzuti.dailydose.data.Track
 import rhett.pezzuti.dailydose.data.source.TrackRepository
-import timber.log.Timber
 
+/**
+ * Enum status for progress bar and connection error visibility.
+ */
 enum class BrowseStatus { LOADING, ERROR, DONE}
 
 class BrowseViewModel(
     private val trackRepository: TrackRepository
 ) : ViewModel() {
 
+
+    /**
+     * Encapsulated data for visibility of view elements related to loading status.
+     */
     private val _status = MutableLiveData<BrowseStatus>()
     val status: LiveData<BrowseStatus>
         get() = _status
 
-    private val _filter = MutableLiveData<String>()
-    val filter : LiveData<String>
-        get() = _filter
-
     private val _forceRefresh = MutableLiveData(true)
 
-    private var firebaseResultCache : Flow<PagingData<Track>>? = null
-
+    /**
+     * Forces a refresh through the network. Syncs remote data if found into database. Queries tracks from database after refresh & sync.
+     *
+     * Must be done this way to allow parameter to be initialized with data from the database without running into threading issue.
+     */
     private var _tracks = _forceRefresh.switchMap { forceRefresh ->
         if (forceRefresh) {
             _status.value = BrowseStatus.LOADING
@@ -39,55 +42,17 @@ class BrowseViewModel(
         trackRepository.observeAllTracks()
     }
 
-    /** Exposed track playlist for fragment **/
+    /**
+     * Exposed LiveData to browseFragment to be put into the adapter.
+     */
     val tracks : LiveData<List<Track>> = _tracks
 
-    /** Attempt at chip filtering **/
-    private val _playlist = MutableLiveData<List<Track>>()
-    // val playlist = trackRepository.observeAllTracks()
-    val playlist : LiveData<List<Track>>
-        get() = _playlist
-
-    // I need to change the value for the observer to be triggered
-    // If i try and set the value for _playlist, I need to use a coroutine.
-    // If i use a coroutine, then it tells me that I cant access the database on the main thread
-    // If i put it on the background thread, then it tells me I can't set the value.
-
     init {
-        /** Chip filtering attempts **/
-        /*viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                _playlist.value = trackRepository.getFavorites()
-            }
-        }*/
-        _filter.value = "dubstep"
+        // Must be done because this status variable is NOT nullable.
         _status.value = BrowseStatus.LOADING
-
-        loadCache()
     }
 
-
-    fun getGenre(genre: String) {
-//        tracks.value =
-    }
-
-    fun loadCache() : Flow<PagingData<Track>>? {
-        firebaseResultCache = trackRepository.getPagingResults()
-        Timber.i("Did this work?")
-        return firebaseResultCache
-    }
-
-    private suspend fun filterTracks(genre: String) {
-        withContext(Dispatchers.IO) {
-            _tracks = trackRepository.observeGenre(genre)
-        }
-    }
-
-
-
-
-
-    /** Database Functions **/
+    /** Database Methods **/
     fun addToFavorites(timestamp: Long) {
         viewModelScope.launch {
             favorite(timestamp)

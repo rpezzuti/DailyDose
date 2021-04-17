@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.annotation.VisibleForTesting
 import androidx.room.Room
 import kotlinx.coroutines.runBlocking
-import rhett.pezzuti.dailydose.data.Track
 import rhett.pezzuti.dailydose.data.source.DefaultTrackRepository
 import rhett.pezzuti.dailydose.data.source.TrackRepository
 import rhett.pezzuti.dailydose.data.source.local.TrackDatabase
@@ -60,7 +59,7 @@ object ServiceLocator {
     fun resetDatabase() {
         synchronized(lock) {
             runBlocking {
-                TrackRemoteDataSource.deleteAllTracks()
+                TrackRemoteDataSource.deleteAllTotal()
             }
             database?.apply {
                 clearAllTables()

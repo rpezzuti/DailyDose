@@ -12,11 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
-import com.google.android.material.chip.Chip
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 import rhett.pezzuti.dailydose.DailyDoseApplication
 import rhett.pezzuti.dailydose.R
 import rhett.pezzuti.dailydose.adapters.FabListener
@@ -41,13 +37,9 @@ class BrowseFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        /** Give the track playlist to the adapter **/
-        viewModel.tracks.observe(viewLifecycleOwner, { playlist ->
-            playlist?.apply {
-                viewModelAdapter?.submitList(playlist)
-            }
+        viewModel.tracks.observe(viewLifecycleOwner, { tracks ->
+            viewModelAdapter?.submitList(tracks)
         })
-
     }
 
     override fun onCreateView(

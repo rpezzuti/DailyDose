@@ -30,31 +30,13 @@ import timber.log.Timber
 import java.lang.Exception
 
 class HomeFragment : Fragment() {
-
-    /**
-     * One way to delay creation of the viewModel until an appropriate lifecycle method is to use
-     * lazy. This requires that viewModel not be referenced before onViewCreated(), which we
-     * do in this Fragment.
-     */
-/*    private val viewModel: HomeViewModel by lazy {
-        val activity = requireNotNull(this.activity) {
-            "You can only access the viewModel after onViewCreated()"
-        }
-
-        // TODO implement the ServiceLocator
-        val trackDataSource = getInstance(activity.applicationContext).trackDatabaseDao
-
-        ViewModelProvider(this, HomeViewModelFactory(trackDataSource, activity.application)).get(
-            HomeViewModel::class.java)
-    }*/
+    private lateinit var binding: FragmentHomeBinding
+    private var viewModelAdapter: TrackAdapter? = null
 
     private val viewModel by viewModels<HomeViewModel> {
         HomeViewModelFactory((requireContext().applicationContext as DailyDoseApplication).trackRepository)
     }
 
-    private var viewModelAdapter: TrackAdapter? = null
-
-    // Putting the data into the adapter at the appropriate time.
     /**
      * Called immediately after onCreateView() has returned, and fragment's
      * view hierarchy has been created.  It can be used to do final
@@ -76,7 +58,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        val binding: FragmentHomeBinding = DataBindingUtil.inflate(
+        binding = DataBindingUtil.inflate(
             inflater,
             R.layout.fragment_home,
             container,
@@ -145,13 +127,7 @@ class HomeFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // This return statement works when the id of the menu item matches the id of the fragment in the nav graph.
 
-        // For the filter menu
-        return if (item.itemId == R.id.menu_filter) {
-            showFilteringPopUpMenu()
-
-
-            true
-        } else if (item.itemId == R.id.settingsActivity){
+        return if (item.itemId == R.id.settingsActivity){
             val intent = Intent(this.activity, SettingsActivity::class.java)
             startActivity(intent)
             return true
@@ -159,28 +135,6 @@ class HomeFragment : Fragment() {
                 // For the overflow menu
             (NavigationUI.onNavDestinationSelected(item!!, requireView().findNavController())
                     || super.onOptionsItemSelected(item))
-        }
-    }
-
-
-    /** Filter Button for EDM/Acoustic tracks **/
-    private fun showFilteringPopUpMenu() {
-        val view = activity?.findViewById<View>(R.id.menu_filter) ?: return
-        PopupMenu(requireContext(), view).run {
-            menuInflater.inflate(R.menu.filter_tracks, menu)
-
-            /**
-            setOnMenuItemClickListener {
-                viewModel.setFiltering(
-                    when (it.itemId) {
-                        R.id.active -> TasksFilterType.ACTIVE_TASKS
-                        R.id.completed -> TasksFilterType.COMPLETED_TASKS
-                        else -> TasksFilterType.ALL_TASKS
-                    }
-                )
-                true
-            }**/
-            show()
         }
     }
 
