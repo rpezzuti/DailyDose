@@ -8,6 +8,13 @@
         android:title="Switch preference example"
         android:summary="The key is used and saved in sharedPref"/>
 
+    <SwitchPreferenceCompat
+        android:defaultValue="true"
+        android:key="notifications_switch"
+        android:title="Notifications On/Off"
+        android:summary="Turn on or off notifications"
+        app:key="notifications_switch"/>
+
     <Preference
         android:key="preference"
         android:title="Send Feedback"

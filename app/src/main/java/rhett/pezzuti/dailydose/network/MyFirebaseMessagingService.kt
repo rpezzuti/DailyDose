@@ -2,6 +2,7 @@ package rhett.pezzuti.dailydose.network
 
 import android.app.NotificationManager
 import androidx.core.content.ContextCompat
+import androidx.preference.PreferenceManager
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -48,7 +49,12 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
                 val track = createTrackFromMessage(remoteMessage)
 
                 /** Show Notification **/
-                sendNotificationWithIntent(track)
+                val sharedPref = PreferenceManager.getDefaultSharedPreferences(this.applicationContext)
+                val showNotification = sharedPref.getBoolean("notifications_switch", true)
+
+                if (showNotification) {
+                    sendNotificationWithIntent(track)
+                }
 
                 /** Save to Database **/
                 saveTrackToDatabase(track)
