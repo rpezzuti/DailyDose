@@ -7,6 +7,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import rhett.pezzuti.dailydose.R
 import rhett.pezzuti.dailydose.data.DatabaseTrack
 import rhett.pezzuti.dailydose.data.Track
 import rhett.pezzuti.dailydose.data.source.local.TrackDatabaseDao
@@ -20,26 +21,7 @@ class MyFirebaseMessagingService(
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
 
-        // Can't use context outside of a function in this class
-
-
-
-        // This chunk is triggered when the remoteMessage is received when the app is in the foreground. any fragment
-        // When the app is in the background, the device receives the notification as displayed is the Firebase Console
-
-        // Notification.Body = text
-        // Data is stored as key value pairs
-
-        // If said child does not exist, it is created.
-
-        // Genre -> Track Title.
-        // When users fetch a genre, they get all the tracks.
-
-        // App State        Notification        Data                Both
-        // Foreground       onMessageReceived   onMessageReceived   onMessageReceived
-        // Background       System Tray         onMessageReceived   Notification: System tray. Data: in extras of the intent.
-
-        // Data Payload.
+        // A remote message with a payload triggers onMessageReceived, instead of being handled by the System Tray.
         if (remoteMessage.data.isNotEmpty()) {
             remoteMessage.data.let {
                 val track = createTrackFromMessage(remoteMessage)
@@ -59,6 +41,9 @@ class MyFirebaseMessagingService(
 
     }
 
+    /**
+     * Save user's token to firebase.
+     */
     override fun onNewToken(token: String) {
         sendRegistrationToServer(token)
     }
@@ -67,13 +52,18 @@ class MyFirebaseMessagingService(
     /**
      * Persist token to third-party (your app) servers.
      */
-    private fun sendRegistrationToServer(token: String?) {
+    private
+    fun sendRegistrationToServer(token: String?) {
         val firebaseDatabase = Firebase.database.reference
 
-        firebaseDatabase.child("My Tokens").setValue(token)
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(this.applicationContext)
+        val userName = sharedPref.getString(getString(R.string.sharedpref_username_key), "username")
+
+        firebaseDatabase.child("Tokens").child(userName!!).setValue(token)
     }
 
-    private fun createTrackFromMessage(remoteMessage: RemoteMessage): Track {
+    private
+    fun createTrackFromMessage(remoteMessage: RemoteMessage): Track {
 
         val timestamp = remoteMessage.data["timestamp"]!!.toLong()
 
@@ -91,7 +81,8 @@ class MyFirebaseMessagingService(
         }
     }
 
-    private fun saveTrackToDatabase(track: Track) {
+    private
+    fun saveTrackToDatabase(track: Track) {
 
         val databaseTrack = DatabaseTrack(
             track.timestamp,
