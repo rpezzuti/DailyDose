@@ -23,9 +23,6 @@ interface BrowseFirebaseApiService {
     @GET ("tracks.json")
     fun getAllTracks():
             Call<JsonObject>
-
-
-
 }
 
 object BrowseFirebaseGson {

@@ -9,7 +9,6 @@ import kotlinx.coroutines.launch
 import rhett.pezzuti.dailydose.data.source.TrackRepository
 import rhett.pezzuti.dailydose.work.RefreshDataWorker
 import rhett.pezzuti.dailydose.work.UploadPreferencesWorker
-import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 class DailyDoseApplication : Application() {
@@ -35,7 +34,6 @@ class DailyDoseApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        Timber.plant(Timber.DebugTree())
 
         // delayedInit()
         anotherDelayedInit()

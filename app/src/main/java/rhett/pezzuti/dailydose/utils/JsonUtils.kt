@@ -1,10 +1,10 @@
 package rhett.pezzuti.dailydose.utils
 
 import com.google.gson.JsonObject
-import retrofit2.Call
+
 import rhett.pezzuti.dailydose.data.DatabaseTrack
 import rhett.pezzuti.dailydose.data.Track
-import timber.log.Timber
+
 
 fun JsonObject.asDatabaseModel(): Array<DatabaseTrack> {
 
@@ -20,13 +20,13 @@ fun JsonObject.asDatabaseModel(): Array<DatabaseTrack> {
         }
 
         val jsonList = mutableListOf<JsonObject>()
-        Timber.i("RHETT: List of data keys $genres")
+
 
         for (i in genres) {
-            Timber.i("RHETT: Genre Indicator $i")
+
 
             jsonList.add(getAsJsonObject(i))
-            Timber.i("RHETT: Json List ${jsonList}")
+
         }
 
 
@@ -87,15 +87,12 @@ fun JsonObject?.asListOfTracks(): List<Track> {
 
         val jsonList = mutableListOf<JsonObject>()
         val trackList = mutableListOf<Track>()
-        Timber.i("RHETT: List of data keys $keySet")
+
 
         // Make a list of JsonObjects, by genre
         for (keys in keySet) {
-            Timber.i("RHETT: Genre Indicator $keys")
-            Timber.i("RHETT: Data of that genre ${this[keys]}")
 
             jsonList.add(this.getAsJsonObject(keys))
-            Timber.i("RHETT: Json List ${jsonList}")
         }
 
 
