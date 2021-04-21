@@ -9,15 +9,14 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import rhett.pezzuti.dailydose.data.DatabaseTrack
 import rhett.pezzuti.dailydose.data.Track
+import rhett.pezzuti.dailydose.data.source.local.TrackDatabaseDao
 import rhett.pezzuti.dailydose.data.source.local.getInstance
 import rhett.pezzuti.dailydose.utils.sendNotificationWithIntent
 import java.lang.Exception
 
-class MyFirebaseMessagingService: FirebaseMessagingService() {
-
-    companion object {
-        private const val TAG = "MyFirebaseMsgService"
-    }
+class MyFirebaseMessagingService(
+    private val trackDatabaseDao: TrackDatabaseDao
+): FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
 
@@ -53,7 +52,7 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
                     sendNotificationWithIntent(track)
                 }
 
-                /** Save to Database **/
+                /** Save to Local Database **/
                 saveTrackToDatabase(track)
             }
         }
@@ -61,18 +60,9 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
     }
 
     override fun onNewToken(token: String) {
-
         sendRegistrationToServer(token)
     }
 
-    override fun onMessageSent(messageId: String) {
-        super.onMessageSent(messageId)
-
-    }
-    override fun onSendError(messageId: String, e: Exception) {
-        super.onSendError(messageId, e)
-
-    }
 
     /**
      * Persist token to third-party (your app) servers.
@@ -102,7 +92,6 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
     }
 
     private fun saveTrackToDatabase(track: Track) {
-        val database = getInstance(applicationContext).trackDatabaseDao
 
         val databaseTrack = DatabaseTrack(
             track.timestamp,
@@ -114,7 +103,7 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
             track.favorite
         )
 
-        database.addTrack(databaseTrack)
+        trackDatabaseDao.addTrack(databaseTrack)
     }
 
     private fun sendNotificationWithIntent(track: Track) {
