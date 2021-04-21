@@ -57,8 +57,6 @@ class BrowseFragment : Fragment() {
 
         setupAdapter()
         setupDecoration()
-        binding.browseRecyclerView.adapter = viewModelAdapter
-
 
         (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.fragment_browse_title)
         return binding.root
@@ -96,6 +94,8 @@ class BrowseFragment : Fragment() {
                     .show()
             }
         })
+
+        binding.browseRecyclerView.adapter = viewModelAdapter
     }
 
 

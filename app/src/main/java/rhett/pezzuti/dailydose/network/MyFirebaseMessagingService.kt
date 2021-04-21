@@ -52,7 +52,8 @@ class MyFirebaseMessagingService(
     /**
      * Persist token to third-party (your app) servers.
      */
-    private fun sendRegistrationToServer(token: String?) {
+    private
+    fun sendRegistrationToServer(token: String?) {
         val firebaseDatabase = Firebase.database.reference
 
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(this.applicationContext)
@@ -61,7 +62,8 @@ class MyFirebaseMessagingService(
         firebaseDatabase.child("Tokens").child(userName!!).setValue(token)
     }
 
-    private fun createTrackFromMessage(remoteMessage: RemoteMessage): Track {
+    private
+    fun createTrackFromMessage(remoteMessage: RemoteMessage): Track {
 
         val timestamp = remoteMessage.data["timestamp"]!!.toLong()
 
@@ -79,7 +81,8 @@ class MyFirebaseMessagingService(
         }
     }
 
-    private fun saveTrackToDatabase(track: Track) {
+    private
+    fun saveTrackToDatabase(track: Track) {
 
         val databaseTrack = DatabaseTrack(
             track.timestamp,

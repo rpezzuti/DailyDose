@@ -11,20 +11,6 @@ import rhett.pezzuti.dailydose.data.Track
 
 private val NOTIFICATION_ID = 0
 
-fun NotificationManager.sendNotification(messageBody: String, applicationContext: Context) {
-
-    val builder = NotificationCompat.Builder(
-        applicationContext,
-        applicationContext.getString(R.string.notification_channel_id)
-    )
-        .setSmallIcon(R.drawable.ic_eigth_note)
-        .setContentTitle(applicationContext.getString(R.string.track_notification_channel_title))
-        .setContentText(messageBody)
-
-    notify(NOTIFICATION_ID, builder.build())
-
-}
-
 fun NotificationManager.sendNotificationWithIntent(track: Track, applicationContext: Context) {
 
 
