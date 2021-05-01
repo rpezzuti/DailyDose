@@ -16,5 +16,4 @@ data class User (
     val instrumentalRock: Boolean = false,
     val deathMetal: Boolean = false,
     val livePerformances: Boolean = false
-
 )
