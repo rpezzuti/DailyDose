@@ -10,11 +10,11 @@
 
         <variable
             name="clickListener"
-            type="rhett.pezzuti.dailydose.adapters.TrackListener" />
+            type="rhett.pezzuti.dailydose.main.TrackListener" />
 
         <variable
             name="fabListener"
-            type="rhett.pezzuti.dailydose.adapters.FabListener" />
+            type="rhett.pezzuti.dailydose.main.FabListener" />
     </data>
 
     <androidx.cardview.widget.CardView

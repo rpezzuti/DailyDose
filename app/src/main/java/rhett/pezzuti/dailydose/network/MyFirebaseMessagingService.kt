@@ -11,9 +11,7 @@ import rhett.pezzuti.dailydose.R
 import rhett.pezzuti.dailydose.data.DatabaseTrack
 import rhett.pezzuti.dailydose.data.Track
 import rhett.pezzuti.dailydose.data.source.local.TrackDatabaseDao
-import rhett.pezzuti.dailydose.data.source.local.getInstance
 import rhett.pezzuti.dailydose.utils.sendNotificationWithIntent
-import java.lang.Exception
 
 class MyFirebaseMessagingService(
     private val trackDatabaseDao: TrackDatabaseDao

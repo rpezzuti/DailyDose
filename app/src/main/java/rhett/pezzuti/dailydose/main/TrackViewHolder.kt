@@ -3,17 +3,15 @@ package rhett.pezzuti.dailydose.main
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import rhett.pezzuti.dailydose.adapters.FabListener
-import rhett.pezzuti.dailydose.adapters.TrackListener
 import rhett.pezzuti.dailydose.data.Track
 import rhett.pezzuti.dailydose.databinding.TrackListItemBinding
 
 class TrackViewHolder private constructor(val binding: TrackListItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(item: Track, clickListener: TrackListener, fabListener: FabListener) {
+    fun bind(item: Track, trackListener: TrackListener, fabListener: FabListener) {
 
         binding.track = item
-        binding.clickListener = clickListener
+        binding.clickListener = trackListener
         binding.fabListener = fabListener
         binding.executePendingBindings()
     }

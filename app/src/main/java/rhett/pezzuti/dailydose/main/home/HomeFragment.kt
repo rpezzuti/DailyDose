@@ -16,9 +16,9 @@ import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.DividerItemDecoration
 import rhett.pezzuti.dailydose.DailyDoseApplication
 import rhett.pezzuti.dailydose.R
-import rhett.pezzuti.dailydose.adapters.FabListener
-import rhett.pezzuti.dailydose.adapters.TrackListener
-import rhett.pezzuti.dailydose.adapters.TrackAdapter
+import rhett.pezzuti.dailydose.main.FabListener
+import rhett.pezzuti.dailydose.main.TrackListener
+import rhett.pezzuti.dailydose.main.TrackAdapter
 import rhett.pezzuti.dailydose.databinding.FragmentHomeBinding
 import rhett.pezzuti.dailydose.settings.SettingsActivity
 import java.lang.Exception

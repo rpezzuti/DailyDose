@@ -8,7 +8,7 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import rhett.pezzuti.dailydose.R
-import rhett.pezzuti.dailydose.adapters.TrackAdapter
+import rhett.pezzuti.dailydose.main.TrackAdapter
 import rhett.pezzuti.dailydose.data.Track
 import rhett.pezzuti.dailydose.main.browse.BrowseStatus
 
